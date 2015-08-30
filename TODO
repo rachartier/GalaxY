@@ -1,0 +1,71 @@
+Gameplay:																				
+	- parcourir des galaxies															
+	- parcourir, decouvrir des planetes													
+	- vaisseau upgradable																
+		- sa taille																		
+		- son poind max																	
+		- son fuel max																	
+		- sa puissance																	
+		- son armure
+		- chaque membre d'équipage sera devouer à un poste, chaque poste se verra un bonus pour chaque homme s'y trouvant														
+Joueur:																					
+	- nombre limite de deplacement (fuel)												
+	- charge maxime (x/tonne)															
+	- puissance des armes																
+	- armure																			
+	- argent																			
+	- nourriture/eau (pour l'equipage)		
+	- commandes:
+		- list: liste toutes les planètes du systeme avec leur distance du joueur
+		- buy : permet de commercer avec la planete
+			- buy list: permet de lister tout les objets
+			- food <ammount>: permet d'acheter de la nourriture
+			- fuel <ammount>: permet d'acheter du fuel
+			- weapon: permet d'acheter une arme		
+			- defense: permet d'acheter du blindage
+		- attack: si le vaisseau est attaquer, alors il a la possibilité de riposter
+		- defense: si le vaisseau est attaquer, la commade defense lui donne une chance d'equiver le coup porte
+		- info
+			- planet: donne les informations de la planete	
+			- fuel: donne les informations sur son nombre de fuel
+		- recruitment: liste tout les candidats (si il y en a) succeptible de pouvoir être dans le vaisseau du joueur
+Planete:													
+	- nombre d'habitants									
+	- taille de la planete									
+	- densite												
+	- vivable												
+	- commerce												
+		- dictature											
+			- esclave										
+			- ....											
+	- regime politique										
+		- monarchie											
+		- republique										
+		- dictature											
+		- autres											
+	- langue (utiliser un decodeur pour les langues inconnus)
+<<<<<<< HEAD
+	- distance par rapport a l'etoile et par rapport au vaisseau
+	- etablir un systeme aleatoire de drop (armes, armures, argents, fuel, etc...)
+Commerce:													
+	- armes													
+	- defenses												
+	- si didacture																		
+		- esclave																		
+		- nucleaire																		
+		- marche noir																	
+	- fuel																				
+	- nourriture																		
+	- eau																				
+=======
+
+Commerce:
+	- armes
+	- defenses
+	- si didacture
+		- esclave
+		- nucleaire
+		- marche noir
+	- fuel
+	
+>>>>>>> parent of d7a387e... changement todo
