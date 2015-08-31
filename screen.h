@@ -11,10 +11,10 @@
 #define CON_HEIGHT	24
 
 struct s_screen {
+	char	buffer[CON_WIDTH][CON_HEIGHT];
+
 	int		actualRow;
 	int		actualCol;
-
-	char	buffer[CON_WIDTH][CON_HEIGHT];
 };
 
 typedef struct s_screen Screen;

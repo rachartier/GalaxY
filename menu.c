@@ -18,10 +18,11 @@ void	menu_destroy(Menu *menu) {
 }
 
 char	menu_getcmd(Menu menu) {
-	char c;
+	signed char c;
 
 	printf("> ");
 	scanf("%c", &c);
+	putchar('\n');
 
 	purge_stdin();
 
@@ -45,14 +46,15 @@ void	menu_addButtonText(Menu *menu, const char *text) {
 }
 
 void	menu_removeButtonText(Menu *menu, int bId) {
-	if (bId < MAX_ELEMENTS) {
+	if (bId >= 0 && bId < MAX_ELEMENTS) {
 		menu->element[bId].isVisible = false;
 	}
 }
 
 void	menu_display(Menu menu) {
-	int titleLenght = strlen(menu.title);
-	int i;
+	int			titleLenght = strlen(menu.title);
+	unsigned	i;
+
 	for (i = 0; i < 80; ++i)
 		putchar('-');
 

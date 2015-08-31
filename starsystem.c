@@ -15,7 +15,7 @@ StarSystem*	starsys_create(void) {
 	if (sys != NULL) {
 		sys->numberPlanets = rndNumberOfPlanets;
 
-		for (int index = 0; index < sys->numberPlanets; ++index) {
+		for (unsigned index = 0; index < sys->numberPlanets; ++index) {
 			add_planet(sys, index);
 		}
 	}
@@ -27,7 +27,7 @@ void		starsys_destroy(StarSystem *sys) {
 	xfree(sys);
 }
 
-static void add_planet(StarSystem *sys, int index) {
+static void add_planet(StarSystem *sys, unsigned index) {
 	Planet	planet;
 
 	if (index == 0)

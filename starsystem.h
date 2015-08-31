@@ -6,11 +6,10 @@
 #define MAX_PLANET	18
 
 struct s_starsystem {
-	Planet		planet[MAX_PLANET + 2];
+	Planet	planet[MAX_PLANET + 2];
 
-	char		name[18];
-
-	unsigned	numberPlanets;
+	char	name[18];
+	size_t	numberPlanets;
 };
 
 typedef struct s_starsystem StarSystem;
@@ -18,6 +17,6 @@ typedef struct s_starsystem StarSystem;
 StarSystem*	starsys_create(void);
 void		starsys_destroy(StarSystem *sys);
 
-static void add_planet(StarSystem *sys, int index);
+static void add_planet(StarSystem *sys, unsigned index);
 
 #endif /* __STARSYSTEM_GUARD_H__ */

@@ -6,7 +6,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <ctype.h>
 
 #include "rand.h"
@@ -81,6 +80,38 @@ void		planet_showSatelliteStats(Satellite s) {
 }
 
 void		planet_showStats(Planet planet) {
+	static const char *g_speciesType[S_TYPE_LAST] = {
+		"Humains",
+		"Robots",
+		"Aliens",
+		"Rocs"
+	};
+
+	static const char *g_governementName[G_TYPE_LAST] = {
+		"Monarchie",
+		"Dictature",
+		"Republique",
+		"Communisme",
+		"Arnachique",
+		"Feodale"
+	};
+
+	static const char *g_planetTypeName[P_TYPE_LAST + 1] = {
+		"Tellurique",
+		"Gazeuse",
+		"Neptunienne",
+		"Geante",
+		"Portail d'entrer",
+		"Portail de sorti",
+		"Etoile"
+	};
+
+	static const char *g_economyName[3] = {
+		"Riche",
+		"Moyenne",
+		"Pauvre"
+	};
+
 	if (planet.type == P_TYPE_STAR) {
 		printf("Est une etoile\n");
 		printf("Rayon: %.3fkm", planet.radius);
@@ -105,7 +136,7 @@ void		planet_showStats(Planet planet) {
 			printf("\nSurface non habitable: %.3lf%%", 100 - planet.stat.percentageLivableArea);
 			printf("\nRichesse de la population: %s\n", g_economyName[planet.economy]);
 		}
-		for (int i = 0; i < planet.nSatellite; ++i) {
+		for (unsigned i = 0; i < planet.nSatellite; ++i) {
 			printf("\nSatellite n%u\n", i + 1);
 			planet_showSatelliteStats(planet.satellite[i]);
 		}
@@ -147,6 +178,8 @@ static double setPercentageOfArea(double value, float offset) {
 }
 
 static bool genNonHabitableArea(Planet *planet, PlanetCondition pCondition, float percentage, int chance) {
+	(void)pCondition;
+
 	if (CHANCE(chance)) {
 		float	areaNonHabitable;
 		double	areaHabitable = planet->areaTotal;
@@ -159,7 +192,7 @@ static bool genNonHabitableArea(Planet *planet, PlanetCondition pCondition, floa
 		areaHabitable = setPercentageOfArea(planet->livableArea, areaNonHabitable);
 
 		planet->livableArea = areaHabitable;
-		planet->stat.percentageLivableArea = planet->livableArea * 100 / planet->areaTotal;
+		planet->stat.percentageLivableArea = (float)planet->livableArea * 100 / planet->areaTotal;
 
 		return true;
 	}
@@ -187,7 +220,7 @@ static void choseRandomName(Planet *planet) {
 			planet->name[i - 1] = 'm';
 
 		if (i == 0)
-			letter = toupper(letter);
+			letter = (char)toupper(letter);
 		planet->name[i] = letter;
 	}
 }
@@ -238,7 +271,7 @@ static void choseRandomEconomy(Planet *planet) {
 static void choseRandomPlanetType(Planet *planet, int id) {
 	int type;
 
-	static const int bornMin[] = {
+	const int bornMin[] = {
 		0,
 		3,
 		5
@@ -311,9 +344,6 @@ static void setRadius(Planet *planet) {
 	planet->radius = radius;
 	planet->areaTotal = (4 * M_PI * (radius * radius)) / 1000000;
 	planet->livableArea = planet->areaTotal;
-}
-
-static void setDensity(Planet *planet) {
 }
 
 static void createSatellite(Planet *planet) {

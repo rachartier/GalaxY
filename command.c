@@ -7,12 +7,43 @@
 
 #include "planet.h"
 
+static const char *g_commandName[] = {
+	"info",
+	"liste",
+	"aller",
+	"fouiller",
+	"entrer",
+	"aide",
+	"quitter",
+	"i",
+	"ls",
+	"al",
+	"f",
+	"e",
+	"?",
+	"q",
+};
+
+static const char *g_commandDetail[] = {
+	"(i) [nom]: Donne des informations sur une planete, un systeme, un satellite",
+	"(ls): Liste toutes les planetes du systeme actuelle",
+	"(al) [prochain[e], planete/systeme] / [satellite, id]: Deplace le vaisseau",
+	"(f): Permet de fouiller une planete deserte",
+	"(e) [portail]: Permet d'aller dans le prochain systeme stellaire",
+	"(a): Ouvre l'aide",
+	"(q): Quitte le jeu",
+	"Raccourcis:\n"
+	"\t- p: planete ou portail\n"
+	"\t- sys: systeme stellaire"
+	"\t- "
+};
+
 static void(*cmdFunction[NFUNCTIONS])(Player *, Token *) = {
 	f_cmd_info,
 	f_cmd_list,
 	f_cmd_jump,
 	f_cmd_search,
-	f_cmd_portail,
+	f_cmd_portal,
 	f_cmd_help,
 	f_cmd_quit
 };
@@ -80,9 +111,11 @@ static void	f_cmd_info(Player *player, Token *token) {
 }
 
 static void	f_cmd_list(Player *player, Token *token) {
-	printf("Il y a %d planetes dans ce systeme:\n", player->actStarsystem->numberPlanets - 2);
+	(void)token;
 
-	for (int i = 0; i < player->actStarsystem->numberPlanets; ++i) {
+	printf("Il y a %u planetes dans ce systeme:\n", player->actStarsystem->numberPlanets - 2);
+
+	for (unsigned i = 0; i < player->actStarsystem->numberPlanets; ++i) {
 		if (player->actStarsystem->planet[i].type == P_TYPE_STAR) {
 			printf("- Etoile\n");
 		}
@@ -131,15 +164,19 @@ static void f_cmd_jump(Player *player, Token *token) {
 }
 
 static void	f_cmd_quit(Player *player, Token *token) {
+	(void)token;
+
 	player->wantToExit = true;
 }
 
 static void	f_cmd_search(Player *player, Token *token) {
+	(void)token;
+
 	player_drop(player, &player->actPlanet);
 }
 
-static void f_cmd_portail(Player *player, Token *token) {
-	if (strcmp(token[1].str, "portail") == 0 || strcmp(token[1].str, "p") == 0 && player->actPlanet.type == P_TYPE_PORTAL_IN) {
+static void f_cmd_portal(Player *player, Token *token) {
+	if ((strcmp(token[1].str, "portail") == 0 || strcmp(token[1].str, "p")) == 0 && player->actPlanet.type == P_TYPE_PORTAL_IN) {
 		starsys_destroy(player->actStarsystem);
 
 		StarSystem	*sys = starsys_create();
@@ -158,6 +195,9 @@ static void f_cmd_portail(Player *player, Token *token) {
 }
 
 static void f_cmd_help(Player *player, Token *token) {
+	(void)player;
+	(void)token;
+
 	for (int i = 0; i < NFUNCTIONS + 1; ++i) {
 		printf("%s%s\n", g_commandName[i], g_commandDetail[i]);
 		printf("-------------------------------------------------------------------------------\n");

@@ -13,7 +13,7 @@ void	set_seed(void) {
 	Menu		*menu = menu_create();
 	char		cmd = 1;
 	bool		running = true;
-	unsigned	seed;
+	unsigned	seed = 42;
 
 	menu_setTitle(menu, "Seed");
 
@@ -26,7 +26,7 @@ void	set_seed(void) {
 
 		switch (cmd) {
 		case 'a': {
-			seed = time(NULL) * clock();
+			seed = (unsigned)time(NULL) * clock();
 
 			printf("Seed: %u\n\n", seed);
 
@@ -68,6 +68,7 @@ void	play(void) {
 int main(void) {
 	Menu		*mainMenu = menu_create();
 	int			cmd = 1;
+	bool		exit = false;
 
 	menu_setTitle(mainMenu, "GalaxY (V0.0.0)");
 
@@ -75,7 +76,7 @@ int main(void) {
 	menu_addButtonText(mainMenu, "Charger");
 	menu_addButtonText(mainMenu, "Quitter");
 
-	while (cmd != 0) {
+	while (!exit) {
 		menu_display(*mainMenu);
 		cmd = menu_getcmd(*mainMenu);
 		switch (cmd) {
@@ -85,7 +86,7 @@ int main(void) {
 		case 'b':
 			break;
 		case 'c':
-
+			exit = true;
 			break;
 		default:
 			break;

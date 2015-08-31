@@ -2,6 +2,7 @@
 #define __PLANET_H_GUARD__
 
 #include <stdbool.h>
+#include <string.h>
 
 #define MAX_SATELLITE	10
 
@@ -55,33 +56,35 @@ enum e_economyType {
 };
 
 struct s_satellite {
-	bool isHabitable;
-	bool visited;
+	double	surface;
+	double	radius;
 
-	unsigned people;
+	size_t	people;
 
-	double surface;
-	double radius;
+	bool	isHabitable;
+	bool	visited;
 };
 
 struct s_planet {
 	struct {
-		double	percentageWater;
+		float	percentageWater;
+		float	percentageOther;
+		float	percentageLivableArea;
 		float	percentageIce;
 		float	percentageDesert;
-		double	percentageOther;
-		double	percentageLivableArea;
 	} stat;
 
-	unsigned	nSatellite;
+	struct	s_satellite	satellite[MAX_SATELLITE];
 
+	unsigned	nSatellite;
 	unsigned	people;
 
-	float		distanceOfNearestStar;
-	float		distanceOfShip;
 	double		radius;
 	double		areaTotal;
 	double		livableArea;
+
+	float		distanceOfNearestStar;
+	float		distanceOfShip;
 
 	bool		isHabitable;
 	bool		isPortal;
@@ -93,47 +96,13 @@ struct s_planet {
 	bool		canCommerce;
 	bool		visited;
 
-	char		name[32];
-
 	enum e_speciesType		specie;
 	enum e_governementType	governementType;
 	enum e_planetCondition	condition;
 	enum e_planetType		type;
 	enum e_economyType		economy;
 
-	struct s_satellite	satellite[MAX_SATELLITE];
-};
-
-static const char *g_speciesType[S_TYPE_LAST] = {
-	"Humains",
-	"Robots",
-	"Aliens",
-	"Rocs"
-};
-
-static const char *g_governementName[G_TYPE_LAST] = {
-	"Monarchie",
-	"Dictature",
-	"Republique",
-	"Communisme",
-	"Arnachique",
-	"Feodale"
-};
-
-static const char *g_planetTypeName[P_TYPE_LAST + 1] = {
-	"Tellurique",
-	"Gazeuse",
-	"Neptunienne",
-	"Geante",
-	"Portail d'entrer",
-	"Portail de sorti",
-	"Etoile"
-};
-
-static const char *g_economyName[3] = {
-	"Riche",
-	"Moyenne",
-	"Pauvre"
+	char	name[32];
 };
 
 typedef struct s_planet		   Planet;
@@ -165,7 +134,6 @@ static bool genNonHabitableArea(Planet *planet, PlanetCondition pCondition, floa
 
 static void	setPeople(Planet *planet);
 static void setRadius(Planet *planet);
-static void setDensity(Planet *planet);
 
 static void createSatellite(Planet *planet);
 

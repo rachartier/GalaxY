@@ -2,18 +2,17 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
 #include <math.h>
 
 #include "rand.h"
 #include "memory.h"
 
-Player* player_create(unsigned life, unsigned shield, unsigned fuel, unsigned weight, unsigned food, unsigned power) {
+Player* player_create(unsigned life, unsigned shield, float fuel, unsigned weight, unsigned food, unsigned power) {
 	Player	*player = xmalloc(sizeof(Player));
 
 #define SETOPT(a, b) (a.max = a.actual = b)
 	SETOPT(player->life, life);
-	SETOPT(player->fuel, 9999);
+	SETOPT(player->fuel, fuel);
 	SETOPT(player->weight, weight);
 	SETOPT(player->food, food);
 	SETOPT(player->shield, shield);
@@ -114,7 +113,7 @@ void	player_moveToPlanet(Player *player, int dir) {
 }
 
 void	player_moveToSatellite(Player *player) {
-	if (player->satelliteIndex >= 0 && player->satelliteIndex < player->actPlanet.nSatellite) {
+	if (player->satelliteIndex < player->actPlanet.nSatellite) {
 		player->actPlanet.satellite[player->satelliteIndex].visited = true;
 
 		printf("Vous arrivez au satellite n%u de la planete %s\n", player->satelliteIndex + 1, player->actPlanet.name);

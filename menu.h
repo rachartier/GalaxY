@@ -5,6 +5,8 @@
 
 #include "screen.h"
 
+#include <string.h>
+
 #define MAX_ELEMENTS	128
 
 struct s_menu {
@@ -14,7 +16,7 @@ struct s_menu {
 	} element[MAX_ELEMENTS];
 
 	char	title[32];
-	int		endList;
+	size_t	endList;
 };
 
 typedef struct s_menu Menu;

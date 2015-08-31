@@ -5,6 +5,7 @@
 #include "starsystem.h"
 
 #include <stdbool.h>
+#include <string.h>
 
 struct s_optioni {
 	unsigned max;
@@ -20,30 +21,29 @@ struct s_player {
 	Planet		actPlanet;
 	StarSystem	*actStarsystem;
 
+	struct s_optionf fuel;
 	struct s_optioni life;
 	struct s_optioni shield;
-	struct s_optionf fuel;
 	struct s_optioni weight;
 	struct s_optioni food;
 
-	unsigned money;
-	unsigned power;
+	size_t	 money;
+	size_t	power;
+	size_t	seed;
 
-	int			planetIndex;
-	unsigned	satelliteIndex;
-
-	bool		wantToExit;
-
-	unsigned	seed;
+	int		planetIndex;
+	int		satelliteIndex;
 
 	struct {
 		int planetsVisited;
 	} stats;
+
+	bool	wantToExit;
 };
 
 typedef struct s_player Player;
 
-Player* player_create(unsigned life, unsigned shield, unsigned fuel, unsigned weight, unsigned food, unsigned power);
+Player* player_create(unsigned life, unsigned shield, float fuel, unsigned weight, unsigned food, unsigned power);
 void	player_destroy(Player *player);
 
 void	player_setLife(Player *player, unsigned life, unsigned maxLife);
