@@ -27,7 +27,7 @@ void		starsys_destroy(StarSystem *sys) {
 	xfree(sys);
 }
 
-static void add_planet(StarSystem *sys, unsigned index) {
+void add_planet(StarSystem *sys, unsigned index) {
 	Planet	planet;
 
 	if (index == 0)

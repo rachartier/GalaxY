@@ -27,9 +27,9 @@ struct s_player {
 	struct s_optioni weight;
 	struct s_optioni food;
 
-	size_t	 money;
-	size_t	power;
-	size_t	seed;
+	unsigned money;
+	unsigned power;
+	unsigned seed;
 
 	int		planetIndex;
 	int		satelliteIndex;

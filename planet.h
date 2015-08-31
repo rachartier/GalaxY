@@ -56,13 +56,13 @@ enum e_economyType {
 };
 
 struct s_satellite {
-	double	surface;
-	double	radius;
+	double		surface;
+	double		radius;
 
-	size_t	people;
+	unsigned	people;
 
-	bool	isHabitable;
-	bool	visited;
+	bool		isHabitable;
+	bool		visited;
 };
 
 struct s_planet {
@@ -102,7 +102,7 @@ struct s_planet {
 	enum e_planetType		type;
 	enum e_economyType		economy;
 
-	char	name[32];
+	char name[32];
 };
 
 typedef struct s_planet		   Planet;
@@ -120,21 +120,22 @@ void	planet_setDistance(Planet *last, Planet *act, float distance);
 void	planet_showStats(Planet planet);
 void	planet_showSatelliteStats(Satellite s);
 
-static double setPercentageOfArea(double value, float offset);
+double setPercentageOfArea(double value, float offset);
 
-static void choseRandomName(Planet *planet);
-static void choseRandomSpecies(Planet *planet);
-static void choseRandomEconomy(Planet *planet);
-static void choseRandomCondition(Planet *planet);
-static void	choseRandomGovernementType(Planet *planet);
-static void choseRandomPlanetType(Planet *planet, int id);
+void choseRandomName(Planet *planet);
+void choseRandomSpecies(Planet *planet);
+void choseRandomEconomy(Planet *planet);
+void choseRandomCondition(Planet *planet);
+void	choseRandomGovernementType(Planet *planet);
+void choseRandomPlanetType(Planet *planet, int id);
 
-static void generateWorld(Planet *planet);
-static bool genNonHabitableArea(Planet *planet, PlanetCondition pCondition, float percentage, int chance);
+void generateWorld(Planet *planet);
+bool genNonHabitableArea(Planet *planet, PlanetCondition pCondition, float percentage, int chance);
 
-static void	setPeople(Planet *planet);
-static void setRadius(Planet *planet);
+void	setPeople(Planet *planet);
+void setRadius(Planet *planet);
+void setDensity(Planet *planet);
 
-static void createSatellite(Planet *planet);
+void createSatellite(Planet *planet);
 
 #endif/*__PLANET_H_GUARD__*/

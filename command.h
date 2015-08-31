@@ -16,14 +16,14 @@ typedef struct s_token Token;
 
 void		cmd_get(Player *player);
 
-static int	parse(char *str, Token *token); // retourne l'ID de la commande
+int	 parse(char *str, Token *token); // retourne l'ID de la commande
 
-static void	f_cmd_info(Player *player, Token *token);
-static void	f_cmd_list(Player *player, Token *token);
-static void f_cmd_jump(Player *player, Token *token);
-static void	f_cmd_quit(Player *player, Token *token);
-static void	f_cmd_search(Player *player, Token *token);
-static void f_cmd_portal(Player *player, Token *token);
-static void f_cmd_help(Player *player, Token *token);
+void f_cmd_info(Player *player, Token *token);
+void f_cmd_list(Player *player, Token *token);
+void f_cmd_jump(Player *player, Token *token);
+void f_cmd_quit(Player *player, Token *token);
+void f_cmd_search(Player *player, Token *token);
+void f_cmd_portal(Player *player, Token *token);
+void f_cmd_help(Player *player, Token *token);
 
 #endif /* __COMMAND_H_GUARD__ */

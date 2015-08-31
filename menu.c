@@ -18,7 +18,7 @@ void	menu_destroy(Menu *menu) {
 }
 
 char	menu_getcmd(Menu menu) {
-	signed char c;
+	char c;
 
 	printf("> ");
 	scanf("%c", &c);
@@ -26,7 +26,7 @@ char	menu_getcmd(Menu menu) {
 
 	purge_stdin();
 
-	if (c >= 'a' || c <= 'a' + menu.endList)
+	if (c >= 'a' || c <= 'a' + (int)menu.endList)
 		return c;
 	return 0;
 }
@@ -58,7 +58,7 @@ void	menu_display(Menu menu) {
 	for (i = 0; i < 80; ++i)
 		putchar('-');
 
-	for (i = 0; i < 40 - titleLenght / 2; ++i)
+	for (i = 0; i < (unsigned)40 - titleLenght / 2; ++i)
 		putchar(' ');
 
 	printf("%s\n", menu.title);

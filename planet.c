@@ -1,8 +1,6 @@
 #include "planet.h"
 
-#define _USE_MATH_DEFINES
 #include <math.h>
-#undef _USE_MATH_DEFINES
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,7 +8,8 @@
 
 #include "rand.h"
 #include "player.h"
-// densité planete tellurique: entre 4 et 4.5
+
+#define M_PI			3.14159265358979323846
 
 #define BORN_OCEAN		rand_float(40.f, 95.f) + rand_float(0.f, 1.f)
 #define BORN_FOREST		rand_float(10.f, 60.f) + rand_float(0.f, 1.f)
@@ -18,15 +17,15 @@
 #define BORN_DESERT		rand_float(5.f, 40.f) + rand_float(0.f, 1.f)
 
 Planet		planet_create(int id) {
-	Planet	p = {
-		/*		.areaTotal = 0.0,
+	Planet	p/* = {
+				.areaTotal = 0.0,
 				.livableArea = 0.0,
 				.people = 0,
 				.isColony = false,
 				.visited = false,
-				.nSatellite = 0*/
-				{0}
-	};
+				.nSatellite = 0
+				0
+	};*/;
 
 	createSatellite(&p);
 
@@ -132,9 +131,10 @@ void		planet_showStats(Planet planet) {
 		if (planet.isHabitable) {
 			printf("\nHabitants: %u millions", planet.people);
 			printf("\nEst habitee par des %s", g_speciesType[planet.specie]);
+			printf("\nGouvernement en place: %s", g_governementName[planet.governementType]);
+			printf("\nRichesse de la population: %s", g_economyName[planet.economy]);
 			printf("\nSurface habitable: %.3lf%%", planet.stat.percentageLivableArea);
-			printf("\nSurface non habitable: %.3lf%%", 100 - planet.stat.percentageLivableArea);
-			printf("\nRichesse de la population: %s\n", g_economyName[planet.economy]);
+			printf("\nSurface non habitable: %.3lf%%\n", 100 - planet.stat.percentageLivableArea);
 		}
 		for (unsigned i = 0; i < planet.nSatellite; ++i) {
 			printf("\nSatellite n%u\n", i + 1);
@@ -143,7 +143,7 @@ void		planet_showStats(Planet planet) {
 	}
 }
 
-static void generateWorld(Planet *planet) {
+void generateWorld(Planet *planet) {
 	if (planet->type == P_TYPE_TERRESRTIAL) {
 		if (genNonHabitableArea(planet, CONDITION_OCEAN, BORN_OCEAN, 7)) {
 			planet->hasWater = true;
@@ -170,14 +170,14 @@ static void generateWorld(Planet *planet) {
 	}
 }
 
-static double setPercentageOfArea(double value, float offset) {
+double setPercentageOfArea(double value, float offset) {
 	if (offset != 0)
 		return (value - value * offset / 100);
 	else
 		return value;
 }
 
-static bool genNonHabitableArea(Planet *planet, PlanetCondition pCondition, float percentage, int chance) {
+bool genNonHabitableArea(Planet *planet, PlanetCondition pCondition, float percentage, int chance) {
 	(void)pCondition;
 
 	if (CHANCE(chance)) {
@@ -199,7 +199,7 @@ static bool genNonHabitableArea(Planet *planet, PlanetCondition pCondition, floa
 	return false;
 }
 
-static void choseRandomName(Planet *planet) {
+void choseRandomName(Planet *planet) {
 	static const char	*vowel = "aeiouy";
 	static const char	*consonant = "bcdfghjklmnpqrstvwxz";
 	size_t				lenghtVowel = strlen(vowel);
@@ -208,15 +208,15 @@ static void choseRandomName(Planet *planet) {
 	int randomLenght = rand_born(3, 8);
 
 	for (int i = 0; i < randomLenght; ++i) {
-		char letter;
+		int letter;
 		if (i & 1)
 			letter = vowel[rand_born(0, lenghtVowel)];
 		else
 			letter = consonant[rand_born(0, lenghtConsonant)];
 
-		if (tolower(planet->name[i - 1]) == 'q')
+		if (tolower((int)planet->name[i - 1]) == 'q')
 			letter = 'u';
-		else if (tolower(planet->name[i - 1] == 'n' && planet->name[i] == 'b'))
+		else if (planet->name[i - 1] == 'n' && planet->name[i] == 'b')
 			planet->name[i - 1] = 'm';
 
 		if (i == 0)
@@ -226,7 +226,7 @@ static void choseRandomName(Planet *planet) {
 }
 
 #define BORN(s, a) (s >= bornMin[a] && s <= bornMax[a])
-static void choseRandomSpecies(Planet *planet) {
+void choseRandomSpecies(Planet *planet) {
 	int specie;
 
 	static const int bornMin[] = {
@@ -262,13 +262,13 @@ static void choseRandomSpecies(Planet *planet) {
 	planet->specie = specie;
 }
 
-static void choseRandomEconomy(Planet *planet) {
+void choseRandomEconomy(Planet *planet) {
 	int eco = rand_born(E_TYPE_RICH, 3);
 
 	planet->economy = eco;
 }
 
-static void choseRandomPlanetType(Planet *planet, int id) {
+void choseRandomPlanetType(Planet *planet, int id) {
 	int type;
 
 	const int bornMin[] = {
@@ -308,11 +308,11 @@ static void choseRandomPlanetType(Planet *planet, int id) {
 }
 #undef BORN
 
-static void	choseRandomGovernementType(Planet *planet) {
+void	choseRandomGovernementType(Planet *planet) {
 	planet->governementType = rand_born(0, G_TYPE_LAST);
 }
 
-static void	setPeople(Planet *planet) {
+void	setPeople(Planet *planet) {
 	double	surface = planet->livableArea; // km^2
 	int		peoplePerSquareKm;
 
@@ -326,7 +326,7 @@ static void	setPeople(Planet *planet) {
 	planet->people = (unsigned)(peoplePerSquareKm * surface) / 10;
 }
 
-static void setRadius(Planet *planet) {
+void setRadius(Planet *planet) {
 	double radius;
 
 	if (planet->type == P_TYPE_STAR) {
@@ -346,7 +346,7 @@ static void setRadius(Planet *planet) {
 	planet->livableArea = planet->areaTotal;
 }
 
-static void createSatellite(Planet *planet) {
+void createSatellite(Planet *planet) {
 	int nSatellite;
 
 	if (planet->isGiant) {

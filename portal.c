@@ -9,7 +9,7 @@ Planet createPortal(void) {
 		.radius = 20,
 		.isHabitable = false,
 		.isPortal = true,
-		{ 0 }
+		0
 	};
 
 	if (a == 0) {
