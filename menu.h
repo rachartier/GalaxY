@@ -22,6 +22,7 @@ typedef struct s_menu Menu;
 Menu*	menu_create(void);
 void	menu_destroy(Menu *menu);
 
+char	menu_getcmd(Menu menu);
 void	menu_setTitle(Menu *menu, char *str);
 
 void	menu_display(Menu menu);

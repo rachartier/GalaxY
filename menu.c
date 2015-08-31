@@ -17,6 +17,19 @@ void	menu_destroy(Menu *menu) {
 	xfree(menu);
 }
 
+char	menu_getcmd(Menu menu) {
+	char c;
+
+	printf("> ");
+	scanf("%c", &c);
+
+	purge_stdin();
+
+	if (c >= 'a' || c <= 'a' + menu.endList)
+		return c;
+	return 0;
+}
+
 void	menu_setTitle(Menu *menu, char *str) {
 	if (str != NULL)
 		strcpy(menu->title, str);
@@ -39,14 +52,19 @@ void	menu_removeButtonText(Menu *menu, int bId) {
 
 void	menu_display(Menu menu) {
 	int titleLenght = strlen(menu.title);
+	int i;
+	for (i = 0; i < 80; ++i)
+		putchar('-');
 
-	for (int i = 0; i < titleLenght - titleLenght / 2; ++i)
+	for (i = 0; i < 40 - titleLenght / 2; ++i)
 		putchar(' ');
 
-	printf("%s\n\n\n", titleLenght);
+	printf("%s\n", menu.title);
 
-	for (int i = 0; i < menu.endList; ++i) {
+	for (i = 0; i < menu.endList; ++i) {
 		if (menu.element[i].isVisible)
 			printf("%c> %s\n", 'a' + i, menu.element[i].text);
 	}
+	for (i = 0; i < 80; ++i)
+		putchar('-');
 }
