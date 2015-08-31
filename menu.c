@@ -20,7 +20,8 @@ void	menu_destroy(Menu *menu) {
 char	menu_getcmd(Menu menu) {
 	char c;
 
-	printf("> ");
+	printf("\n> ");
+
 	scanf("%c", &c);
 	putchar('\n');
 
@@ -67,6 +68,4 @@ void	menu_display(Menu menu) {
 		if (menu.element[i].isVisible)
 			printf("%c> %s\n", 'a' + i, menu.element[i].text);
 	}
-	for (i = 0; i < 80; ++i)
-		putchar('-');
 }

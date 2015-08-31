@@ -28,7 +28,7 @@ void	set_seed(void) {
 		case 'a': {
 			seed = (unsigned)time(NULL) * clock();
 
-			printf("Seed: %u\n\n", seed);
+			printf("Seed: %u\n", seed);
 
 			running = false;
 			break;
@@ -52,6 +52,10 @@ void	play(void) {
 	StarSystem	*sys = NULL;
 
 	set_seed();
+
+	for (int i = 0; i < 80; ++i)
+		putchar('-');
+	putchar('\n\n');
 
 	player = player_create(100, 50, 80, 1000, 100, 100);
 	sys = starsys_create();

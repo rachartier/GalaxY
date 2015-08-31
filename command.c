@@ -31,11 +31,7 @@ static const char *g_commandDetail[] = {
 	"(f): Permet de fouiller une planete deserte",
 	"(e) [portail]: Permet d'aller dans le prochain systeme stellaire",
 	"(a): Ouvre l'aide",
-	"(q): Quitte le jeu",
-	"Raccourcis:\n"
-	"\t- p: planete ou portail\n"
-	"\t- sys: systeme stellaire"
-	"\t- "
+	"(q): Quitte le jeu"
 };
 
 void(*cmdFunction[NFUNCTIONS])(Player *, Token *) = {
@@ -167,6 +163,7 @@ void	f_cmd_quit(Player *player, Token *token) {
 	(void)token;
 
 	player->wantToExit = true;
+	putchar('\n');
 }
 
 void	f_cmd_search(Player *player, Token *token) {
@@ -198,8 +195,8 @@ void f_cmd_help(Player *player, Token *token) {
 	(void)player;
 	(void)token;
 
-	for (int i = 0; i < NFUNCTIONS + 1; ++i) {
+	for (int i = 0; i < NFUNCTIONS; ++i) {
 		printf("%s%s\n", g_commandName[i], g_commandDetail[i]);
-		printf("-------------------------------------------------------------------------------\n");
+		printf("------------------------------------------------------------------------------\n");
 	}
 }

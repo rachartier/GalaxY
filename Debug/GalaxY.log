@@ -1,9 +1,8 @@
-﻿La génération a démarré 31/08/2015 23:35:50.
+﻿La génération a démarré 31/08/2015 23:54:05.
      1>Projet "D:\Dev\Visual Studio 2015\GalaxY\GalaxY\GalaxY.vcxproj" sur le nœud 2 (Build cible(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _CRT_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TC /analyze- /errorReport:prompt planet.c
-         planet.c
-     1>d:\dev\visual studio 2015\galaxy\galaxy\planet.c(195): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _CRT_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TC /analyze- /errorReport:prompt main.c
+         main.c
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Dev\Visual Studio 2015\GalaxY\Debug\GalaxY.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"D:\Dev\Visual Studio 2015\GalaxY\Debug\GalaxY.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Dev\Visual Studio 2015\GalaxY\Debug\GalaxY.lib" /MACHINE:X86 Debug\command.obj
          Debug\main.obj
@@ -20,4 +19,4 @@
 
 La génération a réussi.
 
-Temps écoulé 00:00:00.35
+Temps écoulé 00:00:00.37

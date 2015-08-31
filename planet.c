@@ -17,15 +17,14 @@
 #define BORN_DESERT		rand_float(5.f, 40.f) + rand_float(0.f, 1.f)
 
 Planet		planet_create(int id) {
-	Planet	p/* = {
-				.areaTotal = 0.0,
-				.livableArea = 0.0,
-				.people = 0,
-				.isColony = false,
-				.visited = false,
-				.nSatellite = 0
-				0
-	};*/;
+	Planet	p = {
+		.areaTotal = 0.0,
+		.livableArea = 0.0,
+		.people = 0,
+		.isColony = false,
+		.visited = false,
+		.nSatellite = 0
+	};
 
 	createSatellite(&p);
 
