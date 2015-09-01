@@ -55,12 +55,12 @@ void	play(void) {
 
 	for (int i = 0; i < 80; ++i)
 		putchar('-');
-	putchar('\n\n');
+	putchar('\n');
 
 	player = player_create(100, 50, 80, 1000, 100, 100);
 	sys = starsys_create();
 
-	player_moveToSystem(player, sys);
+	player_move_toSystem(player, sys);
 
 	while (!player->wantToExit) {
 		cmd_get(player);

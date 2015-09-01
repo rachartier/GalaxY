@@ -82,7 +82,7 @@ float	player_getDistanceOfPlanet(Player player, Planet planet) {
 	return dst;
 }
 
-void	player_moveToPlanet(Player *player, int dir) {
+void	player_move_toPlanet(Player *player, int dir) {
 	if (player->planetIndex >= 0 && player->planetIndex + dir < (int)player->actStarsystem->numberPlanets) {
 		player->planetIndex += dir;
 		float fuelCost = player_getDistanceOfPlanet(*player, player->actStarsystem->planet[player->planetIndex]);
@@ -112,7 +112,7 @@ void	player_moveToPlanet(Player *player, int dir) {
 		printf("Vous ne pouvez pas allez plus loins, tapez \"aller prochain systeme\"\n\n");
 }
 
-void	player_moveToSatellite(Player *player) {
+void	player_move_toSatellite(Player *player) {
 	if (player->satelliteIndex < (int)player->actPlanet.nSatellite) {
 		player->actPlanet.satellite[player->satelliteIndex].visited = true;
 
@@ -120,12 +120,12 @@ void	player_moveToSatellite(Player *player) {
 	}
 }
 
-void	player_moveToSystem(Player *player, StarSystem *starsystem) {
+void	player_move_toSystem(Player *player, StarSystem *starsystem) {
 	player->planetIndex = 0;
 	player->stats.planetsVisited--;
 	player->actStarsystem = starsystem;
 
-	player_moveToPlanet(player, 1);
+	player_move_toPlanet(player, 1);
 }
 
 void	player_drop(Player *player, Planet *planet) {

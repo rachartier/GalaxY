@@ -56,8 +56,7 @@ Commerce:
 		- marche noir																	
 	- fuel																				
 	- nourriture																		
-	- eau																				
-=======
+	- eau
 
 Commerce:
 	- armes
@@ -67,5 +66,3 @@ Commerce:
 		- nucleaire
 		- marche noir
 	- fuel
-	
->>>>>>> parent of d7a387e... changement todo

@@ -88,12 +88,12 @@ int		parse(char *str, Token *token) {
 
 void	f_cmd_info(Player *player, Token *token) {
 	if (strcmp(token[1].str, "planete") == 0 || strcmp(token[1].str, "p") == 0) {
-		planet_showStats(player->actPlanet);
+		planet_show_stats(player->actPlanet);
 	}
 	else if (strcmp(token[1].str, "satellite") == 0 || strcmp(token[1].str, "sat") == 0) {
 		if (player->satelliteIndex != -1) {
 			printf("\nSatellite n%u\n", player->satelliteIndex);
-			planet_showSatelliteStats(player->actPlanet.satellite[player->satelliteIndex]);
+			planet_show_satelliteStats(player->actPlanet.satellite[player->satelliteIndex]);
 		}
 		else
 			printf("Vous n'etes pas sur un satellite, tapez \"aller satellite [numeros]\"\n\n");
@@ -131,11 +131,11 @@ void	f_cmd_list(Player *player, Token *token) {
 void f_cmd_jump(Player *player, Token *token) {
 	if ((strcmp(token[1].str, "prochaine") == 0 || strcmp(token[1].str, "pro") == 0)
 		&& (strcmp(token[2].str, "planete") == 0 || strcmp(token[2].str, "p") == 0)) {
-		player_moveToPlanet(player, 1);
+		player_move_toPlanet(player, 1);
 	}
 	else if ((strcmp(token[1].str, "precedente") == 0 || strcmp(token[1].str, "pre") == 0)
 		&& (strcmp(token[2].str, "planete") == 0 || strcmp(token[2].str, "p") == 0)) {
-		player_moveToPlanet(player, -1);
+		player_move_toPlanet(player, -1);
 	}
 
 	else if (strcmp(token[1].str, "satellite") == 0 || strcmp(token[1].str, "sat") == 0) {
@@ -143,12 +143,12 @@ void f_cmd_jump(Player *player, Token *token) {
 			int i = atoi(token[2].str);
 
 			player->satelliteIndex = i - 1;
-			player_moveToSatellite(player);
+			player_move_toSatellite(player);
 		}
 	}
 	else if (strcmp(token[1].str, "planete") == 0 || strcmp(token[1].str, "p") == 0) {
 		if (player->satelliteIndex != -1) {
-			player_moveToPlanet(player, 0);
+			player_move_toPlanet(player, 0);
 		}
 		else {
 			printf("Vous etes deja sur la planete\n");
@@ -184,7 +184,7 @@ void f_cmd_portal(Player *player, Token *token) {
 		scanf("%c", &c);
 
 		if (c == 'o')
-			player_moveToSystem(player, sys);
+			player_move_toSystem(player, sys);
 	}
 	else {
 		printf("Vous n'etes pas sur un portail d'entree\n");
@@ -197,6 +197,6 @@ void f_cmd_help(Player *player, Token *token) {
 
 	for (int i = 0; i < NFUNCTIONS; ++i) {
 		printf("%s%s\n", g_commandName[i], g_commandDetail[i]);
-		printf("------------------------------------------------------------------------------\n");
+		printf("-------------------------------------------------------------------------------\n");
 	}
 }

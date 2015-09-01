@@ -105,37 +105,38 @@ struct s_planet {
 	char name[32];
 };
 
-typedef struct s_planet		   Planet;
-typedef	struct s_satellite	   Satellite;
-typedef enum e_governementType GovernementType;
-typedef enum e_planetCondition PlanetCondition;
-typedef enum e_planetType	   PlanetType;
+typedef struct s_planet			Planet;
+typedef	struct s_satellite		Satellite;
+
+typedef enum e_speciesType		Specie;
+typedef enum e_governementType	GovernementType;
+typedef enum e_planetCondition	PlanetCondition;
+typedef enum e_planetType		PlanetType;
 
 Planet	planet_create(int index);
 Planet	planet_createSun(void);
 
-void	planet_setDistanceOfStar(Planet *planet, float distance);
-void	planet_setDistance(Planet *last, Planet *act, float distance);
+void	planet_set_distanceOfStar(Planet *planet, float distance);
+void	planet_set_distance(Planet *last, Planet *act, float distance);
 
-void	planet_showStats(Planet planet);
-void	planet_showSatelliteStats(Satellite s);
+void	planet_show_stats(Planet planet);
+void	planet_show_satelliteStats(Satellite s);
 
-double setPercentageOfArea(double value, float offset);
+double	set_percentage_of_area(double value, float offset);
 
-void choseRandomName(Planet *planet);
-void choseRandomSpecies(Planet *planet);
-void choseRandomEconomy(Planet *planet);
-void choseRandomCondition(Planet *planet);
-void	choseRandomGovernementType(Planet *planet);
-void choseRandomPlanetType(Planet *planet, int id);
+void chose_random_name(Planet *planet);
+void chose_random_species(Planet *planet);
+void chose_random_economy(Planet *planet);
+void chose_random_condition(Planet *planet);
+void chose_random_governementType(Planet *planet);
+void chose_random_planetType(Planet *planet, int id);
 
-void generateWorld(Planet *planet);
-bool genNonHabitableArea(Planet *planet, PlanetCondition pCondition, float percentage, int chance);
+void generate_world(Planet *planet);
+bool gen_non_habitable_area(Planet *planet, PlanetCondition pCondition, float percentage, int chance);
 
-void	setPeople(Planet *planet);
-void setRadius(Planet *planet);
-void setDensity(Planet *planet);
+void set_people(Planet *planet);
+void set_radius(Planet *planet);
 
-void createSatellite(Planet *planet);
+void create_satellite(Planet *planet);
 
 #endif/*__PLANET_H_GUARD__*/

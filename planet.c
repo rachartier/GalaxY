@@ -26,19 +26,19 @@ Planet		planet_create(int id) {
 		.nSatellite = 0
 	};
 
-	createSatellite(&p);
+	create_satellite(&p);
 
-	choseRandomName(&p);
-	choseRandomPlanetType(&p, id);
-	choseRandomSpecies(&p);
-	choseRandomEconomy(&p);
+	chose_random_name(&p);
+	chose_random_planetType(&p, id);
+	chose_random_species(&p);
+	chose_random_economy(&p);
 
-	setRadius(&p);
+	set_radius(&p);
 
-	generateWorld(&p);
+	generate_world(&p);
 
 	if (p.isHabitable) {
-		setPeople(&p);
+		set_people(&p);
 	}
 
 	return p;
@@ -51,23 +51,23 @@ Planet		planet_createSun(void) {
 		.isGiant = false
 	};
 
-	setRadius(&p);
+	set_radius(&p);
 
 	return p;
 }
 
-void		planet_setDistance(Planet *last, Planet *act, float distance) {
-	planet_setDistanceOfStar(act, last->distanceOfNearestStar + distance);
+void		planet_set_distance(Planet *last, Planet *act, float distance) {
+	planet_set_distanceOfStar(act, last->distanceOfNearestStar + distance);
 }
 
-void		planet_setDistanceOfStar(Planet *planet, float distance) {
+void		planet_set_distanceOfStar(Planet *planet, float distance) {
 	if (planet->type == P_TYPE_STAR)
 		planet->distanceOfNearestStar = 0;
 	else
 		planet->distanceOfNearestStar = distance;
 }
 
-void		planet_showSatelliteStats(Satellite s) {
+void		planet_show_satelliteStats(Satellite s) {
 	printf("\tHabitable: %s\n", (s.isHabitable) ? "oui" : "non");
 	if (s.isHabitable) {
 		printf("\tHabitants: %u\n", s.people);
@@ -77,7 +77,7 @@ void		planet_showSatelliteStats(Satellite s) {
 	printf("\tSurface: %.3lfkm^2\n", s.surface);
 }
 
-void		planet_showStats(Planet planet) {
+void		planet_show_stats(Planet planet) {
 	static const char *g_speciesType[S_TYPE_LAST] = {
 		"Humains",
 		"Robots",
@@ -137,28 +137,28 @@ void		planet_showStats(Planet planet) {
 		}
 		for (unsigned i = 0; i < planet.nSatellite; ++i) {
 			printf("\nSatellite n%u\n", i + 1);
-			planet_showSatelliteStats(planet.satellite[i]);
+			planet_show_satelliteStats(planet.satellite[i]);
 		}
 	}
 }
 
-void generateWorld(Planet *planet) {
+void generate_world(Planet *planet) {
 	if (planet->type == P_TYPE_TERRESRTIAL) {
-		if (genNonHabitableArea(planet, CONDITION_OCEAN, BORN_OCEAN, 7)) {
+		if (gen_non_habitable_area(planet, CONDITION_OCEAN, BORN_OCEAN, 7)) {
 			planet->hasWater = true;
 			planet->isHabitable = true;
 			planet->canCommerce = true;
 
-			genNonHabitableArea(planet, CONDITION_DESERT, BORN_DESERT, 4);
-			genNonHabitableArea(planet, CONDITION_ICE, BORN_ICE, 3);
-			genNonHabitableArea(planet, CONDITION_HUGE_FOREST, BORN_FOREST, 0);
+			gen_non_habitable_area(planet, CONDITION_DESERT, BORN_DESERT, 4);
+			gen_non_habitable_area(planet, CONDITION_ICE, BORN_ICE, 3);
+			gen_non_habitable_area(planet, CONDITION_HUGE_FOREST, BORN_FOREST, 0);
 		}
 		else if (CHANCE(2)) {
 			planet->isColony = true;
 			planet->isHabitable = true;
 			planet->canCommerce = true;
 
-			genNonHabitableArea(planet, CONDITION_UNKNOW, 0, 0);
+			gen_non_habitable_area(planet, CONDITION_UNKNOW, 0, 0);
 		}
 		else {
 			planet->isHabitable = false;
@@ -169,14 +169,14 @@ void generateWorld(Planet *planet) {
 	}
 }
 
-double setPercentageOfArea(double value, float offset) {
+double set_percentage_of_area(double value, float offset) {
 	if (offset != 0)
 		return (value - value * offset / 100);
 	else
 		return value;
 }
 
-bool genNonHabitableArea(Planet *planet, PlanetCondition pCondition, float percentage, int chance) {
+bool gen_non_habitable_area(Planet *planet, PlanetCondition pCondition, float percentage, int chance) {
 	(void)pCondition;
 
 	if (CHANCE(chance)) {
@@ -188,17 +188,17 @@ bool genNonHabitableArea(Planet *planet, PlanetCondition pCondition, float perce
 		else
 			areaNonHabitable = rand_float(0.f, percentage);
 
-		areaHabitable = setPercentageOfArea(planet->livableArea, areaNonHabitable);
+		areaHabitable = set_percentage_of_area(planet->livableArea, areaNonHabitable);
 
 		planet->livableArea = areaHabitable;
-		planet->stat.percentageLivableArea = (float)planet->livableArea * 100 / planet->areaTotal;
+		planet->stat.percentageLivableArea = (float)(planet->livableArea * 100 / planet->areaTotal);
 
 		return true;
 	}
 	return false;
 }
 
-void choseRandomName(Planet *planet) {
+void chose_random_name(Planet *planet) {
 	static const char	*vowel = "aeiouy";
 	static const char	*consonant = "bcdfghjklmnpqrstvwxz";
 	size_t				lenghtVowel = strlen(vowel);
@@ -225,7 +225,7 @@ void choseRandomName(Planet *planet) {
 }
 
 #define BORN(s, a) (s >= bornMin[a] && s <= bornMax[a])
-void choseRandomSpecies(Planet *planet) {
+void chose_random_species(Planet *planet) {
 	int specie;
 
 	static const int bornMin[] = {
@@ -261,13 +261,13 @@ void choseRandomSpecies(Planet *planet) {
 	planet->specie = specie;
 }
 
-void choseRandomEconomy(Planet *planet) {
+void chose_random_economy(Planet *planet) {
 	int eco = rand_born(E_TYPE_RICH, 3);
 
 	planet->economy = eco;
 }
 
-void choseRandomPlanetType(Planet *planet, int id) {
+void chose_random_planetType(Planet *planet, int id) {
 	int type;
 
 	const int bornMin[] = {
@@ -307,11 +307,11 @@ void choseRandomPlanetType(Planet *planet, int id) {
 }
 #undef BORN
 
-void	choseRandomGovernementType(Planet *planet) {
+void	chose_random_governementType(Planet *planet) {
 	planet->governementType = rand_born(0, G_TYPE_LAST);
 }
 
-void	setPeople(Planet *planet) {
+void	set_people(Planet *planet) {
 	double	surface = planet->livableArea; // km^2
 	int		peoplePerSquareKm;
 
@@ -325,7 +325,7 @@ void	setPeople(Planet *planet) {
 	planet->people = (unsigned)(peoplePerSquareKm * surface) / 10;
 }
 
-void setRadius(Planet *planet) {
+void set_radius(Planet *planet) {
 	double radius;
 
 	if (planet->type == P_TYPE_STAR) {
@@ -345,7 +345,7 @@ void setRadius(Planet *planet) {
 	planet->livableArea = planet->areaTotal;
 }
 
-void createSatellite(Planet *planet) {
+void create_satellite(Planet *planet) {
 	int nSatellite;
 
 	if (planet->isGiant) {
