@@ -10,6 +10,8 @@
 Player* player_create(unsigned life, unsigned shield, float fuel, unsigned weight, unsigned food, unsigned power) {
 	Player	*player = xmalloc(sizeof(Player));
 
+	crew_generate(&player->crew, 4);
+
 #define SETOPT(a, b) (a.max = a.actual = b)
 	SETOPT(player->life, life);
 	SETOPT(player->fuel, fuel);
@@ -70,6 +72,8 @@ void	player_info(Player player) {
 	printf("\t- Armure: %u\n", player.shield.actual);
 	printf("\t- Nombre de personne a bord: %u/%u\n", 0, 0);
 	printf("Nombre de planetes visitees: %d\n", player.stats.planetsVisited);
+
+	crew_display(player.crew);
 }
 
 bool	player_isDead(Player *player) {

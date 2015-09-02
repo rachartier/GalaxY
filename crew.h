@@ -6,14 +6,20 @@
 #define MAX_STAFF 10
 
 struct s_crew {
-	Staff	staff[MAX_STAFF];
+	Staff		staff[MAX_STAFF];
+
+	unsigned	nStaff;
+
+	bool		freePlace[MAX_STAFF];
 };
 
 typedef struct s_crew	Crew;
 
 void	crew_generate(Crew *crew, int nStaff);
 
+void	crew_display(Crew crew);
+
 void	crew_add_staff(Crew *crew, Staff staff);
-void	crew_remove_staff(Crew *crew);
+void	crew_remove_staff(Crew *crew, int id);
 
 #endif /* __CREW_H_GUARD__ */

@@ -19,17 +19,21 @@ enum e_posInShip {
 	POS_ATTACK,
 	POS_PILOT,
 	POS_ENGINE,
+	POS_UKNOW,
 
 	POS_LAST
 };
 
 struct s_staff {
+	Specie		specie;
+
+	float		efficiency;
+
 	unsigned	experience;
 	int			life;
 
 	enum e_posInShip	position;
 	enum e_staffSkill	skill;
-	Specie				specie;
 
 	char	name[32];
 
@@ -42,6 +46,8 @@ typedef enum e_staffSkill	StaffSkill;
 typedef enum e_posInShip	PosInShip;
 
 Staff	staff_create(void);
+
+void	staff_display(Staff staff);
 
 void	staff_add_experience(Staff *staff, unsigned amount);
 void	staff_remove_life(Staff *staff, int amount);

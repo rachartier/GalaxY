@@ -8,6 +8,7 @@
 #include "starsystem.h"
 #include "menu.h"
 #include "memory.h"
+#include "crew.h"
 
 void	set_seed(void) {
 	Menu		*menu = menu_create();

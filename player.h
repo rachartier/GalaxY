@@ -3,6 +3,7 @@
 
 #include "planet.h"
 #include "starsystem.h"
+#include "crew.h"
 
 #include <stdbool.h>
 #include <string.h>
@@ -20,6 +21,7 @@ struct s_optionf {
 struct s_player {
 	Planet		actPlanet;
 	StarSystem	*actStarsystem;
+	Crew		crew;
 
 	struct s_optionf fuel;
 	struct s_optioni life;
