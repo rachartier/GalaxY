@@ -59,6 +59,8 @@ void	menu_display(Menu menu) {
 	for (i = 0; i < 80; ++i)
 		putchar('-');
 
+	putchar('\n');
+
 	for (i = 0; i < (unsigned)40 - titleLenght / 2; ++i)
 		putchar(' ');
 
