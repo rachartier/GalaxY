@@ -288,11 +288,14 @@ void	f_cmd_fired(Player *player, Token *token) {
 	printf("Entrez l'ID de celui que vous voulez virer (0 pour annuler): ");
 	scanf("%d", &id);
 
-	if (id != 0) {
+	if (id > 0 && id < player->crew.nStaff + 1) {
 		if (id == 1) {
 			printf("Vous ne pouvez pas vous virez vous meme!\n");
 		}
-		crew_remove_staff(&player->crew, id - 1);
+		else {
+			printf("%s a bien ete vire\n", player->crew.staff[id - 1].name);
+			crew_remove_staff(&player->crew, id - 1);
+		}
 	}
 	purge_stdin();
 }

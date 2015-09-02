@@ -21,7 +21,7 @@ Player* player_create(unsigned life, unsigned shield, float fuel, unsigned weigh
 #undef SETOPT
 
 	//player->seed = ;
-
+	player->money = 1000;
 	player->planetIndex = 0;
 	player->satelliteIndex = -1;
 	player->power = power;
@@ -67,6 +67,7 @@ void	player_setFood(Player *player, unsigned food, unsigned maxFood) {
 
 void	player_info(Player player) {
 	printf("\t- Fuel: %.1f/%.1f\n", player.fuel.actual, player.fuel.max);
+	printf("\t- Scraps: %u\n", player.money);
 	printf("\t- Capacite: %u/%ukg\n", player.weight.actual, player.weight.max);
 	printf("\t- Vie: %u/%u\n", player.life.actual, player.life.max);
 	printf("\t- Degats d'attaque: %u\n", player.power);
@@ -145,7 +146,7 @@ void	player_drop(Player *player, Planet *planet) {
 				if (CHANCE(3)) {
 					unsigned addmoney = rand_born(5, 20);
 
-					printf("\t- Vous prenez %u scraps", addmoney);
+					printf("\t- Vous prenez %u scraps\n", addmoney);
 
 					player->money += addmoney;
 				}
@@ -153,7 +154,7 @@ void	player_drop(Player *player, Planet *planet) {
 					if (player->fuel.actual < player->fuel.max) {
 						float fuel = (float)rand_born(5, 30) + rand_float(0.f, 1.f);
 
-						printf("\t- Vous recuperez %.1f fuel", fuel);
+						printf("\t- Vous recuperez %.1f fuel\n", fuel);
 
 						player_setFuel(player, player->fuel.actual + fuel, player->fuel.max);
 					}

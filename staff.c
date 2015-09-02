@@ -20,7 +20,7 @@ Staff	staff_create(void) {
 	newStaff.specie = S_TYPE_HUMAN;
 	newStaff.position = POS_UKNOW;
 
-	strcpy(newStaff.name, "Jean Paul Ier");
+	staff_gen_name(&newStaff);
 
 	staff_add_experience(&newStaff, (int)rand_born(10, 100));
 
@@ -82,5 +82,5 @@ void	staff_set_specie(Staff *staff, Specie specie) {
 }
 
 void	staff_gen_name(Staff *staff) {
-	// TODO: generer des noms coherents
+	strcpy(staff->name, rand_name());
 }

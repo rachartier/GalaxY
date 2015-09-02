@@ -24,7 +24,7 @@ void	crew_add_staff(Crew *crew, Staff staff) {
 }
 
 void	crew_remove_staff(Crew *crew, int id) {
-	if (id < MAX_STAFF) {
+	if (id >= 0 && id < MAX_STAFF) {
 		crew->freePlace[id] = true;
 		crew->nStaff--;
 	}
