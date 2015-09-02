@@ -9,6 +9,8 @@
 #include "rand.h"
 #include "player.h"
 
+#include "crew.h"
+
 #define M_PI			3.14159265358979323846
 
 #define BORN_OCEAN		rand_float(40.f, 95.f) + rand_float(0.f, 1.f)

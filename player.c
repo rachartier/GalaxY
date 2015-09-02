@@ -10,7 +10,7 @@
 Player* player_create(unsigned life, unsigned shield, float fuel, unsigned weight, unsigned food, unsigned power) {
 	Player	*player = xmalloc(sizeof(Player));
 
-	crew_generate(&player->crew, 4);
+	crew_generate(&player->crew, 1);
 
 #define SETOPT(a, b) (a.max = a.actual = b)
 	SETOPT(player->life, life);
@@ -32,6 +32,7 @@ Player* player_create(unsigned life, unsigned shield, float fuel, unsigned weigh
 }
 
 void	player_destroy(Player *player) {
+	starsys_destroy(player->actStarsystem);
 	xfree(player);
 }
 

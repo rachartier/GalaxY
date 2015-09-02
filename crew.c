@@ -6,6 +6,8 @@
 void	crew_generate(Crew *crew, int nStaff) {
 	memset(crew->freePlace, true, MAX_STAFF * sizeof(int));
 
+	crew->nStaff = 0;
+
 	for (int i = 0; i < nStaff; ++i)
 		crew_add_staff(crew, staff_create());
 }

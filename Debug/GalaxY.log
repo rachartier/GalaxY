@@ -1,16 +1,8 @@
-﻿La génération a démarré 02/09/2015 13:20:01.
+﻿La génération a démarré 02/09/2015 18:58:31.
      1>Projet "D:\Dev\Visual Studio 2015\GalaxY\GalaxY\GalaxY.vcxproj" sur le nœud 2 (Build cible(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _CRT_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TC /analyze- /errorReport:prompt command.c crew.c main.c planet.c player.c portal.c staff.c starsystem.c
-         starsystem.c
-         staff.c
-         portal.c
-         player.c
-         planet.c
-         main.c
-         crew.c
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _CRT_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TC /analyze- /errorReport:prompt command.c
          command.c
-         Génération de code en cours...
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Dev\Visual Studio 2015\GalaxY\Debug\GalaxY.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"D:\Dev\Visual Studio 2015\GalaxY\Debug\GalaxY.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Dev\Visual Studio 2015\GalaxY\Debug\GalaxY.lib" /MACHINE:X86 Debug\command.obj
          Debug\crew.obj
@@ -29,4 +21,4 @@
 
 La génération a réussi.
 
-Temps écoulé 00:00:01.18
+Temps écoulé 00:00:00.45

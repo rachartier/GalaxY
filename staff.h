@@ -38,6 +38,7 @@ struct s_staff {
 	char	name[32];
 
 	bool	isDead;
+	bool	isVisible;
 };
 
 typedef struct s_staff		Staff;

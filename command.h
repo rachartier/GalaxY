@@ -5,7 +5,7 @@
 
 #include "player.h"
 
-#define NFUNCTIONS	7
+#define NFUNCTIONS	9
 #define MAX_LENGHT	64
 
 struct s_token {
@@ -25,5 +25,7 @@ void f_cmd_quit(Player *player, Token *token);
 void f_cmd_search(Player *player, Token *token);
 void f_cmd_portal(Player *player, Token *token);
 void f_cmd_help(Player *player, Token *token);
+void f_cmd_recruitement(Player *player, Token *token);
+void f_cmd_fired(Player *player, Token *token);
 
 #endif /* __COMMAND_H_GUARD__ */

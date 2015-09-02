@@ -6,6 +6,8 @@
 #include <math.h>
 
 #include "planet.h"
+#include "rand.h"
+#include "memory.h"
 
 static const char *g_commandName[] = {
 	"info",
@@ -14,6 +16,8 @@ static const char *g_commandName[] = {
 	"fouiller",
 	"entrer",
 	"aide",
+	"recruter",
+	"virer",
 	"quitter",
 	"i",
 	"ls",
@@ -21,7 +25,9 @@ static const char *g_commandName[] = {
 	"f",
 	"e",
 	"?",
-	"q",
+	"r",
+	"v",
+	"q"
 };
 
 static const char *g_commandDetail[] = {
@@ -31,6 +37,8 @@ static const char *g_commandDetail[] = {
 	"(f): Permet de fouiller une planete deserte",
 	"(e) [portail]: Permet d'aller dans le prochain systeme stellaire",
 	"(a): Ouvre l'aide",
+	"(r): Recrute du personnel",
+	"(v): Vire une personne",
 	"(q): Quitte le jeu"
 };
 
@@ -41,6 +49,8 @@ void(*cmdFunction[NFUNCTIONS])(Player *, Token *) = {
 	f_cmd_search,
 	f_cmd_portal,
 	f_cmd_help,
+	f_cmd_recruitement,
+	f_cmd_fired,
 	f_cmd_quit
 };
 
@@ -179,7 +189,7 @@ void f_cmd_portal(Player *player, Token *token) {
 		StarSystem	*sys = starsys_create();
 		char		c;
 
-		printf("Attention, vous ne pourrez plus revenir dans ce systeme stellaire\nVoulez-vous continuer [o/n]?");
+		printf("Attention, vous ne pourrez plus revenir dans ce systeme stellaire\nVoulez-vous continuer [o/n]?\n");
 
 		scanf("%c", &c);
 
@@ -199,4 +209,84 @@ void f_cmd_help(Player *player, Token *token) {
 		printf("%s%s\n", g_commandName[i], g_commandDetail[i]);
 		printf("-------------------------------------------------------------------------------\n");
 	}
+}
+
+void f_cmd_recruitement(Player *player, Token *token) {
+	(void)token;
+
+	static const char *sentence[] = {
+		"Content de vous rejoindre chef!",
+		"Je ferai un formidable compagnon d'arme!",
+		"Je serai fidele a vos ordres, chef.",
+		"Ce vaisseau sera notre victoire!",
+		"Etant petit, je revais de travailler dans un vaisseau, mon voeux est exhausse!",
+		"Merci, je serai aussi serviable que possible",
+		"Aux armes!",
+		"C'est parti!",
+		"En avant toute!"
+	};
+
+	if (CHANCE(3) && !player->actPlanet.visited && player->actPlanet.isHabitable) {
+		int		n = rand_born(1, 4);
+		Staff	*staff = xmalloc(n * sizeof(Staff));
+		char	c;
+
+		for (int i = 0; i < n; ++i) {
+			staff[i] = staff_create();
+
+			printf("ID: %d", i + 1);
+			staff_display(staff[i]);
+		}
+
+		printf("Voulez vous recruter une de ces personnes [o/n]? ");
+		scanf("%c", &c);
+
+		if (c == 'o') {
+			int		id = 0;
+
+			printf("\nRentrez son ID (rentrez 0 pour annuler): ");
+			scanf("%d", &id);
+
+			if (id != 0) {
+				if (player->crew.nStaff < MAX_STAFF) {
+					while (id < 0 || id - 1 >= n) {
+						printf("Mauvais ID, tapez de nouveau: ");
+						scanf("%d", &id);
+					}
+					if (id != 0) {
+						crew_add_staff(&player->crew, staff[id - 1]);
+						printf("\"%s\"\n", sentence[rand_born(0, 8)]);
+					}
+				}
+				else {
+					printf("Nombre de personnel maximum atteint\n");
+				}
+			}
+		}
+		xfree(staff);
+
+		purge_stdin();
+	}
+	else {
+		printf("Personne a recruter\n");
+	}
+}
+
+void	f_cmd_fired(Player *player, Token *token) {
+	(void)token;
+
+	int id;
+
+	for (unsigned i = 0; i < player->crew.nStaff; ++i) {
+		printf("ID: %u", i + 1);
+		staff_display(player->crew.staff[i]);
+	}
+
+	printf("Entrez l'ID de celui que vous voulez virer (0 pour annuler): ");
+	scanf("%d", &id);
+
+	if (id != 0) {
+		crew_remove_staff(&player->crew, id - 1);
+	}
+	purge_stdin();
 }

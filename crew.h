@@ -3,7 +3,7 @@
 
 #include "staff.h"
 
-#define MAX_STAFF 10
+#define MAX_STAFF 6
 
 struct s_crew {
 	Staff		staff[MAX_STAFF];

@@ -21,6 +21,7 @@ struct s_optionf {
 struct s_player {
 	Planet		actPlanet;
 	StarSystem	*actStarsystem;
+
 	Crew		crew;
 
 	struct s_optionf fuel;
