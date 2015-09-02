@@ -97,18 +97,20 @@ void	player_move_toPlanet(Player *player, int dir) {
 			player->actStarsystem->planet[player->planetIndex].visited = true;
 
 			if (player->actPlanet.type == P_TYPE_STAR)
-				printf("Vous arrivez au systeme stellaire %s", player->actStarsystem->planet[player->planetIndex].name);
+				printf("\nVous arrivez au systeme stellaire %s\n", player->actStarsystem->planet[player->planetIndex].name);
 			else if (dir == 0)
-				printf("Vous revenez a la planete %s", player->actPlanet.name);
+				printf("Vous revenez a la planete %s\n", player->actPlanet.name);
 			else {
 				if (player->actPlanet.isPortal)
-					printf("Vous arrivez a un %s", player->actPlanet.name);
+					printf("Vous arrivez a un %s\n", player->actPlanet.name);
 				else
-					printf("Vous arrivez a la planete %s", player->actPlanet.name);
+					printf("Vous arrivez a la planete %s\n", player->actPlanet.name);
 				player->fuel.actual -= fuelCost;
 			}
 			player->stats.planetsVisited++;
 			player->satelliteIndex = -1;
+
+			planet_show_stats(player->actPlanet);
 		}
 		else
 			printf("Vous n'avez plus de carburant");

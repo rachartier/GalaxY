@@ -31,12 +31,12 @@ static const char *g_commandName[] = {
 };
 
 static const char *g_commandDetail[] = {
-	"(i) [nom]: Donne des informations sur une planete, un systeme, un satellite",
+	"(i) [p/sys/sat/v]: Donne des informations sur une planete, un systeme, un satellite, le vaisseau",
 	"(ls): Liste toutes les planetes du systeme actuelle",
 	"(al) [prochain[e], planete/systeme] / [satellite, id]: Deplace le vaisseau",
 	"(f): Permet de fouiller une planete deserte",
 	"(e) [portail]: Permet d'aller dans le prochain systeme stellaire",
-	"(a): Ouvre l'aide",
+	"(?): Ouvre l'aide",
 	"(r): Recrute du personnel",
 	"(v): Vire une personne",
 	"(q): Quitte le jeu"
@@ -59,7 +59,7 @@ void	cmd_get(Player *player) {
 	Token	token[16];
 	int		funcID = -1;
 
-	printf("\n\n>>> ");
+	printf("\n\n%s[%d] -> ", player->actPlanet.name, player->planetIndex);
 
 	fgets(str, MAX_LENGHT, stdin);
 
@@ -69,7 +69,7 @@ void	cmd_get(Player *player) {
 		if (funcID > -1 && player != NULL)
 			cmdFunction[funcID](player, token);
 		else
-			printf("Mauvaise commande, tapez aide\n");
+			printf("Mauvaise commande, tapez aide ou \'?\'\n");
 	}
 }
 
@@ -113,6 +113,9 @@ void	f_cmd_info(Player *player, Token *token) {
 	}
 	else if (strcmp(token[1].str, "vaisseau") == 0 || strcmp(token[1].str, "v") == 0) {
 		player_info(*player);
+	}
+	else {
+		printf("%s", g_commandDetail[CMD_INFO]);
 	}
 }
 
@@ -165,7 +168,7 @@ void f_cmd_jump(Player *player, Token *token) {
 		}
 	}
 	else {
-		printf("Mauvaise commande\n");
+		printf("%s\n", g_commandDetail[CMD_JUMP]);
 	}
 }
 
@@ -286,6 +289,9 @@ void	f_cmd_fired(Player *player, Token *token) {
 	scanf("%d", &id);
 
 	if (id != 0) {
+		if (id == 1) {
+			printf("Vous ne pouvez pas vous virez vous meme!\n");
+		}
 		crew_remove_staff(&player->crew, id - 1);
 	}
 	purge_stdin();

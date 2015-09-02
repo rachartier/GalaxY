@@ -8,6 +8,18 @@
 #define NFUNCTIONS	9
 #define MAX_LENGHT	64
 
+enum {
+	CMD_INFO,
+	CMD_LIST,
+	CMD_JUMP,
+	CMD_SEARCH,
+	CMD_PORTAL,
+	CMD_HELP,
+	CMD_RECRUITEMENT,
+	CMD_FIRED,
+	CMD_QUIT
+};
+
 struct s_token {
 	char	str[MAX_LENGHT];
 };

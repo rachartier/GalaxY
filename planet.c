@@ -112,6 +112,7 @@ void		planet_show_stats(Planet planet) {
 		"Pauvre"
 	};
 
+	putchar('\n');
 	if (planet.type == P_TYPE_STAR) {
 		printf("Est une etoile\n");
 		printf("Rayon: %.3fkm", planet.radius);

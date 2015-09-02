@@ -40,7 +40,7 @@ void	menu_setTitle(Menu *menu, char *str) {
 void	menu_addButtonText(Menu *menu, const char *text) {
 	if (menu->endList < MAX_ELEMENTS) {
 		strcpy(menu->element[menu->endList].text, text);
-		menu->element->isVisible = true;
+		menu->element[menu->endList].isVisible = true;
 
 		menu->endList++;
 	}
