@@ -11,13 +11,28 @@
 Staff	staff_create(void) {
 	Staff	newStaff;
 
-	newStaff.life = 100;
+	static const int table_life[] = {
+	100,	// humain
+	50,		// robot
+	80,		// alien
+	150,	// roc
+	};
+
+	static const float table_eff[] = {
+		1.00,	// humain
+		1.30,	// robot
+		1.10,	// alien
+		0.90	// roc
+	};
+
+	newStaff.specie = rand_born(0, S_TYPE_LAST);
+
+	newStaff.life = table_life[newStaff.specie];
 	newStaff.experience = rand_born(0, 100);
 	newStaff.skill = rand_born(0, SKILL_LAST - 1);
 
-	newStaff.efficiency = (float)(1 + (newStaff.experience / 1000));
+	newStaff.efficiency = (float)((table_eff[newStaff.specie]) + (newStaff.experience / 100));
 
-	newStaff.specie = S_TYPE_HUMAN;
 	newStaff.position = POS_UKNOW;
 
 	staff_gen_name(&newStaff);

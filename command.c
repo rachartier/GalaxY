@@ -258,7 +258,7 @@ void f_cmd_recruitement(Player *player, Token *token) {
 					}
 					if (id != 0) {
 						crew_add_staff(&player->crew, staff[id - 1]);
-						printf("\"%s\"\n", sentence[rand_born(0, 8)]);
+						printf("%s dit: \"%s\"\n", staff[id - 1].name, sentence[rand_born(0, 8)]);
 					}
 				}
 				else {

@@ -20,7 +20,6 @@ Player* player_create(unsigned life, unsigned shield, float fuel, unsigned weigh
 	SETOPT(player->shield, shield);
 #undef SETOPT
 
-	//player->seed = ;
 	player->money = 1000;
 	player->planetIndex = 0;
 	player->satelliteIndex = -1;
@@ -114,7 +113,7 @@ void	player_move_toPlanet(Player *player, int dir) {
 			planet_show_stats(player->actPlanet);
 		}
 		else
-			printf("Vous n'avez plus de carburant");
+			printf("Vous n'avez plus de carburant\n");
 	}
 	else
 		printf("Vous ne pouvez pas allez plus loins, tapez \"aller prochain systeme\"\n\n");

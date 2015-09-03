@@ -29,7 +29,7 @@ char	*rand_name(void) {
 	char name[32] = { '\0' };
 	char *pch = NULL;
 
-	char pairs[] = {
+	char pairs[] = { // TXTELITE.c
 		"..lexegezacebiso"
 		"usesarmaindirea."
 		"eratenberalaveti"
@@ -42,8 +42,6 @@ char	*rand_name(void) {
 	int pair2 = floor(2 * (rand_float(0.f, 1.f) * (pairsLenght / 2)));
 	int pair3 = floor(2 * (rand_float(0.f, 1.f) * (pairsLenght / 2)));
 	int pair4 = floor(2 * (rand_float(0.f, 1.f) * (pairsLenght / 2)));
-
-	printf("%d %d %d %d\n", pair1, pair2, pair3, pair4);
 
 	name[0] = toupper(pairs[pair1]);
 	name[1] = pairs[pair1 + 1];
@@ -59,12 +57,13 @@ char	*rand_name(void) {
 
 	int i = 0;
 
-	for (; name[i] != '\0'; i++) {
+	while (name[i] != '\0') {
 		if (name[i] == '.') {
 			for (int k = i; name[k] != '\0'; k++) {
 				name[k] = name[k + 1];
 			}
 		}
+		i++;
 	}
 
 	name[i] = '\0';
