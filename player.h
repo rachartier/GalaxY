@@ -49,6 +49,8 @@ typedef struct s_player Player;
 Player* player_create(unsigned life, unsigned shield, float fuel, unsigned weight, unsigned food, unsigned power);
 void	player_destroy(Player *player);
 
+Staff	player_setByUser(void);
+
 void	player_setLife(Player *player, unsigned life, unsigned maxLife);
 void	player_setshield(Player *player, unsigned shield, unsigned maxshield);
 void	player_setFuel(Player *player, float fuel, float maxFuel);

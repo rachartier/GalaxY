@@ -42,12 +42,45 @@ Staff	staff_create(void) {
 	return newStaff;
 }
 
+Staff	staff_create_user(char *name, Specie specie) {
+	Staff	newStaff;
+
+	static const int table_life[] = {
+		200,	// humain
+		100,	// robot
+		160,	// alien
+		300,	// roc
+	};
+
+	static const float table_eff[] = {
+		2.00,	// humain
+		2.60,	// robot
+		2.20,	// alien
+		1.81	// roc
+	};
+
+	newStaff.specie = specie;
+
+	newStaff.life = table_life[specie];
+	newStaff.experience = 0;
+	newStaff.skill = SKILL_CAPTAIN;
+
+	newStaff.efficiency = (float)((table_eff[specie]) + (newStaff.experience / 100));
+
+	newStaff.position = POS_PILOT;
+
+	strcpy(newStaff.name, name);
+
+	return newStaff;
+}
+
 void	staff_display(Staff staff) {
 	static const char *g_skillName[] = {
 		"Bouclier",
 		"Armes",
 		"Pilotage",
-		"Moteur"
+		"Moteur",
+		"Capitaine"
 	};
 
 	static const char *g_positionName[] = {

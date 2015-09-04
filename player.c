@@ -6,11 +6,18 @@
 
 #include "rand.h"
 #include "memory.h"
+#include "menu.h"
+#include "planet.h"
 
 Player* player_create(unsigned life, unsigned shield, float fuel, unsigned weight, unsigned food, unsigned power) {
 	Player	*player = xmalloc(sizeof(Player));
+	Staff	user;
 
-	crew_generate(&player->crew, 1);
+	//crew_generate(&player->crew, 0);
+
+	user = player_setByUser();
+
+	crew_add_player(&player->crew, user);
 
 #define SETOPT(a, b) (a.max = a.actual = b)
 	SETOPT(player->life, life);
@@ -28,6 +35,51 @@ Player* player_create(unsigned life, unsigned shield, float fuel, unsigned weigh
 	player->wantToExit = false;
 
 	return player;
+}
+
+Staff	player_setByUser(void) {
+	Staff	staff;
+	Menu	*menu = menu_create();
+	char	name[32];
+
+	char	c;
+
+	menu_setTitle(menu, "Creation du personnage");
+
+	menu_display(*menu);
+
+	menu_addButtonText(menu, "Humain");
+	menu_addButtonText(menu, "Robot");
+	menu_addButtonText(menu, "Alien");
+	menu_addButtonText(menu, "Roc");
+
+	printf("Nom: ");
+
+	fgets(name, 32, stdin);
+	while (name[0] == ' ') {
+		printf("Veuillez choisir un nom correct: ");
+		fgets(name, 32, stdin);
+	}
+
+	printf("\nRace:\n");
+	printf("\ta) Humain\n");
+	printf("\tb) Robot\n");
+	printf("\tc) Alien\n");
+	printf("\td) Roc\n");
+
+	c = menu_getcmd(*menu);
+
+	while (c == 0) {
+		printf("Entrez une classe valide\n");
+
+		c = menu_getcmd(*menu);
+	}
+
+	staff = staff_create_user(name, (Specie)(c - 'a'));
+
+	menu_destroy(menu);
+
+	return staff;
 }
 
 void	player_destroy(Player *player) {

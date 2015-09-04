@@ -4,6 +4,7 @@
 
 #include <string.h>
 #include <stdio.h>
+#include <ctype.h>
 
 Menu*	menu_create(void) {
 	Menu	*newMenu = xmalloc(sizeof(Menu));
@@ -26,6 +27,8 @@ char	menu_getcmd(Menu menu) {
 	putchar('\n');
 
 	purge_stdin();
+
+	c = (char)tolower((char)c);
 
 	if (c >= 'a' || c <= 'a' + (int)menu.endList)
 		return c;

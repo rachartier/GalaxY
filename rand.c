@@ -26,8 +26,9 @@ float	rand_float(float min, float max) {
 }
 
 char	*rand_name(void) {
-	char name[32] = { '\0' };
-	char *pch = NULL;
+	char name[32];
+
+	memset(name, 0, 32);
 
 	char pairs[] = { // TXTELITE.c
 		"..lexegezacebiso"

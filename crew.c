@@ -12,6 +12,14 @@ void	crew_generate(Crew *crew, int nStaff) {
 		crew_add_staff(crew, staff_create());
 }
 
+void	crew_add_player(Crew *crew, Staff player) {
+	memset(crew->freePlace, true, MAX_STAFF * sizeof(int));
+
+	crew->nStaff = 0;
+
+	crew_add_staff(crew, player);
+}
+
 void	crew_add_staff(Crew *crew, Staff staff) {
 	int i;
 
@@ -23,7 +31,7 @@ void	crew_add_staff(Crew *crew, Staff staff) {
 	crew->nStaff++;
 }
 
-void	crew_remove_staff(Crew *crew, int id) {
+void	crew_remove_staff(Crew *crew, unsigned id) {
 	if (id >= 0 && id < MAX_STAFF) {
 		crew->freePlace[id] = true;
 		crew->nStaff--;

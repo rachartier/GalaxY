@@ -278,7 +278,7 @@ void f_cmd_recruitement(Player *player, Token *token) {
 void	f_cmd_fired(Player *player, Token *token) {
 	(void)token;
 
-	int id;
+	unsigned id;
 
 	for (unsigned i = 0; i < player->crew.nStaff; ++i) {
 		printf("ID: %u", i + 1);

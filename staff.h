@@ -10,6 +10,7 @@ enum e_staffSkill {
 	SKILL_ATTACK,
 	SKILL_PILOT,
 	SKILL_ENGINE,
+	SKILL_CAPTAIN,
 
 	SKILL_LAST
 };
@@ -47,6 +48,7 @@ typedef enum e_staffSkill	StaffSkill;
 typedef enum e_posInShip	PosInShip;
 
 Staff	staff_create(void);
+Staff	staff_create_user(char *name, Specie specie);
 
 void	staff_display(Staff staff);
 

@@ -45,7 +45,6 @@ void	set_seed(void) {
 		}
 		srand(seed);
 	}
-	purge_stdin();
 }
 
 void	play(void) {
@@ -54,8 +53,6 @@ void	play(void) {
 
 	set_seed();
 
-	for (int i = 0; i < 80; ++i)
-		putchar('-');
 	putchar('\n');
 
 	player = player_create(100, 50, 80, 1000, 100, 100);
