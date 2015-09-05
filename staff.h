@@ -53,6 +53,8 @@ Staff	staff_create_user(char *name, Specie specie);
 void	staff_display(Staff staff);
 
 void	staff_add_experience(Staff *staff, unsigned amount);
+
+void	staff_set_life(Staff *staff, int amount);
 void	staff_remove_life(Staff *staff, int amount);
 
 void	staff_set_position(Staff *staff, PosInShip pos);

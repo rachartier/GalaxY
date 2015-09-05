@@ -110,6 +110,14 @@ void	staff_add_experience(Staff *staff, unsigned amount) {
 	staff->experience += amount;
 }
 
+void	staff_set_life(Staff *staff, int amount) {
+	if (staff->life + amount <= 100) {
+		staff->life += amount;
+	}
+	else
+		staff->life = 100;
+}
+
 void	staff_remove_life(Staff *staff, int amount) {
 	staff->life -= amount;
 

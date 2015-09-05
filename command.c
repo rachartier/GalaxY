@@ -202,6 +202,8 @@ void f_cmd_portal(Player *player, Token *token) {
 	else {
 		printf("Vous n'etes pas sur un portail d'entree\n");
 	}
+
+	purge_stdin();
 }
 
 void f_cmd_help(Player *player, Token *token) {

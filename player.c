@@ -140,7 +140,7 @@ float	player_getDistanceOfPlanet(Player player, Planet planet) {
 }
 
 void	player_move_toPlanet(Player *player, int dir) {
-	if (player->planetIndex >= 0 && player->planetIndex + dir < (int)player->actStarsystem->numberPlanets) {
+	if (player->planetIndex + dir >= 0 && player->planetIndex + dir < (int)player->actStarsystem->numberPlanets) {
 		player->planetIndex += dir;
 		float fuelCost = player_getDistanceOfPlanet(*player, player->actStarsystem->planet[player->planetIndex]);
 
@@ -149,7 +149,7 @@ void	player_move_toPlanet(Player *player, int dir) {
 			player->actStarsystem->planet[player->planetIndex].visited = true;
 
 			if (player->actPlanet.type == P_TYPE_STAR)
-				printf("\nVous arrivez au systeme stellaire %s\n", player->actStarsystem->planet[player->planetIndex].name);
+				printf("\nVous etes dans le systeme stellaire\n");
 			else if (dir == 0)
 				printf("Vous revenez a la planete %s\n", player->actPlanet.name);
 			else {
@@ -168,7 +168,7 @@ void	player_move_toPlanet(Player *player, int dir) {
 			printf("Vous n'avez plus de carburant\n");
 	}
 	else
-		printf("Vous ne pouvez pas allez plus loins, tapez \"aller prochain systeme\"\n\n");
+		printf("Vous ne pouvez pas allez plus loin\n\n");
 }
 
 void	player_move_toSatellite(Player *player) {
@@ -188,11 +188,11 @@ void	player_move_toSystem(Player *player, StarSystem *starsystem) {
 }
 
 void	player_drop(Player *player, Planet *planet) {
-	if (planet->type == P_TYPE_TERRESRTIAL && !planet->isHabitable) {
+	if (!planet->isHabitable && (planet->type != P_TYPE_PORTAL_IN && planet->type != P_TYPE_PORTAL_OUT)) {
 		if (!planet->visited) {
 			planet->visited = true;
 			if (CHANCE(2)) {
-				printf("Vous trouvez un vaisseau abandonne...\n");
+				printf("Vous trouvez un vaisseau...\n");
 
 				if (CHANCE(3)) {
 					unsigned addmoney = rand_born(5, 20);
@@ -203,15 +203,30 @@ void	player_drop(Player *player, Planet *planet) {
 				}
 				if (CHANCE(3)) {
 					if (player->fuel.actual < player->fuel.max) {
-						float fuel = (float)rand_born(5, 30) + rand_float(0.f, 1.f);
+						float fuel = rand_float(10.f, 30.f);
 
 						printf("\t- Vous recuperez %.1f fuel\n", fuel);
 
 						player_setFuel(player, player->fuel.actual + fuel, player->fuel.max);
 					}
 				}
-				else
-					printf("Vous ne trouvez rien d'interessant\n");
+				if (CHANCE(8)) {
+					Staff staff = staff_create();
+					char  c;
+
+					printf("Vous trouvez un membre du vaisseau: ");
+
+					staff_set_life(&staff, rand_born(10, 80));
+
+					staff_display(staff);
+
+					printf("Voulez vous le recruter [o/n]?");
+					scanf("%c", &c);
+
+					if (c == 'o') {
+						crew_add_staff(&player->crew, staff);
+					}
+				}
 			}
 			else
 				printf("Vous ne trouvez rien d'interessant\n");
