@@ -222,9 +222,9 @@ void f_cmd_recruitement(Player *player, Token *token) {
 	static const char *sentence[] = {
 		"Content de vous rejoindre chef!",
 		"Je ferai un formidable compagnon d'arme!",
-		"Je serai fidele a vos ordres, chef.",
+		"Je serai fidele a vos ordres, capitaine.",
 		"Ce vaisseau sera notre victoire!",
-		"Etant petit, je revais de travailler dans un vaisseau, mon voeux est exhausse!",
+		"J'ai toujours reve d'etre a vos cote!",
 		"Merci, je serai aussi serviable que possible",
 		"Aux armes!",
 		"C'est parti!",

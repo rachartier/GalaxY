@@ -30,7 +30,7 @@ char	menu_getcmd(Menu menu) {
 
 	c = (char)tolower((char)c);
 
-	if (c >= 'a' || c <= 'a' + (int)menu.endList)
+	if (c >= 'a' && c < 'a' + (int)menu.endList)
 		return c;
 	return 0;
 }

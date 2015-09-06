@@ -148,6 +148,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="command.c" />
+    <ClCompile Include="commerce.c" />
     <ClCompile Include="crew.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="memory.c" />
@@ -165,6 +166,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="command.h" />
+    <ClInclude Include="commerce.h" />
     <ClInclude Include="crew.h" />
     <ClInclude Include="staff.h" />
     <ClInclude Include="memory.h" />
