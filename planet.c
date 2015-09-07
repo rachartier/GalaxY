@@ -102,7 +102,7 @@ void		planet_show_stats(Planet planet) {
 		"Neptunienne",
 		"Geante",
 		"Portail d'entrer",
-		"Portail de sorti",
+		"Portail de sortie",
 		"Etoile"
 	};
 

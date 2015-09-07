@@ -135,7 +135,11 @@ Armor 	commerce_gen_armor(void);
 Engine	commerce_gen_engine(void);
 Hull	commerce_gen_hull(void);
 
-void	commerce_add_item(Commerce *commerce, ItemType iType);
+void	commerce_add_weapon(Commerce *commerce, Weapon weapon, int id);
+void	commerce_add_armor(Commerce *commerce, Armor armor, int id);
+void	commerce_add_engine(Commerce *commerce, Engine engine, int id);
+void	commerce_add_hull(Commerce *commerce, Hull hull, int id);
+
 void	commerce_remove_item(Commerce *commerce, ItemType iType, int id);
 
 void	commerce_display(Commerce *commerce);

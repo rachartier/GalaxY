@@ -25,7 +25,7 @@ Staff	staff_create(void) {
 		0.90	// roc
 	};
 
-	newStaff.specie = rand_born(0, S_TYPE_LAST);
+	newStaff.specie = rand_born(0, S_TYPE_LAST - 1);
 
 	newStaff.life = table_life[newStaff.specie];
 	newStaff.experience = rand_born(0, 100);

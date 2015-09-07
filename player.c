@@ -13,8 +13,6 @@ Player* player_create(unsigned life, unsigned shield, float fuel, unsigned weigh
 	Player	*player = xmalloc(sizeof(Player));
 	Staff	user;
 
-	//crew_generate(&player->crew, 0);
-
 	user = player_setByUser();
 
 	crew_add_player(&player->crew, user);
@@ -45,13 +43,12 @@ Staff	player_setByUser(void) {
 	char	c;
 
 	menu_setTitle(menu, "Creation du personnage");
-
 	menu_display(*menu);
 
-	menu_addButtonText(menu, "Humain");
-	menu_addButtonText(menu, "Robot");
-	menu_addButtonText(menu, "Alien");
-	menu_addButtonText(menu, "Roc");
+	menu_addButtonText(menu, "");
+	menu_addButtonText(menu, "");
+	menu_addButtonText(menu, "");
+	menu_addButtonText(menu, "");
 
 	printf("Nom: ");
 
@@ -68,7 +65,6 @@ Staff	player_setByUser(void) {
 	printf("\td) Roc\n");
 
 	c = menu_getcmd(*menu);
-
 	while (c == 0) {
 		printf("Entrez une classe valide\n");
 
