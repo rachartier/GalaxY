@@ -20,11 +20,11 @@ enum {
 	CMD_QUIT
 };
 
-struct s_token {
+typedef struct s_token {
 	char	str[MAX_LENGHT];
-};
+} Token;
 
-typedef struct s_token Token;
+// typedef struct s_token Token;
 
 void		cmd_get(Player *player);
 

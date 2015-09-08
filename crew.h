@@ -5,15 +5,15 @@
 
 #define MAX_STAFF 6
 
-struct s_crew {
+typedef struct s_crew {
 	Staff		staff[MAX_STAFF];
 
 	unsigned	nStaff;
 
 	bool		freePlace[MAX_STAFF];
-};
+} Crew;
 
-typedef struct s_crew	Crew;
+//typedef struct s_crew	Crew;
 
 void	crew_generate(Crew *crew, int nStaff);
 

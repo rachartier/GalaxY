@@ -2,14 +2,11 @@
 #define __MENU_H_GUARD__
 
 #include <stdbool.h>
-
-#include "screen.h"
-
 #include <string.h>
 
 #define MAX_ELEMENTS	128
 
-struct s_menu {
+typedef struct s_menu {
 	struct {
 		char	text[64];
 		bool	isVisible;
@@ -17,9 +14,9 @@ struct s_menu {
 
 	char	title[32];
 	size_t	endList;
-};
+} Menu;
 
-typedef struct s_menu Menu;
+//typedef struct s_menu Menu;
 
 Menu*	menu_create(void);
 void	menu_destroy(Menu *menu);

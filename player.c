@@ -17,6 +17,9 @@ Player* player_create(unsigned life, unsigned shield, float fuel, unsigned weigh
 
 	crew_add_player(&player->crew, user);
 
+	player->exp = 0;
+	player->lvl = 50;
+
 #define SETOPT(a, b) (a.max = a.actual = b)
 	SETOPT(player->life, life);
 	SETOPT(player->fuel, fuel);
@@ -71,7 +74,7 @@ Staff	player_setByUser(void) {
 		c = menu_getcmd(*menu);
 	}
 
-	staff = staff_create_user(name, (Specie)(c - 'a'));
+	staff = staff_create_user(name, (specie)(c - 'a'));
 
 	menu_destroy(menu);
 
@@ -232,4 +235,23 @@ void	player_drop(Player *player, Planet *planet) {
 	}
 	else
 		printf("Impossible de fouiller ici\n");
+}
+
+void	player_setItem(Player *player, ItemType iType, void *item) {
+	switch (iType) {
+	case I_WEAPON:
+		//	player
+		break;
+	case I_ARMOR:
+		//commerce->armor[id] = *(Armor *)item;
+		break;
+	case I_ENGINE:
+
+		break;
+	case I_HULL:
+
+		break;
+	default:
+		break;
+	}
 }

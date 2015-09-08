@@ -5,7 +5,7 @@
 
 #define SKILL_FACTOR	1.5
 
-enum e_staffSkill {
+typedef enum e_staffSkill {
 	SKILL_SHIELD,
 	SKILL_ATTACK,
 	SKILL_PILOT,
@@ -13,9 +13,9 @@ enum e_staffSkill {
 	SKILL_CAPTAIN,
 
 	SKILL_LAST
-};
+} StaffSkill;
 
-enum e_posInShip {
+typedef enum e_posInShip {
 	POS_SHIELD,
 	POS_ATTACK,
 	POS_PILOT,
@@ -23,32 +23,32 @@ enum e_posInShip {
 	POS_UKNOW,
 
 	POS_LAST
-};
+} PosInShip;
 
-struct s_staff {
-	Specie		specie;
+typedef struct s_staff {
+	SpecieType	specie;
 
 	float		efficiency;
 
 	unsigned	experience;
 	int			life;
 
-	enum e_posInShip	position;
-	enum e_staffSkill	skill;
+	PosInShip	position;
+	StaffSkill	skill;
 
 	char	name[32];
 
 	bool	isDead;
 	bool	isVisible;
-};
-
+} Staff;
+/*
 typedef struct s_staff		Staff;
 
 typedef enum e_staffSkill	StaffSkill;
 typedef enum e_posInShip	PosInShip;
-
+*/
 Staff	staff_create(void);
-Staff	staff_create_user(char *name, Specie specie);
+Staff	staff_create_user(char *name, SpecieType specie);
 
 void	staff_display(Staff staff);
 
@@ -58,7 +58,7 @@ void	staff_set_life(Staff *staff, int amount);
 void	staff_remove_life(Staff *staff, int amount);
 
 void	staff_set_position(Staff *staff, PosInShip pos);
-void	staff_set_specie(Staff *staff, Specie specie);
+void	staff_set_specie(Staff *staff, SpecieType specie);
 
 void	staff_gen_name(Staff *staff);
 

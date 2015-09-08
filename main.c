@@ -9,6 +9,7 @@
 #include "menu.h"
 #include "memory.h"
 #include "crew.h"
+#include "commerce.h"
 
 void	set_seed(void) {
 	Menu		*menu = menu_create();

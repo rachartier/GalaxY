@@ -42,7 +42,7 @@ Staff	staff_create(void) {
 	return newStaff;
 }
 
-Staff	staff_create_user(char *name, Specie specie) {
+Staff	staff_create_user(char *name, SpecieType specie) {
 	Staff	newStaff;
 
 	static const int table_life[] = {
@@ -133,7 +133,7 @@ void	staff_set_position(Staff *staff, PosInShip pos) {
 	}
 }
 
-void	staff_set_specie(Staff *staff, Specie specie) {
+void	staff_set_specie(Staff *staff, SpecieType specie) {
 	staff->specie = specie;
 }
 

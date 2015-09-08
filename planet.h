@@ -6,7 +6,7 @@
 
 #define MAX_SATELLITE	10
 
-enum e_planetType {
+typedef enum e_planetType {
 	P_TYPE_TERRESRTIAL,
 	P_TYPE_GASEOUS,
 	P_TYPE_NEPTUNIAN,
@@ -17,9 +17,9 @@ enum e_planetType {
 	P_TYPE_LAST,
 
 	P_TYPE_STAR
-};
+} PlanetType;
 
-enum e_planetCondition {
+typedef enum e_planetCondition {
 	CONDITION_OCEAN,
 	CONDITION_DESERT,
 	CONDITION_HUGE_FOREST,
@@ -27,9 +27,9 @@ enum e_planetCondition {
 	CONDITION_UNKNOW,
 
 	CONDITION_LAST
-};
+} PlanetCondition;
 
-enum e_governementType {
+typedef enum e_governementType {
 	G_TYPE_MONARCHY,
 	G_TYPE_DICTATORSHIP,
 	G_TYPE_REPUBLIC,
@@ -38,24 +38,24 @@ enum e_governementType {
 	G_TYPE_FEUDAL,
 
 	G_TYPE_LAST
-};
+} GovernementType;
 
-enum e_speciesType {
+typedef enum e_speciesType {
 	S_TYPE_HUMAN,
 	S_TYPE_DROID,
 	S_TYPE_ALIEN,
 	S_TYPE_ROCK,
 
 	S_TYPE_LAST
-};
+} SpecieType;
 
-enum e_economyType {
+typedef enum e_economyType {
 	E_TYPE_RICH,
 	E_TYPE_AVERAGE,
 	E_TYPE_POOR
-};
+} EconomyType;
 
-struct s_satellite {
+typedef struct s_satellite {
 	double		surface;
 	double		radius;
 
@@ -63,9 +63,9 @@ struct s_satellite {
 
 	bool		isHabitable;
 	bool		visited;
-};
+} Satellite;
 
-struct s_planet {
+typedef struct s_planet {
 	struct {
 		float	percentageWater;
 		float	percentageOther;
@@ -74,7 +74,7 @@ struct s_planet {
 		float	percentageDesert;
 	} stat;
 
-	struct	s_satellite	satellite[MAX_SATELLITE];
+	Satellite	satellite[MAX_SATELLITE];
 
 	unsigned	nSatellite;
 	unsigned	people;
@@ -96,23 +96,23 @@ struct s_planet {
 	bool		canCommerce;
 	bool		visited;
 
-	enum e_speciesType		specie;
-	enum e_governementType	governementType;
-	enum e_planetCondition	condition;
-	enum e_planetType		type;
-	enum e_economyType		economy;
+	SpecieType		specie;
+	GovernementType governementType;
+	PlanetCondition condition;
+	PlanetType		type;
+	EconomyType		economy;
 
 	char name[32];
-};
+} Planet;
 
-typedef struct s_planet			Planet;
+/*typedef struct s_planet			Planet;
 typedef	struct s_satellite		Satellite;
 
-typedef enum e_speciesType		Specie;
+typedef enum e_speciesType		specie;
 typedef enum e_governementType	GovernementType;
 typedef enum e_planetCondition	PlanetCondition;
 typedef enum e_planetType		PlanetType;
-
+*/
 Planet	planet_create(int index);
 Planet	planet_createSun(void);
 
