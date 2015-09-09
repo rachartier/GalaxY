@@ -1,10 +1,10 @@
 #include "menu.h"
 
-#include "memory.h"
-
 #include <string.h>
 #include <stdio.h>
 #include <ctype.h>
+
+#include "memory.h"
 
 Menu*	menu_create(void) {
 	Menu	*newMenu = xmalloc(sizeof(Menu));

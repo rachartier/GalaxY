@@ -1,27 +1,13 @@
-#ifndef __PLAYER_H_GUARD__
-#define __PLAYER_H_GUARD__
+#pragma once
 
 #include <stdbool.h>
 #include <string.h>
 
 #include "crew.h"
 #include "starsystem.h"
+#include "commerce.h"
 #include "planet.h"
-
-typedef struct s_option_u {
-	unsigned max;
-	unsigned actual;
-} OptionUnsigned;
-
-typedef struct s_option_i {
-	int max;
-	int actual;
-} OptionInt;
-
-typedef struct s_option_f {
-	float max;
-	float actual;
-} OptionFloat;
+#include "util.h"
 
 typedef struct s_player {
 	Planet		actPlanet;
@@ -57,12 +43,6 @@ typedef struct s_player {
 	bool	wantToExit;
 } Player;
 
-/*typedef struct s_player Player;
-
-typedef struct s_option_f OptionFloat;
-typedef struct s_option_i OptionInt;
-typedef struct s_option_u OptionUnsigned;
-*/
 Player* player_create(unsigned life, unsigned shield, float fuel, unsigned weight, unsigned food, unsigned power);
 void	player_destroy(Player *player);
 
@@ -86,5 +66,3 @@ void	player_move_toSystem(Player *player, StarSystem *starsystem);
 void	player_move_toSatellite(Player *player);
 
 void	player_setItem(Player *player, ItemType iType, void *item);
-
-#endif /* __PLAYER_H_GUARD__ */

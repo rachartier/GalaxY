@@ -12,17 +12,17 @@ Staff	staff_create(void) {
 	Staff	newStaff;
 
 	static const int table_life[] = {
-	100,	// humain
-	50,		// robot
-	80,		// alien
-	150,	// roc
+		100,	// humain
+		50,		// robot
+		80,		// alien
+		150		// roc
 	};
 
 	static const float table_eff[] = {
-		1.00,	// humain
-		1.30,	// robot
-		1.10,	// alien
-		0.90	// roc
+		1.00f,	// humain
+		1.30f,	// robot
+		1.10f,	// alien
+		0.90f	// roc
 	};
 
 	newStaff.specie = rand_born(0, S_TYPE_LAST - 1);
@@ -53,10 +53,10 @@ Staff	staff_create_user(char *name, SpecieType specie) {
 	};
 
 	static const float table_eff[] = {
-		2.00,	// humain
-		2.60,	// robot
-		2.20,	// alien
-		1.81	// roc
+		2.00f,	// humain
+		2.60f,	// robot
+		2.20f,	// alien
+		1.81f	// roc
 	};
 
 	newStaff.specie = specie;
@@ -128,7 +128,7 @@ void	staff_remove_life(Staff *staff, int amount) {
 void	staff_set_position(Staff *staff, PosInShip pos) {
 	if (pos < POS_LAST) {
 		staff->position = pos;
-		if (staff->skill == pos)
+		if (staff->skill == (StaffSkill)pos)
 			staff->efficiency = (float)(1 + (staff->experience / 1000) + 0.2);
 	}
 }

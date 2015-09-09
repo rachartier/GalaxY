@@ -1,5 +1,4 @@
-#ifndef __MENU_H_GUARD__
-#define __MENU_H_GUARD__
+#pragma once
 
 #include <stdbool.h>
 #include <string.h>
@@ -28,5 +27,3 @@ void	menu_display(Menu menu);
 
 void	menu_addButtonText(Menu *menu, const char *text);
 void	menu_removeButtonText(Menu *menu, int bId);
-
-#endif /* #ifndef __MENU_H_GUARD__ */

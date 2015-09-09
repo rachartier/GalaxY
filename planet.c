@@ -7,9 +7,8 @@
 #include <ctype.h>
 
 #include "rand.h"
-#include "player.h"
-
 #include "crew.h"
+#include "player.h"
 
 #define M_PI			3.14159265358979323846
 
@@ -80,14 +79,14 @@ void		planet_show_satelliteStats(Satellite s) {
 }
 
 void		planet_show_stats(Planet planet) {
-	static const char *g_speciesType[S_TYPE_LAST] = {
+	static const char *g_speciesType[] = {
 		"Humains",
 		"Robots",
 		"Aliens",
 		"Rocs"
 	};
 
-	static const char *g_governementName[G_TYPE_LAST] = {
+	static const char *g_governementName[] = {
 		"Monarchie",
 		"Dictature",
 		"Republique",
@@ -96,7 +95,7 @@ void		planet_show_stats(Planet planet) {
 		"Feodale"
 	};
 
-	static const char *g_planetTypeName[P_TYPE_LAST + 1] = {
+	static const char *g_planetTypeName[] = {
 		"Tellurique",
 		"Gazeuse",
 		"Neptunienne",
@@ -106,7 +105,7 @@ void		planet_show_stats(Planet planet) {
 		"Etoile"
 	};
 
-	static const char *g_economyName[3] = {
+	static const char *g_economyName[] = {
 		"Riche",
 		"Moyenne",
 		"Pauvre"

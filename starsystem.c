@@ -29,6 +29,7 @@ void		starsys_destroy(StarSystem *sys) {
 
 void add_planet(StarSystem *sys, unsigned index) {
 	Planet	planet;
+	float	fuelCost = 0.f;
 
 	if (index == 0)
 		planet = planet_createSun();
@@ -37,16 +38,12 @@ void add_planet(StarSystem *sys, unsigned index) {
 	else
 		planet = planet_create(index);
 
-	{
-		float fuelCost = 0.f;
+	fuelCost = (float)(rand_float(6.f, 17.f));
 
-		fuelCost = (float)(rand_float(6.f, 17.f));
-
-		if (index != 0)
-			planet_set_distance(&sys->planet[index - 1], &planet, fuelCost);
-		else
-			planet_set_distance(&sys->planet[index], &planet, fuelCost);
-	}
+	if (index != 0)
+		planet_set_distance(&sys->planet[index - 1], &planet, fuelCost);
+	else
+		planet_set_distance(&sys->planet[index], &planet, fuelCost);
 
 	memcpy(&sys->planet[index], &planet, sizeof(Planet));
 }

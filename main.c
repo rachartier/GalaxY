@@ -2,14 +2,10 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include "command.h"
-#include "planet.h"
-#include "rand.h"
 #include "starsystem.h"
 #include "menu.h"
-#include "memory.h"
-#include "crew.h"
-#include "commerce.h"
+#include "player.h"
+#include "command.h"
 
 void	set_seed(void) {
 	Menu		*menu = menu_create();

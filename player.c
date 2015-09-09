@@ -13,9 +13,14 @@ Player* player_create(unsigned life, unsigned shield, float fuel, unsigned weigh
 	Player	*player = xmalloc(sizeof(Player));
 	Staff	user;
 
+	Weapon	w = weapon_create_rand(0);
+	Armor	a = armor_create_rand(0);
+
 	user = player_setByUser();
 
 	crew_add_player(&player->crew, user);
+
+	player_setItem(player, I_WEAPON, &w);
 
 	player->exp = 0;
 	player->lvl = 50;
@@ -74,7 +79,7 @@ Staff	player_setByUser(void) {
 		c = menu_getcmd(*menu);
 	}
 
-	staff = staff_create_user(name, (specie)(c - 'a'));
+	staff = staff_create_user(name, (SpecieType)(c - 'a'));
 
 	menu_destroy(menu);
 
@@ -125,7 +130,7 @@ void	player_info(Player player) {
 	printf("\t- Nombre de personne a bord: %u/%u\n", 0, 0);
 	printf("Nombre de planetes visitees: %d\n", player.stats.planetsVisited);
 
-	crew_display(player.crew);
+	weapon_display(player.weapon);
 }
 
 bool	player_isDead(Player *player) {
@@ -240,10 +245,10 @@ void	player_drop(Player *player, Planet *planet) {
 void	player_setItem(Player *player, ItemType iType, void *item) {
 	switch (iType) {
 	case I_WEAPON:
-		//	player
+		player->weapon = *(Weapon *)item;
 		break;
 	case I_ARMOR:
-		//commerce->armor[id] = *(Armor *)item;
+		player->armor = *(Armor *)item;
 		break;
 	case I_ENGINE:
 

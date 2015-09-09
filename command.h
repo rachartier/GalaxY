@@ -1,5 +1,4 @@
-#ifndef __COMMAND_H_GUARD__
-#define __COMMAND_H_GUARD__
+#pragma once
 
 #include <stdlib.h>
 
@@ -24,9 +23,7 @@ typedef struct s_token {
 	char	str[MAX_LENGHT];
 } Token;
 
-// typedef struct s_token Token;
-
-void		cmd_get(Player *player);
+void cmd_get(Player *player);
 
 int	 parse(char *str, Token *token); // retourne l'ID de la commande
 
@@ -39,5 +36,3 @@ void f_cmd_portal(Player *player, Token *token);
 void f_cmd_help(Player *player, Token *token);
 void f_cmd_recruitement(Player *player, Token *token);
 void f_cmd_fired(Player *player, Token *token);
-
-#endif /* __COMMAND_H_GUARD__ */

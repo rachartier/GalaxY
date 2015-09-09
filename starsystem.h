@@ -1,5 +1,4 @@
-#ifndef __STARSYSTEM_GUARD_H__
-#define __STARSYSTEM_GUARD_H__
+#pragma once
 
 #include "planet.h"
 
@@ -12,11 +11,7 @@ typedef struct s_starsystem {
 	unsigned	numberPlanets;
 } StarSystem;
 
-//typedef struct s_starsystem StarSystem;
-
 StarSystem*	starsys_create(void);
 void		starsys_destroy(StarSystem *sys);
 
 void		add_planet(StarSystem *sys, unsigned index);
-
-#endif /* __STARSYSTEM_GUARD_H__ */

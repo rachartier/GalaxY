@@ -1,5 +1,4 @@
-#ifndef __PLANET_H_GUARD__
-#define __PLANET_H_GUARD__
+#pragma once
 
 #include <stdbool.h>
 #include <string.h>
@@ -105,14 +104,6 @@ typedef struct s_planet {
 	char name[32];
 } Planet;
 
-/*typedef struct s_planet			Planet;
-typedef	struct s_satellite		Satellite;
-
-typedef enum e_speciesType		specie;
-typedef enum e_governementType	GovernementType;
-typedef enum e_planetCondition	PlanetCondition;
-typedef enum e_planetType		PlanetType;
-*/
 Planet	planet_create(int index);
 Planet	planet_createSun(void);
 
@@ -138,5 +129,3 @@ void set_people(Planet *planet);
 void set_radius(Planet *planet);
 
 void create_satellite(Planet *planet);
-
-#endif/*__PLANET_H_GUARD__*/

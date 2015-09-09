@@ -114,6 +114,9 @@ void	f_cmd_info(Player *player, Token *token) {
 	else if (strcmp(token[1].str, "vaisseau") == 0 || strcmp(token[1].str, "v") == 0) {
 		player_info(*player);
 	}
+	else if (strcmp(token[1].str, "equipage") == 0 || strcmp(token[1].str, "e") == 0) {
+		crew_display(player->crew);
+	}
 	else {
 		printf("%s", g_commandDetail[CMD_INFO]);
 	}

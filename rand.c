@@ -7,7 +7,9 @@
 #include <ctype.h>
 
 int		rand_born(int min, int max) {
-	return (rand() % (max - min) + min);
+	if(max - min != 0)
+		return (rand() % (max - min) + min);
+	return 0;
 }
 
 int		rolld100(void) {

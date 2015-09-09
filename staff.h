@@ -1,5 +1,4 @@
-#ifndef __STAFF_H_GUARD__
-#define __STAFF_H_GUARD__
+#pragma once
 
 #include "planet.h"
 
@@ -41,12 +40,7 @@ typedef struct s_staff {
 	bool	isDead;
 	bool	isVisible;
 } Staff;
-/*
-typedef struct s_staff		Staff;
 
-typedef enum e_staffSkill	StaffSkill;
-typedef enum e_posInShip	PosInShip;
-*/
 Staff	staff_create(void);
 Staff	staff_create_user(char *name, SpecieType specie);
 
@@ -61,5 +55,3 @@ void	staff_set_position(Staff *staff, PosInShip pos);
 void	staff_set_specie(Staff *staff, SpecieType specie);
 
 void	staff_gen_name(Staff *staff);
-
-#endif /* __STAFF_H_GUARD__ */

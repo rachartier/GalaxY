@@ -1,5 +1,4 @@
-#ifndef __CREW_H_GUARD__
-#define __CREW_H_GUARD__
+#pragma once
 
 #include "staff.h"
 
@@ -13,8 +12,6 @@ typedef struct s_crew {
 	bool		freePlace[MAX_STAFF];
 } Crew;
 
-//typedef struct s_crew	Crew;
-
 void	crew_generate(Crew *crew, int nStaff);
 
 void	crew_display(Crew crew);
@@ -23,5 +20,3 @@ void	crew_add_staff(Crew *crew, Staff staff);
 void	crew_add_player(Crew *crew, Staff player);
 
 void	crew_remove_staff(Crew *crew, unsigned id);
-
-#endif /* __CREW_H_GUARD__ */
