@@ -99,7 +99,7 @@ Armor 	armor_create_rand(unsigned level) {
 	};
 
 	Armor		a;
-	ArmorType	at;
+	ArmorType	at = rand_born(0, A_LAST);
 
 	int			mark = rand_born(0, MAXMARK(level));
 
@@ -107,14 +107,34 @@ Armor 	armor_create_rand(unsigned level) {
 	a.life = table_armor_life[mark];
 
 	a.isVisible = true;
-	//a.type = at;
+	a.type = at;
 
 	return a;
 }
 
 Engine	engine_create_rand(unsigned level) {
+	Engine	e;
+
+	e.evasionChance = 0;
+	e.isVisible = false;
+	e.price = 0;
+	e.speed = 0;
+	e.type;
+
+	return e;
 }
 Hull	hull_create_rand(unsigned level) {
+	Hull	h;
+
+	h.armor.actual = 0;
+	h.isVisible = false;
+	h.life.actual = 0;
+	h.nMaxStaff = 0;
+	h.nWeaponsSlot = 0;
+	h.price = 0;
+	h.type = 0;
+
+	return h;
 }
 
 void	weapon_display(Weapon weapon) {
@@ -126,12 +146,21 @@ void	weapon_display(Weapon weapon) {
 	};
 
 	printf("\n%s:\n", weapon.name);
-	printf("\t- Type: %s\n", table_weapon_type[weapon.type]);
+	printf("\t- Type de degats: %s\n", table_weapon_type[weapon.type]);
 	printf("\t- Degats: %d\n", weapon.damage);
 	printf("\t- Penetration d'armure: %.3f%%\n", weapon.penArmor);
-	printf("\t- Vitesse: %.3f\n", weapon.castTime);
+	printf("\t- Temps de chargement: %.3fs\n", weapon.castTime);
 	printf("\t- Chance de coup critique: %.3f%%\n", weapon.criticalChance);
 }
 
 void	armor_display(Armor armor) {
+	static char *table_armor_type[] = {
+		"les lasers",
+		"les machine-guns",
+		"le plasma",
+		"les missiles"
+	};
+	printf("\nArmure efficace contre %s:\n", table_armor_type[armor.type]);
+	printf("\tPoint de vie: %.3f\n", armor.life);
+	printf("\tPoint d'armure: %.3f\n", armor.armor);
 }

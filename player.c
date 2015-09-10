@@ -21,6 +21,7 @@ Player* player_create(unsigned life, unsigned shield, float fuel, unsigned weigh
 	crew_add_player(&player->crew, user);
 
 	player_setItem(player, I_WEAPON, &w);
+	player_setItem(player, I_ARMOR, &a);
 
 	player->exp = 0;
 	player->lvl = 50;
@@ -46,8 +47,8 @@ Player* player_create(unsigned life, unsigned shield, float fuel, unsigned weigh
 Staff	player_setByUser(void) {
 	Staff	staff;
 	Menu	*menu = menu_create();
+	int		i = 0;
 	char	name[32];
-
 	char	c;
 
 	menu_setTitle(menu, "Creation du personnage");
@@ -65,6 +66,11 @@ Staff	player_setByUser(void) {
 		printf("Veuillez choisir un nom correct: ");
 		fgets(name, 32, stdin);
 	}
+
+	for (; name[i] != '\n'; ++i)
+		;
+
+	name[i] = '\0';
 
 	printf("\nRace:\n");
 	printf("\ta) Humain\n");
@@ -131,6 +137,7 @@ void	player_info(Player player) {
 	printf("Nombre de planetes visitees: %d\n", player.stats.planetsVisited);
 
 	weapon_display(player.weapon);
+	armor_display(player.armor);
 }
 
 bool	player_isDead(Player *player) {
@@ -231,6 +238,20 @@ void	player_drop(Player *player, Planet *planet) {
 						crew_add_staff(&player->crew, staff);
 					}
 				}
+				if (CHANCE(10)) {
+					Weapon	w = weapon_create_rand(player->lvl);
+					char	c;
+
+					printf("Vous trouvez une arme: ");
+					weapon_display(w);
+
+					printf("Voulez vous la prendre [o/n]? ");
+
+					scanf("%c", &c);
+					if (c == 'o') {
+						player_setItem(player, I_WEAPON, &w);
+					}
+				}
 			}
 			else
 				printf("Vous ne trouvez rien d'interessant\n");
@@ -251,10 +272,10 @@ void	player_setItem(Player *player, ItemType iType, void *item) {
 		player->armor = *(Armor *)item;
 		break;
 	case I_ENGINE:
-
+		player->engine = *(Engine *)item;
 		break;
 	case I_HULL:
-
+		player->hull = *(Hull *)item;
 		break;
 	default:
 		break;

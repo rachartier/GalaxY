@@ -28,10 +28,10 @@ void	commerce_add_item(Commerce *commerce, ItemType iType, void *item, int id) {
 			commerce->armor[id] = *(Armor *)item;
 			break;
 		case I_ENGINE:
-
+			commerce->engine[id] = *(Engine *)item;
 			break;
 		case I_HULL:
-
+			commerce->hull[id] = *(Hull *)item;
 			break;
 		default:
 			break;
@@ -49,10 +49,10 @@ void	commerce_remove_item(Commerce *commerce, ItemType iType, int id) {
 			commerce->armor[id].isVisible = false;
 			break;
 		case I_ENGINE:
-
+			commerce->engine[id].isVisible = false;
 			break;
 		case I_HULL:
-
+			commerce->hull[id].isVisible = false;
 			break;
 		default:
 			break;

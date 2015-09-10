@@ -31,7 +31,7 @@ static const char *g_commandName[] = {
 };
 
 static const char *g_commandDetail[] = {
-	"(i) [p/sys/sat/v]: Donne des informations sur une planete, un systeme, un satellite, le vaisseau",
+	"\n(i) [p/sys/sat/v/e]: Donne des informations sur une planete, un systeme, un satellite, le vaisseau...",
 	"(ls): Liste toutes les planetes du systeme actuelle",
 	"(al) [prochain[e], planete/systeme] / [satellite, id]: Deplace le vaisseau",
 	"(f): Permet de fouiller une planete deserte",
@@ -102,7 +102,7 @@ void	f_cmd_info(Player *player, Token *token) {
 	}
 	else if (strcmp(token[1].str, "satellite") == 0 || strcmp(token[1].str, "sat") == 0) {
 		if (player->satelliteIndex != -1) {
-			printf("\nSatellite n%u\n", player->satelliteIndex);
+			printf("\nSatellite n%u\n", player->satelliteIndex + 1);
 			planet_show_satelliteStats(player->actPlanet.satellite[player->satelliteIndex]);
 		}
 		else
@@ -247,8 +247,8 @@ void f_cmd_recruitement(Player *player, Token *token) {
 		}
 
 		printf("Voulez vous recruter une de ces personnes [o/n]? ");
-		scanf("%c", &c);
 
+		scanf("%c", &c);
 		if (c == 'o') {
 			int		id = 0;
 
@@ -274,6 +274,9 @@ void f_cmd_recruitement(Player *player, Token *token) {
 		xfree(staff);
 
 		purge_stdin();
+	}
+	else if (!player->actPlanet.isHabitable) {
+		printf("Vous ne pouvez pas recruter sur une planete deserte\n");
 	}
 	else {
 		printf("Personne a recruter\n");
