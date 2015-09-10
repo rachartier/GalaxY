@@ -54,6 +54,9 @@
     <ClCompile Include="commerce.c">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="ship_util.c">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="TODO" />
@@ -95,5 +98,14 @@
     <ClInclude Include="commerce.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="util.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="ship_util.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

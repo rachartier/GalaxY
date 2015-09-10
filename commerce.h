@@ -14,7 +14,7 @@ chaque arme/bouclier/machine aura 8 versions
 #include "ship_util.h"
 
 #define MAX_WEAPON_ITEM	5
-#define MAX_ARMOR_ITEM	3
+#define MAX_ARMOR_ITEM	4
 #define MAX_ENGINE_ITEM	2
 #define MAX_HULL_ITEM	2
 

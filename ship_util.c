@@ -64,12 +64,12 @@ Weapon	weapon_create_rand(unsigned level) {
 	w.penArmor = table_penArmor[wt] * offset;
 	w.criticalChance = critic + (9 * offset);
 
-	w.castTime = table_castTime[wt];
+	w.castTime = table_castTime[wt] / (offset - 0.8);
 
 	w.isVisible = true;
 	w.type = wt;
 
-	strcpy(w.name, "[Nom Arme] ");
+	strcpy(w.name, "Arme ");
 	strcat(w.name, gTable_markName[mark]);
 
 	return w;
@@ -108,6 +108,8 @@ Armor 	armor_create_rand(unsigned level) {
 
 	a.isVisible = true;
 	a.type = at;
+
+	strcpy(a.name, gTable_markName[mark]);
 
 	return a;
 }
@@ -160,7 +162,7 @@ void	armor_display(Armor armor) {
 		"le plasma",
 		"les missiles"
 	};
-	printf("\nArmure efficace contre %s:\n", table_armor_type[armor.type]);
+	printf("\nArmure [%s] efficace contre %s:\n", armor.name, table_armor_type[armor.type]);
 	printf("\tPoint de vie: %.3f\n", armor.life);
-	printf("\tPoint d'armure: %.3f\n", armor.armor);
+	printf("\tEfficacite: %.3f%%\n", armor.armor);
 }

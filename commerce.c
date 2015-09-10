@@ -6,15 +6,30 @@
 #include "ship_util.h"
 
 void	commerce_create(Commerce *commerce, Planet *planet, unsigned level) {
-	int		randNumWeapon = rand_born(0, MAX_WEAPON_ITEM - 1);
-	int		randNumArmor = rand_born(0, MAX_ARMOR_ITEM - 1);
-	int		randNumEngine = rand_born(0, MAX_ENGINE_ITEM - 1);
-	int		randNumHull = rand_born(0, MAX_HULL_ITEM - 1);
+	int		randNumWeapon = rand_born(0, MAX_WEAPON_ITEM);
+	int		randNumArmor = rand_born(0, MAX_ARMOR_ITEM);
+	int		randNumEngine = rand_born(0, MAX_ENGINE_ITEM);
+	int		randNumHull = rand_born(0, MAX_HULL_ITEM);
 
-	for (int i = 0; i < randNumArmor; ++i) {
-		Weapon w = weapon_create_rand(level);
+	printf("%d %d\n\n", randNumWeapon, randNumArmor);
 
-		commerce_add_item(commerce, I_WEAPON, &w, i);
+	for (int i = 0; i < MAX_WEAPON_ITEM; ++i) {
+		if (i < randNumWeapon) {
+			Weapon w = weapon_create_rand(level);
+
+			commerce_add_item(commerce, I_WEAPON, &w, i);
+		}
+		else
+			commerce->weapon[i].isVisible = false;
+	}
+	for (int i = 0; i < MAX_ARMOR_ITEM; ++i) {
+		if (i < randNumArmor) {
+			Armor a = armor_create_rand(level);
+
+			commerce_add_item(commerce, I_ARMOR, &a, i);
+		}
+		else
+			commerce->armor[i].isVisible = false;
 	}
 }
 
@@ -61,4 +76,14 @@ void	commerce_remove_item(Commerce *commerce, ItemType iType, int id) {
 }
 
 void	commerce_display(Commerce *commerce) {
+	for (int i = 0; i < MAX_WEAPON_ITEM; ++i) {
+		if (commerce->weapon[i].isVisible) {
+			weapon_display(commerce->weapon[i]);
+		}
+	}
+	for (int i = 0; i < MAX_ARMOR_ITEM; ++i) {
+		if (commerce->armor[i].isVisible) {
+			armor_display(commerce->armor[i]);
+		}
+	}
 }

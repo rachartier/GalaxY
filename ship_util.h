@@ -70,6 +70,8 @@ typedef struct s_weapon {
 typedef struct s_armor {
 	ArmorType	type;
 
+	char	name[32];
+
 	float	armor;
 	float	life;
 
