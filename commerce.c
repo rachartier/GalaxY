@@ -11,8 +11,6 @@ void	commerce_create(Commerce *commerce, Planet *planet, unsigned level) {
 	int		randNumEngine = rand_born(0, MAX_ENGINE_ITEM);
 	int		randNumHull = rand_born(0, MAX_HULL_ITEM);
 
-	printf("%d %d\n\n", randNumWeapon, randNumArmor);
-
 	for (int i = 0; i < MAX_WEAPON_ITEM; ++i) {
 		if (i < randNumWeapon) {
 			Weapon w = weapon_create_rand(level);

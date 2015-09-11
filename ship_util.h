@@ -98,7 +98,7 @@ typedef struct s_hull {
 	unsigned	nMaxStaff;
 
 	OptionInt	life;
-	OptionInt	armor;
+	OptionFloat	fuel;
 
 	unsigned price;
 
@@ -112,3 +112,4 @@ Hull	hull_create_rand(unsigned playerLevel);
 
 void	weapon_display(Weapon weapon);
 void	armor_display(Armor armor);
+void	hull_display(Hull hull);

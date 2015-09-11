@@ -201,12 +201,12 @@ void f_cmd_portal(Player *player, Token *token) {
 
 		if (c == 'o')
 			player_move_toSystem(player, sys);
+
+		purge_stdin();
 	}
 	else {
 		printf("Vous n'etes pas sur un portail d'entree\n");
 	}
-
-	purge_stdin();
 }
 
 void f_cmd_help(Player *player, Token *token) {
@@ -256,7 +256,7 @@ void f_cmd_recruitement(Player *player, Token *token) {
 			scanf("%d", &id);
 
 			if (id != 0) {
-				if (player->crew.nStaff < MAX_STAFF) {
+				if (player->crew.nStaff < player->hull.nMaxStaff) {
 					while (id < 0 || id - 1 >= n) {
 						printf("Mauvais ID, tapez de nouveau: ");
 						scanf("%d", &id);

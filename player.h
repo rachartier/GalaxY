@@ -20,10 +20,6 @@ typedef struct s_player {
 	Engine		engine;
 	Hull		hull;
 
-	OptionFloat		fuel;
-	OptionInt		life;
-	OptionUnsigned	shield;
-	OptionUnsigned	weight;
 	OptionUnsigned	food;
 
 	unsigned money;

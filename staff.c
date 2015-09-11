@@ -8,22 +8,26 @@
 #define W 20
 #define H 7
 
+static const int table_life[] = {
+	100,	// humain
+	90,		// robot
+	80,		// alien
+	150,	// roc
+	60,		// intel
+	200
+};
+
+static const float table_eff[] = {
+	1.00f,	// humain
+	1.10f,	// robot
+	1.10f,	// alien
+	0.90f,	// roc
+	1.50f,	// intel
+	0.70f	// warbrog
+};
+
 Staff	staff_create(void) {
 	Staff	newStaff;
-
-	static const int table_life[] = {
-		100,	// humain
-		50,		// robot
-		80,		// alien
-		150		// roc
-	};
-
-	static const float table_eff[] = {
-		1.00f,	// humain
-		1.30f,	// robot
-		1.10f,	// alien
-		0.90f	// roc
-	};
 
 	newStaff.specie = rand_born(0, S_TYPE_LAST - 1);
 
@@ -45,27 +49,13 @@ Staff	staff_create(void) {
 Staff	staff_create_user(char *name, SpecieType specie) {
 	Staff	newStaff;
 
-	static const int table_life[] = {
-		200,	// humain
-		100,	// robot
-		160,	// alien
-		300,	// roc
-	};
-
-	static const float table_eff[] = {
-		2.00f,	// humain
-		2.60f,	// robot
-		2.20f,	// alien
-		1.81f	// roc
-	};
-
 	newStaff.specie = specie;
 
-	newStaff.life = table_life[specie];
+	newStaff.life = table_life[specie] * 2;
 	newStaff.experience = 0;
 	newStaff.skill = SKILL_CAPTAIN;
 
-	newStaff.efficiency = (float)((table_eff[specie]) + (newStaff.experience / 100));
+	newStaff.efficiency = (float)((table_eff[specie] * 2) + (newStaff.experience / 100));
 
 	newStaff.position = POS_PILOT;
 
@@ -95,7 +85,9 @@ void	staff_display(Staff staff) {
 		"Humain",
 		"Robot",
 		"Alien",
-		"Roc"
+		"Roc",
+		"Intel",
+		"Warbrog"
 	};
 
 	printf("\n%s (%s)\n", staff.name, g_speciesType[staff.specie]);

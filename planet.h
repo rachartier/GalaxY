@@ -44,6 +44,8 @@ typedef enum e_speciesType {
 	S_TYPE_DROID,
 	S_TYPE_ALIEN,
 	S_TYPE_ROCK,
+	S_TYPE_INTEL,
+	S_TYPE_WARBROG,
 
 	S_TYPE_LAST
 } SpecieType;

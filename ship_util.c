@@ -126,15 +126,64 @@ Engine	engine_create_rand(unsigned level) {
 	return e;
 }
 Hull	hull_create_rand(unsigned level) {
-	Hull	h;
+	Hull		h;
+	HullType	ht;
 
-	h.armor.actual = 0;
-	h.isVisible = false;
-	h.life.actual = 0;
-	h.nMaxStaff = 0;
-	h.nWeaponsSlot = 0;
-	h.price = 0;
-	h.type = 0;
+	static const int table_life[] = {
+		500,
+		1500,
+		2000,
+		2500,
+		4000
+	};
+
+	static const int table_max_staff[] = {
+		4,
+		5,
+		6,
+		8,
+		10
+	};
+
+	static const int table_max_weapon_slot[] = {
+		2,
+		3,
+		4,
+		6,
+		8
+	};
+
+	static const int table_price[] = {
+		500,
+		1000,
+		1500,
+		2000,
+		5000
+	};
+
+	static const float table_fuel[] = {
+		50.f,
+		120.f,
+		200.f,
+		300.f,
+		500.f
+	};
+
+	h.isVisible = true;
+
+	if (level == 0)
+		ht = H_SMALL;
+	else
+		ht = rand_born(0, H_LAST - 1);
+
+	h.life.actual = table_life[ht];
+	h.nMaxStaff = table_max_staff[ht];
+	h.nWeaponsSlot = table_max_weapon_slot[ht];
+
+	h.fuel.actual = h.fuel.max = table_fuel[ht];
+
+	h.price = table_price[ht];
+	h.type = ht;
 
 	return h;
 }
@@ -165,4 +214,20 @@ void	armor_display(Armor armor) {
 	printf("\nArmure [%s] efficace contre %s:\n", armor.name, table_armor_type[armor.type]);
 	printf("\tPoint de vie: %.3f\n", armor.life);
 	printf("\tEfficacite: %.3f%%\n", armor.armor);
+}
+
+void	hull_display(Hull hull) {
+	static char *hull_name[] = {
+		"Tres petite",
+		"Petite",
+		"Normale",
+		"Grande",
+		"Tres grande"
+	};
+
+	printf("\nCoque (%s):", hull_name[hull.type]);
+	printf("\tPoint de vie: %d/%d\n", hull.life.actual, hull.life.actual);
+	printf("\tCarburant: %.3f/%.3f\n", hull.fuel.actual, hull.fuel.max);
+	printf("\tPersonnel maximum: %d\n", hull.nMaxStaff);
+	printf("\tNombre maximum d'armes: %d\n", hull.nWeaponsSlot);
 }
