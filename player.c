@@ -144,7 +144,7 @@ float	player_getDistanceOfPlanet(Player player, Planet planet) {
 
 void	player_set_planet(Player *player) {
 	player->actPlanet = player->actStarsystem->planet[player->planetIndex];
-	player->actPlanet.visited = true;
+	player->actStarsystem->planet[player->planetIndex].visited = true;
 
 	player->stats.planetsVisited++;
 	player->satelliteIndex = -1;

@@ -12,7 +12,7 @@ static const int table_life[] = {
 	100,	// humain
 	90,		// robot
 	80,		// alien
-	150,	// roc
+	130,	// roc
 	60,		// intel
 	200
 };
@@ -20,10 +20,10 @@ static const int table_life[] = {
 static const float table_eff[] = {
 	1.00f,	// humain
 	1.10f,	// robot
-	1.10f,	// alien
+	1.20f,	// alien
 	0.90f,	// roc
 	1.50f,	// intel
-	0.70f	// warbrog
+	0.60f	// warbrog
 };
 
 Staff	staff_create(void) {

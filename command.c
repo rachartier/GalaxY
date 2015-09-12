@@ -234,7 +234,7 @@ void f_cmd_recruitement(Player *player, Token *token) {
 		"En avant toute!"
 	};
 
-	if (CHANCE(3) && !player->actPlanet.visited && player->actPlanet.isHabitable) {
+	if (CHANCE(0) && !player->actPlanet.visited && player->actPlanet.isHabitable) {
 		int		n = rand_born(1, 4);
 		Staff	*staff = xmalloc(n * sizeof(Staff));
 		char	c;
@@ -306,4 +306,8 @@ void	f_cmd_fired(Player *player, Token *token) {
 		}
 	}
 	purge_stdin();
+}
+
+void	f_cmd_setPosition(Player *player, Token *token) {
+	crew_display(player->crew);
 }
