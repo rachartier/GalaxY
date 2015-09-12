@@ -57,6 +57,7 @@ float	player_getDistanceOfPlanet(Player player, Planet planet);
 
 void	player_info(Player player);
 
+void	player_set_planet(Player *player);
 void	player_move_toPlanet(Player *player, int dir);
 void	player_move_toSystem(Player *player, StarSystem *starsystem);
 void	player_move_toSatellite(Player *player);

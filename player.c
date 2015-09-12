@@ -8,6 +8,7 @@
 #include "memory.h"
 #include "menu.h"
 #include "planet.h"
+#include "drop.h"
 
 Player* player_create(unsigned life, unsigned shield, float fuel, unsigned weight, unsigned food, unsigned power) {
 	Player	*player = xmalloc(sizeof(Player));
@@ -19,6 +20,8 @@ Player* player_create(unsigned life, unsigned shield, float fuel, unsigned weigh
 
 	user = player_setByUser();
 
+	player->power = 0u;
+
 	crew_add_player(&player->crew, user);
 
 	player_setItem(player, I_WEAPON, &w);
@@ -28,10 +31,9 @@ Player* player_create(unsigned life, unsigned shield, float fuel, unsigned weigh
 	player->exp = 0;
 	player->lvl = 50;
 
-	player->money = 1000;
+	player->money = 1000u;
 	player->planetIndex = 0;
 	player->satelliteIndex = -1;
-	//player->power = power;
 	player->stats.planetsVisited = 0;
 	player->wantToExit = false;
 
@@ -121,8 +123,8 @@ void	player_setFood(Player *player, unsigned food, unsigned maxFood) {
 
 void	player_info(Player player) {
 	printf("\t- Scraps: %u\n", player.money);
-	//printf("\t- Degats d'attaque: %u\n", player.power);
-	//printf("\t- Nombre de personne a bord: %u/%u\n", 0, 0);
+	printf("\t- Degats d'attaque: %u\n", player.power);
+	printf("\t- Nombre de personne a bord: %u/%u\n", player.crew.nStaff, player.hull.nMaxStaff);
 	printf("Nombre de planetes visitees: %d\n", player.stats.planetsVisited);
 
 	hull_display(player.hull);
@@ -140,30 +142,36 @@ float	player_getDistanceOfPlanet(Player player, Planet planet) {
 	return dst;
 }
 
+void	player_set_planet(Player *player) {
+	player->actPlanet = player->actStarsystem->planet[player->planetIndex];
+	player->actPlanet.visited = true;
+
+	player->stats.planetsVisited++;
+	player->satelliteIndex = -1;
+
+	if (player->actPlanet.isPortal)
+		printf("\nVous arrivez a un %s\n", player->actPlanet.name);
+	else
+		printf("\nVous arrivez a la planete %s\n", player->actPlanet.name);
+
+	planet_show_stats(player->actPlanet);
+}
+
 void	player_move_toPlanet(Player *player, int dir) {
 	if (player->planetIndex + dir >= 0 && player->planetIndex + dir < (int)player->actStarsystem->numberPlanets) {
 		player->planetIndex += dir;
 		float fuelCost = player_getDistanceOfPlanet(*player, player->actStarsystem->planet[player->planetIndex]);
 
 		if (player->hull.fuel.actual - fuelCost > 0.f) {
-			memcpy(&player->actPlanet, &player->actStarsystem->planet[player->planetIndex], sizeof(Planet));
-			player->actStarsystem->planet[player->planetIndex].visited = true;
+			player_set_planet(player);
 
 			if (player->actPlanet.type == P_TYPE_STAR)
-				printf("\nVous etes dans le systeme stellaire\n");
+				printf("\nVous etes deja dans le systeme stellaire\n");
 			else if (dir == 0)
 				printf("Vous revenez a la planete %s\n", player->actPlanet.name);
 			else {
-				if (player->actPlanet.isPortal)
-					printf("Vous arrivez a un %s\n", player->actPlanet.name);
-				else
-					printf("Vous arrivez a la planete %s\n", player->actPlanet.name);
 				player->hull.fuel.actual -= fuelCost;
 			}
-			player->stats.planetsVisited++;
-			player->satelliteIndex = -1;
-
-			planet_show_stats(player->actPlanet);
 		}
 		else
 			printf("Vous n'avez plus de carburant\n");
@@ -195,53 +203,10 @@ void	player_drop(Player *player, Planet *planet) {
 			if (CHANCE(2)) {
 				printf("Vous trouvez un vaisseau...\n");
 
-				if (CHANCE(3)) {
-					unsigned addmoney = rand_born(5, 20);
-
-					printf("\t- Vous prenez %u scraps\n", addmoney);
-
-					player->money += addmoney;
-				}
-				if (CHANCE(3)) {
-					if (player->hull.fuel.actual < player->hull.fuel.max) {
-						float fuel = rand_float(10.f, 30.f);
-
-						printf("\t- Vous recuperez %.1f fuel\n", fuel);
-
-						player_setFuel(player, player->hull.fuel.actual + fuel, player->hull.fuel.max);
-					}
-				}
-				if (CHANCE(8)) {
-					Staff staff = staff_create();
-					char  c;
-
-					printf("Vous trouvez un membre du vaisseau: ");
-
-					staff_set_life(&staff, rand_born(10, 80));
-
-					staff_display(staff);
-
-					printf("Voulez vous le recruter [o/n]?");
-					scanf("%c", &c);
-
-					if (c == 'o') {
-						crew_add_staff(&player->crew, staff);
-					}
-				}
-				if (CHANCE(10)) {
-					Weapon	w = weapon_create_rand(player->lvl);
-					char	c;
-
-					printf("Vous trouvez une arme: ");
-					weapon_display(w);
-
-					printf("Voulez vous la prendre [o/n]? ");
-
-					scanf("%c", &c);
-					if (c == 'o') {
-						player_setItem(player, I_WEAPON, &w);
-					}
-				}
+				drop_staff(player);
+				drop_scrap(player);
+				drop_fuel(player);
+				drop_weapon(player);
 			}
 			else
 				printf("Vous ne trouvez rien d'interessant\n");
@@ -256,8 +221,12 @@ void	player_drop(Player *player, Planet *planet) {
 void	player_setItem(Player *player, ItemType iType, void *item) {
 	switch (iType) {
 	case I_WEAPON:
-		player->weapon = *(Weapon *)item;
-		break;
+	{
+		Weapon	w = *(Weapon *)item;
+		player->weapon = w;
+		player->power += w.damage;
+	}
+	break;
 	case I_ARMOR:
 		player->armor = *(Armor *)item;
 		break;

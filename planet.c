@@ -83,7 +83,9 @@ void		planet_show_stats(Planet planet) {
 		"Humains",
 		"Robots",
 		"Aliens",
-		"Rocs"
+		"Rocs",
+		"Intel",
+		"Warbrog"
 	};
 
 	static const char *g_governementName[] = {
@@ -232,32 +234,36 @@ void chose_random_species(Planet *planet) {
 
 	static const int bornMin[] = {
 		0,
-		13,
-		15,
-		16
+		8,
+		12,
+		14,
+		16,
+		20
 	};
 
 	const int bornMax[] = {
 		bornMin[1] - 1,
 		bornMin[2] - 1,
 		bornMin[3] - 1,
-		bornMin[3] + 1
+		bornMin[4] - 1,
+		bornMin[5] - 1,
+		bornMin[5] + 6
 	};
 
-	specie = rand_born(0, 19);
+	specie = rand_born(0, bornMin[5] + 6);
 
-	if (BORN(specie, S_TYPE_HUMAN)) {
+	if (BORN(specie, S_TYPE_HUMAN))
 		specie = S_TYPE_HUMAN;
-	}
-	else if (BORN(specie, S_TYPE_DROID)) {
+	else if (BORN(specie, S_TYPE_DROID))
 		specie = S_TYPE_DROID;
-	}
-	else if (BORN(specie, S_TYPE_ALIEN)) {
+	else if (BORN(specie, S_TYPE_ALIEN))
 		specie = S_TYPE_ALIEN;
-	}
-	else if (BORN(specie, S_TYPE_ROCK)) {
+	else if (BORN(specie, S_TYPE_ROCK))
 		specie = S_TYPE_ROCK;
-	}
+	else if (BORN(specie, S_TYPE_WARBROG))
+		specie = S_TYPE_WARBROG;
+	else if (BORN(specie, S_TYPE_INTEL))
+		specie = S_TYPE_INTEL;
 	else
 		specie = S_TYPE_HUMAN;
 	planet->specie = specie;

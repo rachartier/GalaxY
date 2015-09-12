@@ -84,4 +84,14 @@ void	commerce_display(Commerce *commerce) {
 			armor_display(commerce->armor[i]);
 		}
 	}
+	/*	for (int i = 0; i < MAX_ENGINE_ITEM; ++i) {
+			if (commerce->engine[i].isVisible) {
+				armor_display(commerce->engine[i]);
+			}
+		}*/
+	for (int i = 0; i < MAX_HULL_ITEM; ++i) {
+		if (commerce->hull[i].isVisible) {
+			hull_display(commerce->hull[i]);
+		}
+	}
 }

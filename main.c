@@ -6,6 +6,7 @@
 #include "menu.h"
 #include "player.h"
 #include "command.h"
+#include "memory.h"
 
 void	set_seed(void) {
 	Menu		*menu = menu_create();
@@ -35,6 +36,8 @@ void	set_seed(void) {
 			running = false;
 			printf("Entrez un seed: ");
 			scanf("%u", &seed);
+
+			purge_stdin();
 			break;
 		default:
 			running = false;

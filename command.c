@@ -31,7 +31,7 @@ static const char *g_commandName[] = {
 };
 
 static const char *g_commandDetail[] = {
-	"\n(i) [p/sys/sat/v/e]: Donne des informations sur une planete, un systeme, un satellite, le vaisseau...",
+	"\n\n(i) [p/sys/sat/v/e]: Donne des informations sur une planete, un systeme, un satellite, le vaisseau...",
 	"(ls): Liste toutes les planetes du systeme actuelle",
 	"(al) [prochain[e], planete/systeme] / [satellite, id]: Deplace le vaisseau",
 	"(f): Permet de fouiller une planete deserte",
@@ -276,7 +276,7 @@ void f_cmd_recruitement(Player *player, Token *token) {
 		purge_stdin();
 	}
 	else if (!player->actPlanet.isHabitable) {
-		printf("Vous ne pouvez pas recruter sur une planete deserte\n");
+		printf("Vous ne pouvez pas recruter sur %s\n", (player->actPlanet.type == P_TYPE_PORTAL_IN || player->actPlanet.type == P_TYPE_PORTAL_OUT) ? "un portail" : "une planete deserte");
 	}
 	else {
 		printf("Personne a recruter\n");
