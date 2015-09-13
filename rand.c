@@ -7,7 +7,7 @@
 #include <ctype.h>
 
 int		rand_born(int min, int max) {
-	if(max - min != 0)
+	if (max - min != 0)
 		return (rand() % (max - min) + min);
 	return 0;
 }
@@ -27,10 +27,10 @@ float	rand_float(float min, float max) {
 	return min + (((float)rand() / (float)(RAND_MAX / (max - min))));
 }
 
-char	*rand_name(void) {
-	char name[32];
+Name	rand_name(void) {
+	Name name;
 
-	memset(name, 0, 32);
+	memset(name.str, 0, 32);
 
 	char pairs[] = { // TXTELITE.c
 		"..lexegezacebiso"
@@ -46,30 +46,30 @@ char	*rand_name(void) {
 	int pair3 = floor(2 * (rand_float(0.f, 1.f) * (pairsLenght / 2)));
 	int pair4 = floor(2 * (rand_float(0.f, 1.f) * (pairsLenght / 2)));
 
-	name[0] = toupper(pairs[pair1]);
-	name[1] = pairs[pair1 + 1];
+	name.str[0] = toupper(pairs[pair1]);
+	name.str[1] = pairs[pair1 + 1];
 
-	name[2] = pairs[pair2];
-	name[3] = pairs[pair2 + 1];
+	name.str[2] = pairs[pair2];
+	name.str[3] = pairs[pair2 + 1];
 
-	name[4] = pairs[pair3];
-	name[5] = pairs[pair3 + 1];
+	name.str[4] = pairs[pair3];
+	name.str[5] = pairs[pair3 + 1];
 
-	name[6] = pairs[pair4];
-	name[7] = pairs[pair4 + 1];
+	name.str[6] = pairs[pair4];
+	name.str[7] = pairs[pair4 + 1];
 
 	int i = 0;
 
-	while (name[i] != '\0') {
-		if (name[i] == '.') {
-			for (int k = i; name[k] != '\0'; k++) {
-				name[k] = name[k + 1];
+	while (name.str[i] != '\0') {
+		if (name.str[i] == '.') {
+			for (int k = i; name.str[k] != '\0'; k++) {
+				name.str[k] = name.str[k + 1];
 			}
 		}
 		i++;
 	}
 
-	name[i] = '\0';
+	name.str[i] = '\0';
 
 	return name;
 }

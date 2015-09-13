@@ -12,7 +12,7 @@ static const int table_life[] = {
 	100,	// humain
 	90,		// robot
 	80,		// alien
-	130,	// roc
+	150,	// roc
 	60,		// intel
 	200
 };
@@ -20,10 +20,10 @@ static const int table_life[] = {
 static const float table_eff[] = {
 	1.00f,	// humain
 	1.10f,	// robot
-	1.20f,	// alien
+	1.10f,	// alien
 	0.90f,	// roc
 	1.50f,	// intel
-	0.60f	// warbrog
+	0.70f	// warbrog
 };
 
 Staff	staff_create(void) {
@@ -130,5 +130,5 @@ void	staff_set_specie(Staff *staff, SpecieType specie) {
 }
 
 void	staff_gen_name(Staff *staff) {
-	strcpy(staff->name, rand_name());
+	strcpy(staff->name, rand_name().str);
 }

@@ -25,7 +25,7 @@ void	set_seed(void) {
 
 		switch (cmd) {
 		case 'a': {
-			seed = (unsigned)time(NULL) * clock();
+			seed = (unsigned)time(NULL) / clock();
 
 			printf("Seed: %u\n", seed);
 

@@ -307,7 +307,3 @@ void	f_cmd_fired(Player *player, Token *token) {
 	}
 	purge_stdin();
 }
-
-void	f_cmd_setPosition(Player *player, Token *token) {
-	crew_display(player->crew);
-}
