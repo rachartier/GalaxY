@@ -188,7 +188,7 @@ bool gen_non_habitable_area(Planet *planet, PlanetCondition pCondition, float pe
 		double	areaHabitable = planet->areaTotal;
 
 		if (planet->isColony)
-			areaNonHabitable = rand_float(70.f, 95.f);
+			areaNonHabitable = rand_float(70.f, 90f);
 		else
 			areaNonHabitable = rand_float(0.f, percentage);
 

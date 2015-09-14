@@ -6,7 +6,7 @@
 
 #include "rand.h"
 
-#define NMARKS	8
+#define NMARKS	7
 #define MAXMARK(a)	((a/2 >= NMARKS) ? NMARKS - 1 : a/2)
 
 static char *gTable_markName[] = {
@@ -16,19 +16,18 @@ static char *gTable_markName[] = {
 	"Mark IV",
 	"Mark V",
 	"Mark VI",
-	"Mark X",
 	"Final"
 };
 
 Weapon	weapon_create_rand(unsigned level) {
 	static float table_weapon[] = {
-		1,
-		1.2,
-		1.5,
-		1.8,
-		1.9,
-		2.3,
-		3.2
+		1.f,
+		1.2f,
+		1.5f,
+		1.8f,
+		1.9f,
+		2.3f,
+		3.2f
 	};
 
 	static int table_damage[] = {
