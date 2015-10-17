@@ -166,7 +166,7 @@ void	player_move_toPlanet(Player *player, int dir) {
 			player_set_planet(player);
 
 			if (player->actPlanet.type == P_TYPE_STAR)
-				printf("\nVous etes deja dans le systeme stellaire\n");
+				printf("\nVous etes deja dans le systeme planetaire\n");
 			else if (dir == 0)
 				printf("Vous revenez a la planete %s\n", player->actPlanet.name);
 			else {

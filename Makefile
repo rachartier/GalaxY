@@ -5,7 +5,7 @@ BINDIR=$(PREFIX)/bin
 
 CC=gcc
 CPPFLAGS=-I$(INCDIR)
-CFLAGS=-Wall -Wextra -std=c99 -lm
+CFLAGS=-Wall -Wextra -std=c99 -lm -g
 LDFLAGS=
 
 EXEC=$(BINDIR)/GalaxY

@@ -123,7 +123,7 @@ void		planet_show_stats(Planet planet) {
 		printf("Est un %s\n", g_planetTypeName[planet.type]);
 		printf("Rayon: %.3fkm\n", planet.radius);
 		if (planet.type == P_TYPE_PORTAL_IN)
-			printf("Tapez \"entrer portail\" pour aller dans un nouveau systeme stellaire\n");
+			printf("Tapez \"entrer\" pour aller dans un nouveau systeme planetaire\n");
 	}
 	else {
 		printf("Nom: %s\n", planet.name);
