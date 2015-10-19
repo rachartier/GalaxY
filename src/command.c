@@ -181,7 +181,7 @@ void	f_cmd_search(Player *player, Token *token) {
 }
 
 void f_cmd_portal(Player *player, Token *token) {
-   if(player->actPlanet.isPortal) {
+   if(player->planetIndex == player->actStarsystem->numberPlanets - 1) {
       char		c;
 
 		printf("Attention, vous ne pourrez plus revenir dans ce systeme planetaire\nVoulez-vous continuer [o/n]?\n");

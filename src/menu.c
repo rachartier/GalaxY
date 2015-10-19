@@ -18,20 +18,18 @@ void	menu_destroy(Menu *menu) {
 	xfree(menu);
 }
 
-char	menu_getcmd(Menu menu) {
-	char c;
+int menu_getcmd(Menu menu) {
+	int i;
 
 	printf("\n> ");
 
-	scanf("%c", &c);
+	scanf("%d", &i);
 	putchar('\n');
 
 	purge_stdin();
 
-	c = (char)tolower((char)c);
-
-	if (c >= 'a' && c < 'a' + (int)menu.endList)
-		return c;
+	if (i >= 1 && i < 1 + (int)menu.endList)
+		return i;
 	return 0;
 }
 
@@ -71,6 +69,6 @@ void	menu_display(Menu menu) {
 
 	for (i = 0; i < menu.endList; ++i) {
 		if (menu.element[i].isVisible)
-			printf("%c> %s\n", 'a' + i, menu.element[i].text);
+			printf("%d> %s\n", i + 1, menu.element[i].text);
 	}
 }
