@@ -19,7 +19,7 @@ static const char *g_commandName[] = {
 	"recruter",
 	"virer",
 	"quitter",
-	"i",
+	"info",
 	"ls",
 	"al",
 	"f",
@@ -31,15 +31,15 @@ static const char *g_commandName[] = {
 };
 
 static const char *g_commandDetail[] = {
-	"\n\n(i) [p/sys/sat/v/e]: Donne des informations sur une planete, un systeme, un satellite, le vaisseau...",
-	"(ls): Liste toutes les planetes du systeme actuelle",
-	"(al) [prochain[e], planete/systeme] / [satellite, id]: Deplace le vaisseau",
-	"(f): Permet de fouiller une planete deserte",
-	"(e) [portail]: Permet d'aller dans le prochain systeme stellaire",
-	"(?): Ouvre l'aide",
-	"(r): Recrute du personnel",
-	"(v): Vire une personne",
-	"(q): Quitte le jeu"
+	"[ /vaisseau/equipage] (i [ /v/e])\n\tinfos sur une planete, le vaisseau, l'equipage",
+	"(ls) : liste toutes les planetes du systeme planétaire",
+	"[suiv/prec] (al [s/p])\n\t permet de deplacer de planete en planete",
+	"(f) : fouiller la planete actuelle",
+	"(e) : permet de passer au prochain systeme planetaire",
+	"(?) : ouvre l'aide",
+	"(r) : recrute du personnel",
+	"(v) : vire une personne",
+	"(q) : quitte le jeu"
 };
 
 void(*cmdFunction[NFUNCTIONS])(Player *, Token *) = {
@@ -59,7 +59,7 @@ void	cmd_get(Player *player) {
 	Token	token[16];
 	int		funcID = -1;
 
-	printf("\n\n%s[%d] -> ", player->actPlanet.name, player->planetIndex);
+	printf("\n\n%s [%d/%d] >>> ", player->actPlanet.name, player->planetIndex, player->actStarsystem->numberPlanets - 1);
 
 	fgets(str, MAX_LENGHT, stdin);
 
@@ -97,19 +97,13 @@ int		parse(char *str, Token *token) {
 }
 
 void	f_cmd_info(Player *player, Token *token) {
-	if (strcmp(token[1].str, "planete") == 0 || strcmp(token[1].str, "p") == 0) {
-		planet_show_stats(player->actPlanet);
-	}
-	else if (strcmp(token[1].str, "satellite") == 0 || strcmp(token[1].str, "sat") == 0) {
+	if (strcmp(token[1].str, "satellite") == 0 || strcmp(token[1].str, "s") == 0) {
 		if (player->satelliteIndex != -1) {
 			printf("\nSatellite n%u\n", player->satelliteIndex + 1);
 			planet_show_satelliteStats(player->actPlanet.satellite[player->satelliteIndex]);
 		}
 		else
 			printf("Vous n'etes pas sur un satellite, tapez \"aller satellite [numeros]\"\n\n");
-	}
-	else if (strcmp(token[1].str, "systeme") == 0 || strcmp(token[1].str, "sys") == 0) {
-		f_cmd_list(player, token);
 	}
 	else if (strcmp(token[1].str, "vaisseau") == 0 || strcmp(token[1].str, "v") == 0) {
 		player_info(*player);
@@ -118,14 +112,14 @@ void	f_cmd_info(Player *player, Token *token) {
 		crew_display(player->crew);
 	}
 	else {
-		printf("%s", g_commandDetail[CMD_INFO]);
+		planet_show_stats(player->actPlanet);
 	}
 }
 
 void	f_cmd_list(Player *player, Token *token) {
 	(void)token;
 
-	printf("Il y a %u planetes dans ce systeme:\n", player->actStarsystem->numberPlanets - 2);
+	printf("Il y a %u planetes dans ce systeme :\n", player->actStarsystem->numberPlanets - 1);
 
 	for (unsigned i = 0; i < player->actStarsystem->numberPlanets; ++i) {
 		if (player->actStarsystem->planet[i].type == P_TYPE_STAR) {
@@ -133,9 +127,15 @@ void	f_cmd_list(Player *player, Token *token) {
 		}
 		else {
 			printf("- %s", player->actStarsystem->planet[i].name);
-			for (int j = strlen(player->actStarsystem->planet[i].name); j < 18; ++j)
+         int j;
+         j = strlen(player->actStarsystem->planet[i].name);
+         if (i == player->planetIndex) {
+            printf(" (vaisseau)");
+            j += 11;
+         }
+			for (; j < 30; ++j)
 				putchar(' ');
-			printf("Habitee[%c], Visitee[%c], Dst vaisseau[%.1f]/Etoile[%.1f]\n",
+			printf("Hab.[%c], Vu(e)[%c], Dist. vaisseau[%.1f]/Etoile[%.1f]\n",
 				(player->actStarsystem->planet[i].isHabitable) ? 'X' : ' ',
 				(player->actStarsystem->planet[i].visited) ? 'X' : ' ',
 				player_getDistanceOfPlanet(*player, player->actStarsystem->planet[i]),
@@ -145,29 +145,21 @@ void	f_cmd_list(Player *player, Token *token) {
 }
 
 void f_cmd_jump(Player *player, Token *token) {
-	if ((strcmp(token[1].str, "prochaine") == 0 || strcmp(token[1].str, "pro") == 0)
-		&& (strcmp(token[2].str, "planete") == 0 || strcmp(token[2].str, "p") == 0)) {
+	if ((strcmp(token[1].str, "suiv") == 0 || strcmp(token[1].str, "s") == 0)) {
 		player_move_toPlanet(player, 1);
 	}
-	else if ((strcmp(token[1].str, "precedente") == 0 || strcmp(token[1].str, "pre") == 0)
-		&& (strcmp(token[2].str, "planete") == 0 || strcmp(token[2].str, "p") == 0)) {
+	else if ((strcmp(token[1].str, "prec") == 0 || strcmp(token[1].str, "p") == 0)) {
 		player_move_toPlanet(player, -1);
 	}
 
+   // TODO : commande spéciale pour les satellites ? Ex : satellite 1 (déplace
+   // sur le satellite 1 de la planète actuelle
 	else if (strcmp(token[1].str, "satellite") == 0 || strcmp(token[1].str, "sat") == 0) {
 		if (token[2].str != NULL) {
 			int i = atoi(token[2].str);
 
 			player->satelliteIndex = i - 1;
 			player_move_toSatellite(player);
-		}
-	}
-	else if (strcmp(token[1].str, "planete") == 0 || strcmp(token[1].str, "p") == 0) {
-		if (player->satelliteIndex != -1) {
-			player_move_toPlanet(player, 0);
-		}
-		else {
-			printf("Vous etes deja sur la planete\n");
 		}
 	}
 	else {
@@ -189,18 +181,18 @@ void	f_cmd_search(Player *player, Token *token) {
 }
 
 void f_cmd_portal(Player *player, Token *token) {
-	if ((strcmp(token[1].str, "portail") == 0 || strcmp(token[1].str, "p")) == 0 && player->actPlanet.type == P_TYPE_PORTAL_IN) {
-		starsys_destroy(player->actStarsystem);
+   if(player->planetIndex == player->actStarsystem->numberPlanets - 1) {
+      char		c;
 
-		StarSystem	*sys = starsys_create();
-		char		c;
-
-		printf("Attention, vous ne pourrez plus revenir dans ce systeme stellaire\nVoulez-vous continuer [o/n]?\n");
+		printf("Attention, vous ne pourrez plus revenir dans ce systeme planetaire\nVoulez-vous continuer [o/n]?\n");
 
 		scanf("%c", &c);
 
-		if (c == 'o')
-			player_move_toSystem(player, sys);
+		if (c == 'o') {
+         starsys_destroy(player->actStarsystem);
+         StarSystem	*sys = starsys_create();
+         player_move_toSystem(player, sys);
+      }
 
 		purge_stdin();
 	}
@@ -213,9 +205,10 @@ void f_cmd_help(Player *player, Token *token) {
 	(void)player;
 	(void)token;
 
+   putchar('\n');
+   printf("COMMANDE [ARGUMENT] (VERSION COURTE [ARGUMENT]): DESCRIPTION\n\n");
 	for (int i = 0; i < NFUNCTIONS; ++i) {
-		printf("%s%s\n", g_commandName[i], g_commandDetail[i]);
-		printf("-------------------------------------------------------------------------------\n");
+		printf("%s %s\n\n", g_commandName[i], g_commandDetail[i]);
 	}
 }
 

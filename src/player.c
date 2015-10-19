@@ -45,7 +45,7 @@ Staff	player_setByUser(void) {
 	Menu	*menu = menu_create();
 	int		i = 0;
 	char	name[32];
-	char	c;
+	int   cmd;
 
 	menu_setTitle(menu, "Creation du personnage");
 	menu_display(*menu);
@@ -71,21 +71,21 @@ Staff	player_setByUser(void) {
 	name[i] = '\0';
 
 	printf("\nRace:\n");
-	printf("\ta) Humain\n");
-	printf("\tb) Robot\n");
-	printf("\tc) Alien\n");
-	printf("\td) Roc\n");
-	printf("\te) Intel\n");
-	printf("\tf) Warbrog\n");
+	printf("\t1) Humain\n");
+	printf("\t2) Robot\n");
+	printf("\t3) Alien\n");
+	printf("\t4) Roc\n");
+	printf("\t4) Intel\n");
+	printf("\t5) Warbrog\n");
 
-	c = menu_getcmd(*menu);
-	while (c == 0) {
+	cmd = menu_getcmd(*menu);
+	while (cmd == 0) {
 		printf("Entrez une classe valide\n");
 
-		c = menu_getcmd(*menu);
+		cmd = menu_getcmd(*menu);
 	}
 
-	staff = staff_create_user(name, (SpecieType)(c - 'a'));
+	staff = staff_create_user(name, (SpecieType)(cmd - 1));
 
 	menu_destroy(menu);
 
@@ -158,7 +158,7 @@ void	player_set_planet(Player *player) {
 }
 
 void	player_move_toPlanet(Player *player, int dir) {
-	if (player->planetIndex + dir >= 0 && player->planetIndex + dir < (int)player->actStarsystem->numberPlanets) {
+	if (player->planetIndex + dir > 0 && player->planetIndex + dir < (int)player->actStarsystem->numberPlanets) {
 		player->planetIndex += dir;
 		float fuelCost = player_getDistanceOfPlanet(*player, player->actStarsystem->planet[player->planetIndex]);
 
@@ -166,7 +166,7 @@ void	player_move_toPlanet(Player *player, int dir) {
 			player_set_planet(player);
 
 			if (player->actPlanet.type == P_TYPE_STAR)
-				printf("\nVous etes deja dans le systeme stellaire\n");
+				printf("\nVous etes deja dans le systeme planetaire\n");
 			else if (dir == 0)
 				printf("Vous revenez a la planete %s\n", player->actPlanet.name);
 			else {

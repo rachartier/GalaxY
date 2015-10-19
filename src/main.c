@@ -10,7 +10,7 @@
 
 void	set_seed(void) {
 	Menu		*menu = menu_create();
-	char		cmd = 1;
+	int      cmd = 1;
 	bool		running = true;
 	unsigned	seed = 42;
 
@@ -24,7 +24,7 @@ void	set_seed(void) {
 		cmd = menu_getcmd(*menu);
 
 		switch (cmd) {
-		case 'a': {
+		case 1: {
 			seed = (unsigned)time(NULL) / clock();
 
 			printf("Seed: %u\n", seed);
@@ -32,7 +32,7 @@ void	set_seed(void) {
 			running = false;
 			break;
 		}
-		case 'b':
+		case 2:
 			running = false;
 			printf("Entrez un seed: ");
 			scanf("%u", &seed);
@@ -82,12 +82,12 @@ int main(void) {
 		menu_display(*mainMenu);
 		cmd = menu_getcmd(*mainMenu);
 		switch (cmd) {
-		case 'a':
+		case 1:
 			play();
 			break;
-		case 'b':
+		case 2:
 			break;
-		case 'c':
+		case 3:
 			exit = true;
 			break;
 		default:
