@@ -120,7 +120,9 @@ Engine	engine_create_rand(unsigned level) {
 	e.isVisible = false;
 	e.price = 0;
 	e.speed = 0;
-	e.type;
+	e.type = 0;
+
+	level = 0;
 
 	return e;
 }

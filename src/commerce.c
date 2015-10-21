@@ -6,10 +6,12 @@
 #include "ship_util.h"
 
 void	commerce_create(Commerce *commerce, Planet *planet, unsigned level) {
+	(void)planet;
+	
 	int		randNumWeapon = rand_born(0, MAX_WEAPON_ITEM);
 	int		randNumArmor = rand_born(0, MAX_ARMOR_ITEM);
-	int		randNumEngine = rand_born(0, MAX_ENGINE_ITEM);
-	int		randNumHull = rand_born(0, MAX_HULL_ITEM);
+//	int		randNumEngine = rand_born(0, MAX_ENGINE_ITEM);
+//	int		randNumHull = rand_born(0, MAX_HULL_ITEM);
 
 	for (int i = 0; i < MAX_WEAPON_ITEM; ++i) {
 		if (i < randNumWeapon) {

@@ -31,9 +31,9 @@ static const char *g_commandName[] = {
 };
 
 static const char *g_commandDetail[] = {
-	"[ /vaisseau/equipage] (i [ /v/e])\n\tinfos sur une planete, le vaisseau, l'equipage",
-	"(ls) : liste toutes les planetes du systeme planétaire",
-	"[suiv/prec] (al [s/p])\n\t permet de deplacer de planete en planete",
+	"[ /vaisseau/equipage] (i [ /v/e])\n\t\tinfos sur une planete, le vaisseau, l'equipage",
+	"(ls) : liste toutes les planetes du systeme planetaire",
+	"[suiv/prec] (al [s/p])\n\t\tpermet de deplacer de planete en planete",
 	"(f) : fouiller la planete actuelle",
 	"(e) : permet de passer au prochain systeme planetaire",
 	"(?) : ouvre l'aide",
@@ -126,16 +126,19 @@ void	f_cmd_list(Player *player, Token *token) {
 			printf("- Etoile\n");
 		}
 		else {
-			printf("- %s", player->actStarsystem->planet[i].name);
-         int j;
-         j = strlen(player->actStarsystem->planet[i].name);
-         if (i == player->planetIndex) {
-            printf(" (vaisseau)");
-            j += 11;
-         }
-			for (; j < 30; ++j)
+			int j = strlen(player->actStarsystem->planet[i].name);
+
+			if (i == (unsigned)player->planetIndex) {
+				printf("- [ %s ]", player->actStarsystem->planet[i].name);
+				j += 4;
+			}
+			else {
+				printf("- %s", player->actStarsystem->planet[i].name);
+			}
+
+			for (; j < 20; ++j)
 				putchar(' ');
-			printf("Hab.[%c], Vu(e)[%c], Dist. vaisseau[%.1f]/Etoile[%.1f]\n",
+			printf("Hab[%c], Vis[%c], Dst. vaisseau[%.1f]/Etoile[%.1f]\n",
 				(player->actStarsystem->planet[i].isHabitable) ? 'X' : ' ',
 				(player->actStarsystem->planet[i].visited) ? 'X' : ' ',
 				player_getDistanceOfPlanet(*player, player->actStarsystem->planet[i]),
@@ -152,8 +155,8 @@ void f_cmd_jump(Player *player, Token *token) {
 		player_move_toPlanet(player, -1);
 	}
 
-   // TODO : commande spéciale pour les satellites ? Ex : satellite 1 (déplace
-   // sur le satellite 1 de la planète actuelle
+	// TODO : commande spéciale pour les satellites ? Ex : satellite 1 (déplace
+	// sur le satellite 1 de la planète actuelle
 	else if (strcmp(token[1].str, "satellite") == 0 || strcmp(token[1].str, "sat") == 0) {
 		if (token[2].str != NULL) {
 			int i = atoi(token[2].str);
@@ -181,23 +184,23 @@ void	f_cmd_search(Player *player, Token *token) {
 }
 
 void f_cmd_portal(Player *player, Token *token) {
-   if(player->planetIndex == player->actStarsystem->numberPlanets - 1) {
-      char		c;
+	(void)token;
+
+	if ((unsigned)player->planetIndex == player->actStarsystem->numberPlanets - 1) {
+		char		c;
 
 		printf("Attention, vous ne pourrez plus revenir dans ce systeme planetaire\nVoulez-vous continuer [o/n]?\n");
 
 		scanf("%c", &c);
 
 		if (c == 'o') {
-         starsys_destroy(player->actStarsystem);
-         StarSystem	*sys = starsys_create();
-         player_move_toSystem(player, sys);
-      }
-
-		purge_stdin();
-	}
-	else {
-		printf("Vous n'etes pas sur un portail d'entree\n");
+			starsys_destroy(player->actStarsystem);
+			StarSystem	*sys = starsys_create();
+			player_move_toSystem(player, sys);
+		}
+		else {
+			printf("Vous n'etes pas sur un portail d'entree\n");
+		}
 	}
 }
 
@@ -205,10 +208,10 @@ void f_cmd_help(Player *player, Token *token) {
 	(void)player;
 	(void)token;
 
-   putchar('\n');
-   printf("COMMANDE [ARGUMENT] (VERSION COURTE [ARGUMENT]): DESCRIPTION\n\n");
+	putchar('\n');
+	printf("COMMANDE [ARGUMENT] (VERSION COURTE [ARGUMENT]): DESCRIPTION\n\n");
 	for (int i = 0; i < NFUNCTIONS; ++i) {
-		printf("%s %s\n\n", g_commandName[i], g_commandDetail[i]);
+		printf("- %s %s\n\n", g_commandName[i], g_commandDetail[i]);
 	}
 }
 

@@ -1,7 +1,8 @@
 #include "menu.h"
 
-#include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <ctype.h>
 
 #include "memory.h"
@@ -19,14 +20,19 @@ void	menu_destroy(Menu *menu) {
 }
 
 int menu_getcmd(Menu menu) {
-	int i;
+	int 	i;
+	char 	buff[2];
 
-	printf("\n> ");
+	do {
+		printf("\n> ");
 
-	scanf("%d", &i);
+		fgets(buff, 2, stdin);
+	} while (!isdigit(buff[0]));
+
 	putchar('\n');
-
 	purge_stdin();
+
+	i = atoi(buff);
 
 	if (i >= 1 && i < 1 + (int)menu.endList)
 		return i;
