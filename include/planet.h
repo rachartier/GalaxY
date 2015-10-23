@@ -1,7 +1,10 @@
-#pragma once
+#ifndef __PLANET_H__
+#define __PLANET_H__
 
 #include <stdbool.h>
 #include <string.h>
+
+#include "market.h"
 
 #define MAX_SATELLITE	10
 
@@ -75,7 +78,9 @@ typedef struct s_planet {
 		float	percentageDesert;
 	} stat;
 
-	Satellite	satellite[MAX_SATELLITE];
+	struct s_satellite	satellite[MAX_SATELLITE];
+
+	struct s_market		*market;
 
 	unsigned	nSatellite;
 	unsigned	people;
@@ -97,16 +102,18 @@ typedef struct s_planet {
 	bool		canCommerce;
 	bool		visited;
 
-	SpecieType		specie;
-	GovernementType governementType;
-	PlanetCondition condition;
-	PlanetType		type;
-	EconomyType		economy;
+	enum e_speciesType		specie;
+	enum e_governementType	governementType;
+	enum e_planetCondition	condition;
+	enum e_planetType		type;
+	enum e_economyType		economy;
 
 	char name[32];
 } Planet;
 
 Planet	planet_create(int index);
+void	planet_destroy(Planet *planet);
+
 Planet	planet_createSun(void);
 
 void	planet_set_distanceOfStar(Planet *planet, float distance);
@@ -131,3 +138,5 @@ void set_people(Planet *planet);
 void set_radius(Planet *planet);
 
 void create_satellite(Planet *planet);
+
+#endif // __PLANET_H__

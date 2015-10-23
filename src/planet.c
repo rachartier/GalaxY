@@ -9,6 +9,7 @@
 #include "rand.h"
 #include "crew.h"
 #include "player.h"
+#include "memory.h"
 
 #define M_PI			3.14159265358979323846
 
@@ -39,10 +40,16 @@ Planet		planet_create(int id) {
 	generate_world(&p);
 
 	if (p.isHabitable) {
+		p.market = xmalloc(sizeof(Market));
 		set_people(&p);
+		market_create(p.market, &p);
 	}
 
 	return p;
+}
+void	planet_destroy(Planet *planet) {
+	if (planet->isHabitable)
+		xfree(planet->market);
 }
 
 Planet		planet_createSun(void) {

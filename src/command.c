@@ -8,6 +8,7 @@
 #include "planet.h"
 #include "rand.h"
 #include "memory.h"
+#include "market.h"
 
 static const char *g_commandName[] = {
 	"info",
@@ -19,7 +20,8 @@ static const char *g_commandName[] = {
 	"recruter",
 	"virer",
 	"quitter",
-	"info",
+	"commerce",
+	"i",
 	"ls",
 	"al",
 	"f",
@@ -27,7 +29,8 @@ static const char *g_commandName[] = {
 	"?",
 	"r",
 	"v",
-	"q"
+	"q",
+	"c"
 };
 
 static const char *g_commandDetail[] = {
@@ -51,7 +54,8 @@ void(*cmdFunction[NFUNCTIONS])(Player *, Token *) = {
 	f_cmd_help,
 	f_cmd_recruitement,
 	f_cmd_fired,
-	f_cmd_quit
+	f_cmd_quit,
+	f_cmd_commerce
 };
 
 void	cmd_get(Player *player) {
@@ -64,9 +68,18 @@ void	cmd_get(Player *player) {
 	fgets(str, MAX_LENGHT, stdin);
 
 	if (*str != '\n') {
-		funcID = parse(str, token);
+		parse(str, token);
 
-		if (funcID > -1 && player != NULL)
+		for (int i = 0; i < (NFUNCTIONS * 2); ++i) {
+			if (strcmp(g_commandName[i], token[0].str) == 0) {
+				if (i < NFUNCTIONS)
+					funcID = i;
+				else
+					funcID = i - NFUNCTIONS;
+			}
+		}
+
+		if (funcID >= 0 && player != NULL)
 			cmdFunction[funcID](player, token);
 		else
 			printf("Mauvaise commande, tapez aide ou \'?\'\n");
@@ -81,22 +94,17 @@ int		parse(char *str, Token *token) {
 	pch = strtok(str, delimter);
 
 	while (pch != NULL) {
+		memset(token[i].str, 0, 64);
 		strcpy(token[i++].str, pch);
 		pch = strtok(NULL, delimter);
 	}
 
-	for (i = 0; i < (NFUNCTIONS * 2); ++i) {
-		if (strcmp(g_commandName[i], token[0].str) == 0) {
-			if (i < NFUNCTIONS)
-				return i;
-			else
-				return i - NFUNCTIONS;
-		}
-	}
-	return -1;
+	return 0;
 }
 
 void	f_cmd_info(Player *player, Token *token) {
+	printf("%s", token[1].str);
+
 	if (strcmp(token[1].str, "satellite") == 0 || strcmp(token[1].str, "s") == 0) {
 		if (player->satelliteIndex != -1) {
 			printf("\nSatellite n%u\n", player->satelliteIndex + 1);
@@ -230,7 +238,7 @@ void f_cmd_recruitement(Player *player, Token *token) {
 		"En avant toute!"
 	};
 
-	if (CHANCE(0) && !player->actPlanet.visited && player->actPlanet.isHabitable) {
+	if (CHANCE(2) && !player->actPlanet.visited && player->actPlanet.isHabitable) {
 		int		n = rand_born(1, 4);
 		Staff	*staff = xmalloc(n * sizeof(Staff));
 		char	c;
@@ -242,9 +250,12 @@ void f_cmd_recruitement(Player *player, Token *token) {
 			staff_display(staff[i]);
 		}
 
-		printf("Voulez vous recruter une de ces personnes [o/n]? ");
+		do {
+			printf("Voulez vous recruter une de ces personnes [o/n]? ");
 
-		scanf("%c", &c);
+			scanf("%c\n", &c);
+		} while (c != 'o' || c != 'n');
+
 		if (c == 'o') {
 			int		id = 0;
 
@@ -267,6 +278,7 @@ void f_cmd_recruitement(Player *player, Token *token) {
 				}
 			}
 		}
+
 		xfree(staff);
 
 		purge_stdin();
@@ -302,4 +314,33 @@ void	f_cmd_fired(Player *player, Token *token) {
 		}
 	}
 	purge_stdin();
+}
+
+void	f_cmd_commerce(Player *player, Token *token) {
+	Token	_token[16];
+	char	str[128];
+
+	if (player->actPlanet.isHabitable) {
+		while (strcmp(_token[0].str, "quitter") != 0) {
+			market_display(player->actPlanet.market);
+
+			printf(">>> ");
+			fgets(str, strlen(str), stdin);
+
+			parse(str, _token);
+
+			if (_token[0].str[0] != '\n') {
+				if (strcmp(_token[0].str, "acheter") == 0) {
+					market_buy(player->actPlanet.market, player, _token);
+				}
+				else if (strcmp(_token[0].str, "afficher") == 0) {
+					market_display_item(player->actPlanet.market, _token);
+				}
+				else {
+					market_display_help();
+				}
+			}
+			purge_stdin();
+		}
+	}
 }

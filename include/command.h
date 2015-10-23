@@ -1,10 +1,12 @@
-#pragma once
+#ifndef __COMMAND_H__
+#define __COMMAND_H__
 
 #include <stdlib.h>
 
 #include "player.h"
+#include "util.h"
 
-#define NFUNCTIONS	9
+#define NFUNCTIONS	10
 #define MAX_LENGHT	64
 
 enum {
@@ -16,12 +18,9 @@ enum {
 	CMD_HELP,
 	CMD_RECRUITEMENT,
 	CMD_FIRED,
-	CMD_QUIT
+	CMD_QUIT,
+	CMD_COMMERCE
 };
-
-typedef struct s_token {
-	char	str[MAX_LENGHT];
-} Token;
 
 void cmd_get(Player *player);
 
@@ -36,3 +35,6 @@ void f_cmd_portal(Player *player, Token *token);
 void f_cmd_help(Player *player, Token *token);
 void f_cmd_recruitement(Player *player, Token *token);
 void f_cmd_fired(Player *player, Token *token);
+void f_cmd_commerce(Player *player, Token *token);
+
+#endif // __COMMAND_H__

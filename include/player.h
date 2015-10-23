@@ -1,11 +1,12 @@
-#pragma once
+#ifndef __PLAYER_H__
+#define __PLAYER_H__
 
 #include <stdbool.h>
 #include <string.h>
 
 #include "crew.h"
 #include "starsystem.h"
-#include "commerce.h"
+#include "market.h"
 #include "planet.h"
 #include "util.h"
 
@@ -22,7 +23,8 @@ typedef struct s_player {
 
 	OptionUnsigned	food;
 
-	unsigned money;
+	float	 money;
+
 	unsigned power;
 	unsigned seed;
 
@@ -63,3 +65,5 @@ void	player_move_toSystem(Player *player, StarSystem *starsystem);
 void	player_move_toSatellite(Player *player);
 
 void	player_setItem(Player *player, ItemType iType, void *item);
+
+#endif // __PLAYER_H__

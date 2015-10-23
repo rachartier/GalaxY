@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __STAFF_H__
+#define __STAFF_H__
 
 #include "planet.h"
 
@@ -55,3 +56,5 @@ void	staff_set_position(Staff *staff, PosInShip pos);
 void	staff_set_specie(Staff *staff, SpecieType specie);
 
 void	staff_gen_name(Staff *staff);
+
+#endif // __STAFF_H__

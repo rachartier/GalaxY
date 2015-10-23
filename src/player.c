@@ -31,7 +31,7 @@ Player* player_create(unsigned life, unsigned shield, float fuel, unsigned weigh
 	player->exp = 0;
 	player->lvl = 50;
 
-	player->money = 1000u;
+	player->money = 100000.0f;
 	player->planetIndex = 0;
 	player->satelliteIndex = -1;
 	player->stats.planetsVisited = 0;
@@ -122,7 +122,7 @@ void	player_setFood(Player *player, unsigned food, unsigned maxFood) {
 }
 
 void	player_info(Player player) {
-	printf("\t- Scraps: %u\n", player.money);
+	printf("\t- Scraps: %f.3\n", player.money);
 	printf("\t- Degats d'attaque: %u\n", player.power);
 	printf("\t- Nombre de personne a bord: %u/%u\n", player.crew.nStaff, player.hull.nMaxStaff);
 	printf("Nombre de planetes visitees: %d\n", player.stats.planetsVisited);
@@ -236,6 +236,18 @@ void	player_setItem(Player *player, ItemType iType, void *item) {
 	case I_HULL:
 		player->hull = *(Hull *)item;
 		break;
+	case I_FOOD:
+	{
+		unsigned food = *(unsigned *)item;
+		player->food.actual += food;
+	}
+	break;
+	case I_FUEL:
+	{
+		unsigned fuel = *(unsigned *)item;
+		player->hull.fuel.actual += fuel;
+	}
+	break;
 	default:
 		break;
 	}

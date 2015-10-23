@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __STARSYSTEME_H__
+#define __STARSYSTEME_H__
 
 #include "planet.h"
 
@@ -15,3 +16,5 @@ StarSystem*	starsys_create(void);
 void		starsys_destroy(StarSystem *sys);
 
 void		add_planet(StarSystem *sys, unsigned index);
+
+#endif // __STARSYSTEME_H__

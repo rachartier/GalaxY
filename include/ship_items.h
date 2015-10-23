@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __SHIP_ITEMS_H__
+#define __SHIP_ITEMS_H__
 
 #include <stdbool.h>
 
@@ -9,6 +10,8 @@ typedef enum e_item_type {
 	I_ARMOR,
 	I_ENGINE,
 	I_HULL,
+	I_FOOD,
+	I_FUEL,
 
 	I_LAST
 } ItemType;
@@ -62,7 +65,7 @@ typedef struct s_weapon {
 
 	float	castTime;
 
-	unsigned price;
+	float	price;
 
 	bool	isVisible;
 } Weapon;
@@ -112,4 +115,7 @@ Hull	hull_create_rand(unsigned playerLevel);
 
 void	weapon_display(Weapon weapon);
 void	armor_display(Armor armor);
+void	engine_display(Engine engine);
 void	hull_display(Hull hull);
+
+#endif // __SHIP_ITEMS_H__

@@ -3,7 +3,7 @@
 #include <stdio.h>
 
 #include "staff.h"
-#include "ship_util.h"
+#include "ship_items.h"
 #include "rand.h"
 
 void	drop_staff(Player *player) {

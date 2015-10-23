@@ -1,4 +1,4 @@
-#include "ship_util.h"
+#include "ship_items.h"
 
 #include <stdio.h>
 #include <stdbool.h>
@@ -68,6 +68,8 @@ Weapon	weapon_create_rand(unsigned level) {
 	w.isVisible = true;
 	w.type = wt;
 
+	w.price = rand_born(1, 10) * ((mark + 1) * 1000);
+
 	strcpy(w.name, "Arme ");
 	strcat(w.name, gTable_markName[mark]);
 
@@ -108,11 +110,12 @@ Armor 	armor_create_rand(unsigned level) {
 	a.isVisible = true;
 	a.type = at;
 
+	a.price = rand_born(1, 10) * ((mark + 1) * 1000);
+
 	strcpy(a.name, gTable_markName[mark]);
 
 	return a;
 }
-
 Engine	engine_create_rand(unsigned level) {
 	Engine	e;
 
@@ -121,6 +124,8 @@ Engine	engine_create_rand(unsigned level) {
 	e.price = 0;
 	e.speed = 0;
 	e.type = 0;
+
+	e.price = 0;
 
 	level = 0;
 
@@ -215,6 +220,10 @@ void	armor_display(Armor armor) {
 	printf("\nArmure [%s] efficace contre %s:\n", armor.name, table_armor_type[armor.type]);
 	printf("\tPoint de vie: %.3f\n", armor.life);
 	printf("\tEfficacite: %.3f%%\n", armor.armor);
+}
+
+void	engine_display(Engine engine) {
+	printf("..............\n...............\n");
 }
 
 void	hull_display(Hull hull) {

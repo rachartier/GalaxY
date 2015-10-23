@@ -1,4 +1,9 @@
-#pragma once
+#ifndef __UTIL_H__
+#define __UTIL_H__
+
+typedef struct s_token {
+	char str[64];
+} Token;
 
 typedef struct s_option_u {
 	unsigned max;
@@ -14,3 +19,5 @@ typedef struct s_option_f {
 	float max;
 	float actual;
 } OptionFloat;
+
+#endif // __UTIL_H__

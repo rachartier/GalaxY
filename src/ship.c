@@ -5,9 +5,9 @@
 void	ship_create(Ship *ship, unsigned int level, size_t nCrew) {
 	unsigned min = (level == 0) ? level : level - 1;
 
-	Weapon	w = weapon_create_rand(min, level);
-	Armor	a = armor_create_rand(min, level);
-	Hull	h = hull_create_rand(min, level);
+	Weapon	w = weapon_create_rand(level);
+	Armor	a = armor_create_rand(level);
+	Hull	h = hull_create_rand(level);
 
 	ship->power = 0u;
 

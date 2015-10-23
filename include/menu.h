@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __MENU_H__
+#define __MENU_H__
 
 #include <stdbool.h>
 #include <string.h>
@@ -27,3 +28,5 @@ void	menu_display(Menu menu);
 
 void	menu_addButtonText(Menu *menu, const char *text);
 void	menu_removeButtonText(Menu *menu, int bId);
+
+#endif // __MENU_H__
