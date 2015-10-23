@@ -20,12 +20,13 @@ Si vous ne vous rappelez plus d'une commande ou de comment l'utiliser, tapez `ai
 | `info vaisseau`    | `info v`    | informations de votre vaisseau                  |
 | `info equipage`    | `info e`    | informations sur votre équipage                 |
 | `entrer`           | `e`         | permet de passer au prochain système planétaire |
+| `commerce`         | `c`         | permet de faire d'acheter du matériel           |
 | `quitter`          | `q`         | quitte la partie en cours                       |
 
 (A venir)
 
-- `commerce` (`c`) : donne accès au menu de commerce de la planète actuelle.
 - `bataille` (`b`) : votre vaisseau entre dans le mode de bataille.
+- `quete` (`qs`) : affichera une liste de quêtes
 
 # TODO
 
