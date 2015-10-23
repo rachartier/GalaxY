@@ -33,6 +33,5 @@ void	xfree(void *memory) {
 
 void	purge_stdin(void) {
 	int c = 0;
-	while (c != '\n' && c != EOF)
-		c = getchar();
+	while ((c = getchar()) != '\n' && c != EOF);
 }

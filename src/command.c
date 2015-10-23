@@ -94,7 +94,6 @@ int		parse(char *str, Token *token) {
 	pch = strtok(str, delimter);
 
 	while (pch != NULL) {
-		memset(token[i].str, 0, 64);
 		strcpy(token[i++].str, pch);
 		pch = strtok(NULL, delimter);
 	}
@@ -317,30 +316,32 @@ void	f_cmd_fired(Player *player, Token *token) {
 }
 
 void	f_cmd_commerce(Player *player, Token *token) {
-	Token	_token[16];
-	char	str[128];
+	if (player->actPlanet.isHabitable || player->actPlanet.isColony) {
+		Token	_token[16];
+		char	str[128];
 
-	if (player->actPlanet.isHabitable) {
 		while (strcmp(_token[0].str, "quitter") != 0) {
 			market_display(player->actPlanet.market);
 
 			printf(">>> ");
-			fgets(str, strlen(str), stdin);
+			fgets(str, 128, stdin);
 
 			parse(str, _token);
 
-			if (_token[0].str[0] != '\n') {
-				if (strcmp(_token[0].str, "acheter") == 0) {
-					market_buy(player->actPlanet.market, player, _token);
-				}
-				else if (strcmp(_token[0].str, "afficher") == 0) {
-					market_display_item(player->actPlanet.market, _token);
-				}
-				else {
-					market_display_help();
-				}
+			if (strcmp(_token[0].str, "acheter") == 0) {
+				market_buy(player->actPlanet.market, player, _token);
 			}
+			else if (strcmp(_token[0].str, "afficher") == 0) {
+				market_display_item(player->actPlanet.market, _token);
+			}
+			else {
+				market_display_help();
+			}
+			printf("Appuyez sur [ENTREE] pour continuer");
 			purge_stdin();
 		}
+	}
+	else {
+		printf("Impossible de faire du commerce ici\n");
 	}
 }

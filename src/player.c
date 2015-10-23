@@ -60,7 +60,8 @@ Staff	player_setByUser(void) {
 	printf("Nom: ");
 
 	fgets(name, 32, stdin);
-	while (name[0] == ' ') {
+
+	while (name[0] == ' ' || name[1] == '\n') {
 		printf("Veuillez choisir un nom correct: ");
 		fgets(name, 32, stdin);
 	}
@@ -75,8 +76,8 @@ Staff	player_setByUser(void) {
 	printf("\t2) Robot\n");
 	printf("\t3) Alien\n");
 	printf("\t4) Roc\n");
-	printf("\t4) Intel\n");
-	printf("\t5) Warbrog\n");
+	printf("\t5) Intel\n");
+	printf("\t6) Warbrog\n");
 
 	cmd = menu_getcmd(*menu);
 	while (cmd == 0) {

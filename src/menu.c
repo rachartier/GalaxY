@@ -21,22 +21,17 @@ void	menu_destroy(Menu *menu) {
 
 int menu_getcmd(Menu menu) {
 	int 	i;
-	char 	buff[2];
+	char 	buff[8];
 
 	do {
 		printf("\n> ");
 
-		fgets(buff, 2, stdin);
-	} while (!isdigit(buff[0]));
+		scanf("%d", &i);
+	} while (i < 1 || i >= 1 + (int)menu.endList);
 
-	putchar('\n');
 	purge_stdin();
 
-	i = atoi(buff);
-
-	if (i >= 1 && i < 1 + (int)menu.endList)
-		return i;
-	return 0;
+	return i;
 }
 
 void	menu_setTitle(Menu *menu, char *str) {
