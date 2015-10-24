@@ -42,7 +42,8 @@ static const char *g_commandDetail[] = {
 	"(?) : ouvre l'aide",
 	"(r) : recrute du personnel",
 	"(v) : vire une personne",
-	"(q) : quitte le jeu"
+	"(q) : quitte le jeu",
+	"(c) : permet d'acheter du nouveaux materiels"
 };
 
 void(*cmdFunction[NFUNCTIONS])(Player *, Token *) = {
@@ -323,7 +324,7 @@ void	f_cmd_commerce(Player *player, Token *token) {
 		while (strcmp(_token[0].str, "quitter") != 0) {
 			market_display(player->actPlanet.market);
 
-			printf(">>> ");
+			printf("[Argent: %.3f] >>> ", player->money);
 			fgets(str, 128, stdin);
 
 			parse(str, _token);
@@ -337,8 +338,6 @@ void	f_cmd_commerce(Player *player, Token *token) {
 			else {
 				market_display_help();
 			}
-			printf("Appuyez sur [ENTREE] pour continuer");
-			purge_stdin();
 		}
 	}
 	else {

@@ -30,7 +30,7 @@ void	drop_scrap(Player *player) {
 	if (CHANCE(3)) {
 		unsigned addmoney = rand_born(5, 20);
 
-		printf("\t- Vous prenez %u scraps\n", addmoney);
+		printf("\t- Vous trouvez %u$\n", addmoney);
 
 		player->money += addmoney;
 	}

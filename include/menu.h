@@ -24,6 +24,7 @@ void	menu_destroy(Menu *menu);
 int menu_getcmd(Menu menu);
 void	menu_setTitle(Menu *menu, char *str);
 
+void	menu_display_header(const char *title);
 void	menu_display(Menu menu);
 
 void	menu_addButtonText(Menu *menu, const char *text);

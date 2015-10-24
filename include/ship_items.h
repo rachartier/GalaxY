@@ -78,7 +78,7 @@ typedef struct s_armor {
 	float	armor;
 	float	life;
 
-	unsigned price;
+	float	price;
 
 	bool	isVisible;
 } Armor;
@@ -89,7 +89,7 @@ typedef struct s_engine {
 	float	evasionChance;
 	float	speed;
 
-	unsigned price;
+	float	price;
 
 	bool	isVisible;
 } Engine;
@@ -103,7 +103,7 @@ typedef struct s_hull {
 	OptionInt	life;
 	OptionFloat	fuel;
 
-	unsigned price;
+	float	price;
 
 	bool	isVisible;
 } Hull;

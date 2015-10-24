@@ -7,6 +7,7 @@
 #include "rand.h"
 #include "ship_items.h"
 #include "player.h"
+#include "menu.h"
 
 void	market_create(Market *market, Planet *planet) {
 	market->nWeapons = rand_born(0, MAX_WEAPON_ITEM);
@@ -79,7 +80,7 @@ void	market_add_item(Market *market, ItemType iType, void *item, int id) {
 }
 
 void	market_remove_item(Market *market, ItemType iType, int id) {
-	if (id > 0 && id < MAX_WEAPON_ITEM) {
+	if (id >= 0 && id < MAX_WEAPON_ITEM) {
 		switch (iType) {
 		case I_WEAPON:
 			market->weapon[id].isVisible = false;
@@ -125,23 +126,23 @@ void*	market_get_item(Market *market, ItemType iType, int id) {
 	return NULL;
 }
 
-int		market_get_item_price(Market *market, ItemType iType, int id) {
+float	market_get_item_price(Market *market, ItemType iType, int id) {
 	if (id < MAX_WEAPON_ITEM) {
 		switch (iType) {
 		case I_WEAPON:
-			if (id < market->nWeapons)
+			if (id < market->nWeapons && market->weapon[id].isVisible)
 				return market->weapon[id].price;
 			break;
 		case I_ARMOR:
-			if (id < market->nArmors)
+			if (id < market->nArmors && market->armor[id].isVisible)
 				return market->armor[id].price;
 			break;
 		case I_ENGINE:
-			if (id < market->nEngines)
+			if (id < market->nEngines && market->engine[id].isVisible)
 				return market->engine[id].price;
 			break;
 		case I_HULL:
-			if (id < market->nHulls)
+			if (id < market->nHulls && market->hull[id].isVisible)
 				return market->hull[id].price;
 			break;
 		default:
@@ -152,10 +153,10 @@ int		market_get_item_price(Market *market, ItemType iType, int id) {
 }
 
 void	market_display(Market *market) {
-	int i = 0;
+	menu_display_header("Commerce");
 
 	if (market->nWeapons > 0)
-		printf("Armes (%d)\n", market->nWeapons);
+		printf("\nArmes (%d)\n", market->nWeapons);
 	if (market->nArmors > 0)
 		printf("Armures (%d)\n", market->nArmors);
 	if (market->nEngines > 0)
@@ -163,7 +164,7 @@ void	market_display(Market *market) {
 	if (market->nHulls > 0)
 		printf("Coques (%d)\n", market->nHulls);
 
-	printf("\n\tAUTRES:");
+	printf("\nAutres:");
 
 	printf("\n- Nourriture: %u\n", market->nFoods);
 	printf("- Fuels: %u\n\n", market->nFuels);
@@ -175,6 +176,10 @@ void	market_display_weapon(Market *market) {
 			printf("\n[%d (prix: %.3f$)] ", i + 1, market->weapon[i].price);
 			weapon_display(market->weapon[i]);
 		}
+		else {
+			if (i < market->nWeapons)
+				printf("Vendu!");
+		}
 	}
 }
 void	market_display_armor(Market *market) {
@@ -183,6 +188,10 @@ void	market_display_armor(Market *market) {
 		if (market->armor[i].isVisible) {
 			printf("[%d (prix: %.3f$)] ", i + 1, market->armor[i].price);
 			armor_display(market->armor[i]);
+		}
+		else {
+			if (i < market->nArmors)
+				printf("Vendu!");
 		}
 	}
 }
@@ -193,6 +202,10 @@ void	market_display_engine(Market *market) {
 			printf("\n[%d (prix: %.3f$)] ", i + 1, market->engine[i].price);
 			engine_display(market->engine[i]);
 		}
+		else {
+			if (i < market->nEngines)
+				printf("Vendu!");
+		}
 	}
 }
 void	market_display_hull(Market *market) {
@@ -201,6 +214,10 @@ void	market_display_hull(Market *market) {
 		if (market->hull[i].isVisible) {
 			printf("\n[%d (prix: %.3f$)] ", i + 1, market->hull[i].price);
 			hull_display(market->hull[i]);
+		}
+		else {
+			if (i < market->nHulls)
+				printf("Vendu!");
 		}
 	}
 }
@@ -250,34 +267,79 @@ void	market_buy(Market *market, Player *player, Token *token) {
 		for (int i = 0; i < 6; ++i) {
 			if (strcmp(token[1].str, itemName[i]) == 0) {
 				if (i == I_FUEL) {
-					unsigned fuel = (unsigned)atoi(token[2].str);
-					if (market->nFuels - fuel < 0)
-						printf("Vous ne pouvhez pas en acheter autant!\n");
-					else
-						market->nFuels -= fuel;
+					unsigned fuelAmount = (unsigned)atoi(token[2].str);
+
+					market_buy_fuel(market, player, fuelAmount);
+					break;
 				}
 				else if (i == I_FOOD) {
-					unsigned food = (unsigned)atoi(token[2].str);
-					if (market->nFoods - food < 0)
-						printf("Vous ne pouvhez pas en acheter autant!\n");
-					else
-						market->nFoods -= food;
+					unsigned foodAmount = (unsigned)atoi(token[2].str);
+
+					market_buy_food(market, player, foodAmount);
+					break;
 				}
 				else {
 					int id = atoi(token[2].str) - 1;
-					int price = market_get_item_price(market, i, id);
+					market_buy_item(market, player, i, id);
 
-					if (player->money >= price) {
-						player_setItem(player, i, market_get_item(market, i, id));
-						player->money -= price;
-
-						market_remove_item(market, i, id);
-						printf("Achete!\n\n");
-					}
-					else
-						printf("Pas assez d'argent...\n\n");
+					break;
 				}
 			}
 		}
 	}
+}
+
+void	market_buy_fuel(Market *market, Player *player, unsigned amount) {
+	static const float	fuelPrice[] = {
+		1.9f,
+		2.3f,
+		1.6f,
+		1.7f,
+		3.0f
+	};
+
+	if (market->nFuels - amount < 0 && (player->money - amount * fuelPrice[player->actPlanet.governementType]) < 0)
+		printf("Vous ne pouvez pas en acheter autant!\n");
+	else if (player->actPlanet.governementType == G_TYPE_FEUDAL)
+		printf("Vous ne pouvez pas en acheter ici\n");
+	else {
+		market->nFuels -= amount;
+		player->money -= amount * fuelPrice[player->actPlanet.governementType];
+
+		printf("Vous avez achete %d fuels\n", amount);
+	}
+}
+
+void	market_buy_food(Market *market, Player *player, unsigned amount) {
+	static const float	foodPrice[] = {
+		1.2f,
+		1.8f,
+		1.1f,
+		1.1f,
+		2.1f,
+		3.0f
+	};
+
+	if (market->nFoods - amount < 0 && (player->money - amount * foodPrice[player->actPlanet.governementType]) < 0)
+		printf("Vous ne pouvhez pas en acheter autant!\n");
+	else {
+		market->nFoods -= amount;
+		player->money -= amount * foodPrice[player->actPlanet.governementType];
+
+		printf("Vous avez achete %d de nourriture\n", amount);
+	}
+}
+
+void	market_buy_item(Market *market, Player *player, ItemType iType, int id) {
+	int price = market_get_item_price(market, iType, id);
+
+	if (player->money >= price && price != -1) {
+		player_setItem(player, iType, market_get_item(market, iType, id));
+		player->money -= price;
+
+		market_remove_item(market, iType, id);
+		printf("Achete!\n\n");
+	}
+	else
+		printf("L'article n'est plus disponible ou vous n'avez pas assez d'argent...\n\n");
 }

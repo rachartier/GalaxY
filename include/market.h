@@ -5,7 +5,7 @@
 Le systeme de combat marche comme Grandia II, c'est à dire que chaque vaisseau aura un temps d'attente et un temps de cast
 ce qui pourra rendre les combats plus "realistes"
 
-chaque arme/bouclier/machine aura 8 versions
+chaque arme/bouclier/machine aura 7 versions
 */
 
 #include <stdbool.h>
@@ -39,7 +39,7 @@ void	market_create(Market *market, struct s_planet *planet);
 void	market_add_item(Market *market, ItemType iType, void *item, int id);
 void	market_remove_item(Market *market, ItemType iType, int id);
 void*	market_get_item(Market *market, ItemType iType, int id);
-int		market_get_item_price(Market *market, ItemType iType, int id);
+float	market_get_item_price(Market *market, ItemType iType, int id);
 
 void	market_display(Market *market);
 
@@ -50,6 +50,10 @@ void	market_display_hull(Market *market);
 
 void	market_display_item(Market *market, Token *token);
 void	market_display_help(void);
+
 void	market_buy(Market *market, struct s_player *player, Token *token);
+void	market_buy_fuel(Market *market, struct s_player *player, unsigned amount);
+void	market_buy_food(Market *market, struct s_player *player, unsigned amount);
+void	market_buy_item(Market *market, struct s_player *player, ItemType iType, int id);
 
 #endif // __MARKET_H__

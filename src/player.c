@@ -123,7 +123,7 @@ void	player_setFood(Player *player, unsigned food, unsigned maxFood) {
 }
 
 void	player_info(Player player) {
-	printf("\t- Scraps: %f.3\n", player.money);
+	printf("\t- Argent: %.3$\n", player.money);
 	printf("\t- Degats d'attaque: %u\n", player.power);
 	printf("\t- Nombre de personne a bord: %u/%u\n", player.crew.nStaff, player.hull.nMaxStaff);
 	printf("Nombre de planetes visitees: %d\n", player.stats.planetsVisited);

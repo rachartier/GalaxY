@@ -5,6 +5,7 @@
 #include <string.h>
 #include <ctype.h>
 
+#include "util.h"
 #include "memory.h"
 
 Menu*	menu_create(void) {
@@ -54,19 +55,20 @@ void	menu_removeButtonText(Menu *menu, int bId) {
 	}
 }
 
+void	menu_display_header(const char *title) {
+	int	titleLenght = strlen(title);
+
+	LINE(80, '-');
+	putchar('\n');
+	LINE(40 - titleLenght / 2, ' ');
+
+	printf("%s\n", title);
+}
+
 void	menu_display(Menu menu) {
-	int			titleLenght = strlen(menu.title);
 	unsigned	i;
 
-	for (i = 0; i < 80; ++i)
-		putchar('-');
-
-	putchar('\n');
-
-	for (i = 0; i < (unsigned)40 - titleLenght / 2; ++i)
-		putchar(' ');
-
-	printf("%s\n", menu.title);
+	menu_display_header(menu.title);
 
 	for (i = 0; i < menu.endList; ++i) {
 		if (menu.element[i].isVisible)
