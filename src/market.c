@@ -166,8 +166,8 @@ void	market_display(Market *market) {
 
 	printf("\nAutres:");
 
-	printf("\n- Nourriture: %u\n", market->nFoods);
-	printf("- Fuels: %u\n\n", market->nFuels);
+	printf("\n- Nourriture: %d\n", market->nFoods);
+	printf("- Fuels: %d\n\n", market->nFuels);
 }
 
 void	market_display_weapon(Market *market) {
@@ -248,7 +248,7 @@ void	market_display_help(void) {
 		"\n\nAIDE: \n"
 		" - Afficher une categorie: \"afficher <nom-categorie>\"\n"
 		" - Acheter un objet: \"acheter <nom-objet>[arme, armure, moteur, coque] <id>\"\n"
-		" - Acheter nourrirutre/fuel: \"acheter [nourriture,fuel] <quantite>\"\n"
+		" - Acheter nourrirutre/fuel: \"acheter [nourriture,fuel] <quantite/[max]>\"\n"
 	};
 	printf("%s\n\n", help);
 }
@@ -267,7 +267,12 @@ void	market_buy(Market *market, Player *player, Token *token) {
 		for (int i = 0; i < 6; ++i) {
 			if (strcmp(token[1].str, itemName[i]) == 0) {
 				if (i == I_FUEL) {
-					unsigned fuelAmount = (unsigned)atoi(token[2].str);
+					unsigned fuelAmount = 0;
+
+					if (strcmp(token[2].str, "max") == 0)
+						fuelAmount = player->ship.hull.fuel.max - player->ship.hull.fuel.actual;
+					else
+						fuelAmount = (unsigned)atoi(token[2].str);
 
 					market_buy_fuel(market, player, fuelAmount);
 					break;
@@ -298,13 +303,18 @@ void	market_buy_fuel(Market *market, Player *player, unsigned amount) {
 		3.0f
 	};
 
-	if (market->nFuels - amount < 0 && (player->money - amount * fuelPrice[player->actPlanet.governementType]) < 0)
+	if (((market->nFuels - amount) < 0)
+		|| ((player->money - amount * fuelPrice[player->actPlanet.governementType]) < 0)
+		|| ((player->ship.hull.fuel.actual + amount) > player->ship.hull.fuel.max)) {
 		printf("Vous ne pouvez pas en acheter autant!\n");
-	else if (player->actPlanet.governementType == G_TYPE_FEUDAL)
+	}
+	else if (player->actPlanet.governementType == G_TYPE_FEUDAL) {
 		printf("Vous ne pouvez pas en acheter ici\n");
+	}
 	else {
 		market->nFuels -= amount;
 		player->money -= amount * fuelPrice[player->actPlanet.governementType];
+		player->ship.hull.fuel.actual += amount;
 
 		printf("Vous avez achete %d fuels\n", amount);
 	}
@@ -320,7 +330,8 @@ void	market_buy_food(Market *market, Player *player, unsigned amount) {
 		3.0f
 	};
 
-	if (market->nFoods - amount < 0 && (player->money - amount * foodPrice[player->actPlanet.governementType]) < 0)
+	if (market->nFoods - amount < 0
+		&& (player->money - amount * foodPrice[player->actPlanet.governementType]) < 0)
 		printf("Vous ne pouvhez pas en acheter autant!\n");
 	else {
 		market->nFoods -= amount;

@@ -16,6 +16,7 @@ typedef struct s_player {
 	Ship			ship;
 
 	OptionUnsigned	food;
+	OptionFloat		fuel;
 
 	float	 money;
 

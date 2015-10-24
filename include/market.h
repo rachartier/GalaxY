@@ -31,8 +31,8 @@ typedef struct s_market {
 	unsigned	nEngines;
 	unsigned	nHulls;
 
-	unsigned	nFoods;
-	unsigned	nFuels;
+	int		nFoods;
+	int		nFuels;
 } Market;
 
 void	market_create(Market *market, Planet *planet);

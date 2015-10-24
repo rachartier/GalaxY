@@ -133,8 +133,8 @@ bool	player_isDead(Player *player) {
 }
 
 float	player_getDistanceOfPlanet(Player player, Planet planet) {
-	float dst = 0;
-	dst += (float)fabs(planet.distanceOfNearestStar - player.actStarsystem->planet[player.planetIndex].distanceOfNearestStar);
+	float dst = 0.f;
+	dst = (float)fabs(planet.distanceOfNearestStar - player.actStarsystem->planet[player.planetIndex].distanceOfNearestStar);
 	return dst;
 }
 
@@ -156,7 +156,7 @@ void	player_set_planet(Player *player) {
 void	player_move_toPlanet(Player *player, int dir) {
 	if (player->planetIndex + dir > 0 && player->planetIndex + dir < (int)player->actStarsystem->numberPlanets) {
 		player->planetIndex += dir;
-		float fuelCost = player_getDistanceOfPlanet(*player, player->actStarsystem->planet[player->planetIndex]);
+		float fuelCost = player_getDistanceOfPlanet(*player, player->actStarsystem->planet[player->planetIndex + dir]);
 
 		if (player->ship.hull.fuel.actual - fuelCost > 0.f) {
 			player_set_planet(player);
@@ -165,9 +165,8 @@ void	player_move_toPlanet(Player *player, int dir) {
 				printf("\nVous etes deja dans le systeme planetaire\n");
 			else if (dir == 0)
 				printf("Vous revenez a la planete %s\n", player->actPlanet.name);
-			else {
+			else
 				player->ship.hull.fuel.actual -= fuelCost;
-			}
 		}
 		else
 			printf("Vous n'avez plus de carburant\n");
