@@ -20,7 +20,7 @@ Si vous ne vous rappelez plus d'une commande ou de comment l'utiliser, tapez `ai
 | `info vaisseau`    | `info v`    | informations de votre vaisseau                  |
 | `info equipage`    | `info e`    | informations sur votre équipage                 |
 | `entrer`           | `e`         | permet de passer au prochain système planétaire |
-| `commerce`         | `c`         | permet de faire d'acheter du matériel           |
+| `commerce`         | `c`         | permet d'acheter du matériel           |
 | `quitter`          | `q`         | quitte la partie en cours                       |
 
 (A venir)
