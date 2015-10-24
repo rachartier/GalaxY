@@ -86,9 +86,11 @@ typedef struct s_armor {
 typedef struct s_engine {
 	EngineType	type;
 
-	float	evasionChance;
-	float	speed;
+	char	name[32];
 
+	int		evasionChance;
+
+	float	speed;
 	float	price;
 
 	bool	isVisible;

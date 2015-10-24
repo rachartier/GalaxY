@@ -14,19 +14,13 @@ Player* player_create(unsigned life, unsigned shield, float fuel, unsigned weigh
 	Player	*player = xmalloc(sizeof(Player));
 	Staff	user;
 
-	Weapon	w = weapon_create_rand(0);
-	Armor	a = armor_create_rand(0);
-	Hull	h = hull_create_rand(0);
-
 	user = player_setByUser();
 
 	player->power = 0u;
 
-	crew_add_player(&player->crew, user);
+	crew_add_player(&player->ship.crew, user);
 
-	player_setItem(player, I_WEAPON, &w);
-	player_setItem(player, I_ARMOR, &a);
-	player_setItem(player, I_HULL, &h);
+	ship_create(&player->ship, 0, 1);
 
 	player->exp = 0;
 	player->lvl = 50;
@@ -99,22 +93,22 @@ void	player_destroy(Player *player) {
 }
 
 void	player_setLife(Player *player, unsigned life, unsigned maxLife) {
-	player->hull.life.actual = life;
-	player->hull.life.max = maxLife;
+	player->ship.hull.life.actual = life;
+	player->ship.hull.life.max = maxLife;
 }
 
 void	player_setshield(Player *player, unsigned shield, unsigned maxshield) {
-	player->hull.life.actual = shield;
-	player->hull.life.max = maxshield;
+	player->ship.hull.life.actual = shield;
+	player->ship.hull.life.max = maxshield;
 }
 
 void	player_setFuel(Player *player, float fuel, float maxFuel) {
-	player->hull.fuel.actual = fuel;
+	player->ship.hull.fuel.actual = fuel;
 
-	if (player->hull.fuel.actual > player->hull.fuel.max)
-		player->hull.fuel.actual = player->hull.fuel.max;
+	if (player->ship.hull.fuel.actual > player->ship.hull.fuel.max)
+		player->ship.hull.fuel.actual = player->ship.hull.fuel.max;
 
-	player->hull.fuel.max = maxFuel;
+	player->ship.hull.fuel.max = maxFuel;
 }
 
 void	player_setFood(Player *player, unsigned food, unsigned maxFood) {
@@ -123,18 +117,19 @@ void	player_setFood(Player *player, unsigned food, unsigned maxFood) {
 }
 
 void	player_info(Player player) {
-	printf("\t- Argent: %.3$\n", player.money);
+	printf("\t- Argent: %.3f$\n", player.money);
 	printf("\t- Degats d'attaque: %u\n", player.power);
-	printf("\t- Nombre de personne a bord: %u/%u\n", player.crew.nStaff, player.hull.nMaxStaff);
+	printf("\t- Nombre de personne a bord: %u/%u\n", player.ship.crew.nStaff, player.ship.hull.nMaxStaff);
 	printf("Nombre de planetes visitees: %d\n", player.stats.planetsVisited);
 
-	hull_display(player.hull);
-	weapon_display(player.weapon);
-	armor_display(player.armor);
+	hull_display(player.ship.hull);
+	weapon_display(player.ship.weapon);
+	armor_display(player.ship.armor);
+	engine_display(player.ship.engine);
 }
 
 bool	player_isDead(Player *player) {
-	return player->hull.life.actual == 0;
+	return player->ship.hull.life.actual == 0;
 }
 
 float	player_getDistanceOfPlanet(Player player, Planet planet) {
@@ -163,7 +158,7 @@ void	player_move_toPlanet(Player *player, int dir) {
 		player->planetIndex += dir;
 		float fuelCost = player_getDistanceOfPlanet(*player, player->actStarsystem->planet[player->planetIndex]);
 
-		if (player->hull.fuel.actual - fuelCost > 0.f) {
+		if (player->ship.hull.fuel.actual - fuelCost > 0.f) {
 			player_set_planet(player);
 
 			if (player->actPlanet.type == P_TYPE_STAR)
@@ -171,7 +166,7 @@ void	player_move_toPlanet(Player *player, int dir) {
 			else if (dir == 0)
 				printf("Vous revenez a la planete %s\n", player->actPlanet.name);
 			else {
-				player->hull.fuel.actual -= fuelCost;
+				player->ship.hull.fuel.actual -= fuelCost;
 			}
 		}
 		else
@@ -199,8 +194,8 @@ void	player_move_toSystem(Player *player, StarSystem *starsystem) {
 
 void	player_drop(Player *player, Planet *planet) {
 	if (!planet->isHabitable && (planet->type != P_TYPE_PORTAL_IN && planet->type != P_TYPE_PORTAL_OUT)) {
-		if (!planet->visited) {
-			planet->visited = true;
+		if (!planet->searched) {
+			planet->searched = true;
 			if (CHANCE(2)) {
 				printf("Vous trouvez un vaisseau...\n");
 
@@ -224,18 +219,18 @@ void	player_setItem(Player *player, ItemType iType, void *item) {
 	case I_WEAPON:
 	{
 		Weapon	w = *(Weapon *)item;
-		player->weapon = w;
+		player->ship.weapon = w;
 		player->power += w.damage;
 	}
 	break;
 	case I_ARMOR:
-		player->armor = *(Armor *)item;
+		player->ship.armor = *(Armor *)item;
 		break;
 	case I_ENGINE:
-		player->engine = *(Engine *)item;
+		player->ship.engine = *(Engine *)item;
 		break;
 	case I_HULL:
-		player->hull = *(Hull *)item;
+		player->ship.hull = *(Hull *)item;
 		break;
 	case I_FOOD:
 	{
@@ -246,7 +241,7 @@ void	player_setItem(Player *player, ItemType iType, void *item) {
 	case I_FUEL:
 	{
 		unsigned fuel = *(unsigned *)item;
-		player->hull.fuel.actual += fuel;
+		player->ship.hull.fuel.actual += fuel;
 	}
 	break;
 	default:

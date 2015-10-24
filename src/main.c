@@ -58,6 +58,8 @@ void	play(void) {
 	player = player_create(100, 50, 80, 1000, 100, 100);
 	sys = starsys_create();
 
+	LINE(80, '-');
+
 	player_move_toSystem(player, sys);
 
 	while (!player->wantToExit) {

@@ -21,7 +21,7 @@ void	drop_staff(Player *player) {
 		scanf("%c", &c);
 
 		if (c == 'o') {
-			crew_add_staff(&player->crew, staff);
+			crew_add_staff(&player->ship.crew, staff);
 		}
 	}
 }
@@ -38,12 +38,12 @@ void	drop_scrap(Player *player) {
 
 void	drop_fuel(Player *player) {
 	if (CHANCE(3)) {
-		if (player->hull.fuel.actual < player->hull.fuel.max) {
+		if (player->ship.hull.fuel.actual < player->ship.hull.fuel.max) {
 			float fuel = rand_float(10.f, 30.f);
 
 			printf("\t- Vous recuperez %.1f fuel\n", fuel);
 
-			player_setFuel(player, player->hull.fuel.actual + fuel, player->hull.fuel.max);
+			player_setFuel(player, player->ship.hull.fuel.actual + fuel, player->ship.hull.fuel.max);
 		}
 	}
 }

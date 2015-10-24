@@ -7,12 +7,14 @@ void	ship_create(Ship *ship, unsigned int level, size_t nCrew) {
 
 	Weapon	w = weapon_create_rand(level);
 	Armor	a = armor_create_rand(level);
+	Engine	e = engine_create_rand(level);
 	Hull	h = hull_create_rand(level);
 
 	ship->power = 0u;
 
 	ship_set_item(ship, I_WEAPON, &w);
 	ship_set_item(ship, I_ARMOR, &a);
+	ship_set_item(ship, I_ENGINE, &e);
 	ship_set_item(ship, I_HULL, &h);
 
 	for (; nCrew > 0; --nCrew) {

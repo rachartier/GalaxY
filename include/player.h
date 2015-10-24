@@ -4,22 +4,16 @@
 #include <stdbool.h>
 #include <string.h>
 
-#include "crew.h"
 #include "starsystem.h"
-#include "market.h"
 #include "planet.h"
 #include "util.h"
+#include "ship.h"
 
 typedef struct s_player {
 	Planet		actPlanet;
 	StarSystem	*actStarsystem;
 
-	Crew		crew;
-
-	Weapon		weapon;
-	Armor		armor;
-	Engine		engine;
-	Hull		hull;
+	Ship			ship;
 
 	OptionUnsigned	food;
 

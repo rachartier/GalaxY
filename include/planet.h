@@ -4,8 +4,6 @@
 #include <stdbool.h>
 #include <string.h>
 
-#include "market.h"
-
 #define MAX_SATELLITE	10
 
 typedef enum e_planetType {
@@ -15,9 +13,7 @@ typedef enum e_planetType {
 	P_TYPE_GIANT,
 	P_TYPE_PORTAL_IN,
 	P_TYPE_PORTAL_OUT,
-
 	P_TYPE_LAST,
-
 	P_TYPE_STAR
 } PlanetType;
 
@@ -27,7 +23,6 @@ typedef enum e_planetCondition {
 	CONDITION_HUGE_FOREST,
 	CONDITION_ICE,
 	CONDITION_UNKNOW,
-
 	CONDITION_LAST
 } PlanetCondition;
 
@@ -38,7 +33,6 @@ typedef enum e_governementType {
 	G_TYPE_COMMUNISM,
 	G_TYPE_ARNACHIC,
 	G_TYPE_FEUDAL,
-
 	G_TYPE_LAST
 } GovernementType;
 
@@ -49,7 +43,6 @@ typedef enum e_speciesType {
 	S_TYPE_ROCK,
 	S_TYPE_INTEL,
 	S_TYPE_WARBROG,
-
 	S_TYPE_LAST
 } SpecieType;
 
@@ -101,14 +94,15 @@ typedef struct s_planet {
 	bool		hasWater;
 	bool		canCommerce;
 	bool		visited;
+	bool		searched;
+
+	char name[32];
 
 	enum e_speciesType		specie;
 	enum e_governementType	governementType;
 	enum e_planetCondition	condition;
 	enum e_planetType		type;
 	enum e_economyType		economy;
-
-	char name[32];
 } Planet;
 
 Planet	planet_create(int index);

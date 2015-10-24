@@ -10,6 +10,7 @@
 #include "crew.h"
 #include "player.h"
 #include "memory.h"
+#include "market.h"
 
 #define M_PI			3.14159265358979323846
 
@@ -25,7 +26,8 @@ Planet		planet_create(int id) {
 		.people = 0,
 		.isColony = false,
 		.visited = false,
-		.nSatellite = 0
+		.nSatellite = 0,
+		.searched = false
 	};
 
 	create_satellite(&p);

@@ -64,7 +64,7 @@ void	cmd_get(Player *player) {
 	Token	token[16];
 	int		funcID = -1;
 
-	printf("\n\n%s [%d/%d] >>> ", player->actPlanet.name, player->planetIndex, player->actStarsystem->numberPlanets - 1);
+	printf("\n\n%s [%d/%d] >>> ", player->actPlanet.name, player->planetIndex + 1, player->actStarsystem->numberPlanets);
 
 	fgets(str, MAX_LENGHT, stdin);
 
@@ -117,7 +117,7 @@ void	f_cmd_info(Player *player, Token *token) {
 		player_info(*player);
 	}
 	else if (strcmp(token[1].str, "equipage") == 0 || strcmp(token[1].str, "e") == 0) {
-		crew_display(player->crew);
+		crew_display(player->ship.crew);
 	}
 	else {
 		planet_show_stats(player->actPlanet);
@@ -263,13 +263,13 @@ void f_cmd_recruitement(Player *player, Token *token) {
 			scanf("%d", &id);
 
 			if (id != 0) {
-				if (player->crew.nStaff < player->hull.nMaxStaff) {
+				if (player->ship.crew.nStaff < player->ship.hull.nMaxStaff) {
 					while (id < 0 || id - 1 >= n) {
 						printf("Mauvais ID, tapez de nouveau: ");
 						scanf("%d", &id);
 					}
 					if (id != 0) {
-						crew_add_staff(&player->crew, staff[id - 1]);
+						crew_add_staff(&player->ship.crew, staff[id - 1]);
 						printf("%s dit: \"%s\"\n", staff[id - 1].name, sentence[rand_born(0, 8)]);
 					}
 				}
@@ -296,21 +296,21 @@ void	f_cmd_fired(Player *player, Token *token) {
 
 	unsigned id;
 
-	for (unsigned i = 0; i < player->crew.nStaff; ++i) {
+	for (unsigned i = 0; i < player->ship.crew.nStaff; ++i) {
 		printf("ID: %u", i + 1);
-		staff_display(player->crew.staff[i]);
+		staff_display(player->ship.crew.staff[i]);
 	}
 
 	printf("Entrez l'ID de celui que vous voulez virer (0 pour annuler): ");
 	scanf("%d", &id);
 
-	if (id > 0 && id < player->crew.nStaff + 1) {
+	if (id > 0 && id < player->ship.crew.nStaff + 1) {
 		if (id == 1) {
 			printf("Vous ne pouvez pas vous virez vous meme!\n");
 		}
 		else {
-			printf("%s a bien ete vire\n", player->crew.staff[id - 1].name);
-			crew_remove_staff(&player->crew, id - 1);
+			printf("%s a bien ete vire\n", player->ship.crew.staff[id - 1].name);
+			crew_remove_staff(&player->ship.crew, id - 1);
 		}
 	}
 	purge_stdin();

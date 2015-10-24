@@ -38,10 +38,10 @@ Weapon	weapon_create_rand(unsigned level) {
 	};
 
 	static float table_penArmor[] = {
-		5,
-		3,
-		7,
-		15
+		5.0,
+		3.0,
+		7.0,
+		15.0
 	};
 
 	static float table_castTime[] = {
@@ -70,33 +70,32 @@ Weapon	weapon_create_rand(unsigned level) {
 
 	w.price = rand_born(1, 10) * ((mark + 1) * 1000);
 
-	strcpy(w.name, "Arme ");
-	strcat(w.name, gTable_markName[mark]);
+	strcpy(w.name, gTable_markName[mark]);
 
 	return w;
 }
 Armor 	armor_create_rand(unsigned level) {
 	static float table_armor[] = {
-		10,
-		15,
-		25,
-		40,
-		50,
-		60,
-		70,
-		90
+		10.0,
+		15.0,
+		25.0,
+		40.0,
+		50.0,
+		60.0,
+		70.0,
+		90.0f
 	};
 
 	// A revoir
 	static float table_armor_life[] = {
-		100,
-		400,
-		800,
-		1000,
-		1500,
-		2000,
-		3000,
-		5000
+		100.0,
+		400.0,
+		800.0,
+		1000.0,
+		1500.0,
+		2000.0,
+		3000.0,
+		5000.0
 	};
 
 	Armor		a;
@@ -117,17 +116,30 @@ Armor 	armor_create_rand(unsigned level) {
 	return a;
 }
 Engine	engine_create_rand(unsigned level) {
-	Engine	e;
+	static int table_evasion[] = {
+		10,
+		15,
+		25,
+		40,
+		50,
+		60,
+		70
+	};
 
-	e.evasionChance = 0;
-	e.isVisible = false;
-	e.price = 0;
+	Engine		e;
+	EngineType	et = rand_born(0, A_LAST);
+
+	int	mark = rand_born(0, MAXMARK(level));
+
+	e.evasionChance = table_evasion[mark];
+	e.isVisible = true;
+
 	e.speed = 0;
 	e.type = 0;
 
-	e.price = 0;
+	e.price = rand_born(2, 11) * ((mark + 1) * 10000);;
 
-	level = 0;
+	strcpy(e.name, gTable_markName[mark]);
 
 	return e;
 }
@@ -202,7 +214,7 @@ void	weapon_display(Weapon weapon) {
 		"Missile"
 	};
 
-	printf("\n%s:\n", weapon.name);
+	printf("\nArme [%s]:\n", weapon.name);
 	printf("\t- Type de degats: %s\n", table_weapon_type[weapon.type]);
 	printf("\t- Degats: %d\n", weapon.damage);
 	printf("\t- Penetration d'armure: %.3f%%\n", weapon.penArmor);
@@ -223,7 +235,8 @@ void	armor_display(Armor armor) {
 }
 
 void	engine_display(Engine engine) {
-	printf("..............\n...............\n");
+	printf("\nMoteur [%s]:\n", engine.name);
+	printf("\t- Chance d'evasion: %d%%\n", engine.evasionChance);
 }
 
 void	hull_display(Hull hull) {
