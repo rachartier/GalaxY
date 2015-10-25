@@ -84,15 +84,19 @@ void	market_remove_item(Market *market, ItemType iType, int id) {
 		switch (iType) {
 		case I_WEAPON:
 			market->weapon[id].isVisible = false;
+			market->nWeapons--;
 			break;
 		case I_ARMOR:
 			market->armor[id].isVisible = false;
+			market->nArmors--;
 			break;
 		case I_ENGINE:
 			market->engine[id].isVisible = false;
+			market->nEngines--;
 			break;
 		case I_HULL:
 			market->hull[id].isVisible = false;
+			market->nHulls--;
 			break;
 		default:
 			break;
@@ -155,14 +159,10 @@ float	market_get_item_price(Market *market, ItemType iType, int id) {
 void	market_display(Market *market) {
 	menu_display_header("Commerce");
 
-	if (market->nWeapons > 0)
-		printf("\nArmes (%d)\n", market->nWeapons);
-	if (market->nArmors > 0)
-		printf("Armures (%d)\n", market->nArmors);
-	if (market->nEngines > 0)
-		printf("Moteurs (%d)\n", market->nEngines);
-	if (market->nHulls > 0)
-		printf("Coques (%d)\n", market->nHulls);
+	printf("\nArmes (%d)\n", market->nWeapons);
+	printf("Armures (%d)\n", market->nArmors);
+	printf("Moteurs (%d)\n", market->nEngines);
+	printf("Coques (%d)\n", market->nHulls);
 
 	printf("\nAutres:");
 
@@ -178,7 +178,7 @@ void	market_display_weapon(Market *market) {
 		}
 		else {
 			if (i < market->nWeapons)
-				printf("Vendu!");
+				printf("Vendu!\n");
 		}
 	}
 }
@@ -191,7 +191,7 @@ void	market_display_armor(Market *market) {
 		}
 		else {
 			if (i < market->nArmors)
-				printf("Vendu!");
+				printf("Vendu!\n");
 		}
 	}
 }
@@ -204,7 +204,7 @@ void	market_display_engine(Market *market) {
 		}
 		else {
 			if (i < market->nEngines)
-				printf("Vendu!");
+				printf("Vendu!\n");
 		}
 	}
 }
@@ -217,7 +217,7 @@ void	market_display_hull(Market *market) {
 		}
 		else {
 			if (i < market->nHulls)
-				printf("Vendu!");
+				printf("Vendu!\n");
 		}
 	}
 }
@@ -293,7 +293,6 @@ void	market_buy(Market *market, Player *player, Token *token) {
 		}
 	}
 }
-
 void	market_buy_fuel(Market *market, Player *player, unsigned amount) {
 	static const float	fuelPrice[] = {
 		1.9f,
@@ -319,7 +318,6 @@ void	market_buy_fuel(Market *market, Player *player, unsigned amount) {
 		printf("Vous avez achete %d fuels\n", amount);
 	}
 }
-
 void	market_buy_food(Market *market, Player *player, unsigned amount) {
 	static const float	foodPrice[] = {
 		1.2f,
@@ -340,7 +338,6 @@ void	market_buy_food(Market *market, Player *player, unsigned amount) {
 		printf("Vous avez achete %d de nourriture\n", amount);
 	}
 }
-
 void	market_buy_item(Market *market, Player *player, ItemType iType, int id) {
 	int price = market_get_item_price(market, iType, id);
 
@@ -353,4 +350,56 @@ void	market_buy_item(Market *market, Player *player, ItemType iType, int id) {
 	}
 	else
 		printf("L'article n'est plus disponible ou vous n'avez pas assez d'argent...\n\n");
+}
+
+void	market_compare(Market *market, Player *player, Token *token) {
+	static const char	*itemName[] = {
+		"arme",
+		"armure",
+		"moteur",
+		"coque"
+	};
+
+	for (int i = 0; i < 4; ++i) {
+		if (strcmp(token[1].str, itemName[i]) == 0 && token[2].str != NULL) {
+			int id = atoi(token[2].str) - 1;
+
+			switch (i) {
+			case I_WEAPON:
+				if (id < market->nWeapons) {
+					printf("\nVous avez:");
+					weapon_display(player->ship.weapon);
+					printf("Vous regardez:");
+					weapon_display(market->weapon[id]);
+				}
+				break;
+			case I_ARMOR:
+				if (id < market->nArmors) {
+					printf("\nVous avez:");
+					armor_display(player->ship.armor);
+					printf("Vous regardez:");
+					armor_display(market->armor[id]);
+				}
+				break;
+			case I_ENGINE:
+				if (id < market->nEngines) {
+					printf("\nVous avez:");
+					engine_display(player->ship.engine);
+					printf("Vous regardez:");
+					engine_display(market->engine[id]);
+				}
+				break;
+			case I_HULL:
+				if (id < market->nHulls) {
+					printf("\nVous avez:");
+					hull_display(player->ship.hull);
+					printf("Vous regardez:");
+					hull_display(market->hull[id]);
+				}
+				break;
+			default:
+				break;
+			}
+		}
+	}
 }

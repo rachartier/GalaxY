@@ -335,6 +335,9 @@ void	f_cmd_commerce(Player *player, Token *token) {
 			else if (strcmp(_token[0].str, "afficher") == 0) {
 				market_display_item(player->actPlanet.market, _token);
 			}
+			else if (strcmp(_token[0].str, "comparer") == 0) {
+				market_compare(player->actPlanet.market, player, _token);
+			}
 			else {
 				market_display_help();
 			}

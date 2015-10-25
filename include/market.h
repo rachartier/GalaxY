@@ -57,4 +57,6 @@ void	market_buy_fuel(Market *market, Player *player, unsigned amount);
 void	market_buy_food(Market *market, Player *player, unsigned amount);
 void	market_buy_item(Market *market, Player *player, ItemType iType, int id);
 
+void	market_compare(Market *market, Player *player, Token *token);
+
 #endif // __MARKET_H__

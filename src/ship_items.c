@@ -230,8 +230,8 @@ void	armor_display(Armor armor) {
 		"les missiles"
 	};
 	printf("\nArmure [%s] efficace contre %s:\n", armor.name, table_armor_type[armor.type]);
-	printf("\tPoint de vie: %.3f\n", armor.life);
-	printf("\tEfficacite: %.3f%%\n", armor.armor);
+	printf("\t-Point de vie: %.3f\n", armor.life);
+	printf("\t-Efficacite: %.3f%%\n", armor.armor);
 }
 
 void	engine_display(Engine engine) {
@@ -248,9 +248,9 @@ void	hull_display(Hull hull) {
 		"Tres grande"
 	};
 
-	printf("\nCoque (%s):", hull_name[hull.type]);
-	printf("\tPoint de vie: %d/%d\n", hull.life.actual, hull.life.actual);
-	printf("\tCarburant: %.3f/%.3f\n", hull.fuel.actual, hull.fuel.max);
-	printf("\tPersonnel maximum: %d\n", hull.nMaxStaff);
-	printf("\tNombre maximum d'armes: %d\n", hull.nWeaponsSlot);
+	printf("\nCoque (%s):\n", hull_name[hull.type]);
+	printf("\t-Point de vie: %d/%d\n", hull.life.actual, hull.life.actual);
+	printf("\t-Carburant: %.3f/%.3f\n", hull.fuel.actual, hull.fuel.max);
+	printf("\t-Personnel maximum: %d\n", hull.nMaxStaff);
+	printf("\t-Nombre maximum d'armes: %d\n", hull.nWeaponsSlot);
 }
