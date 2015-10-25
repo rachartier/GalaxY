@@ -249,6 +249,7 @@ void	market_display_help(void) {
 		" - Afficher une categorie: \"afficher <nom-categorie>\"\n"
 		" - Acheter un objet: \"acheter <nom-objet>[arme, armure, moteur, coque] <id>\"\n"
 		" - Acheter nourrirutre/fuel: \"acheter [nourriture,fuel] <quantite/[max]>\"\n"
+        " - Comparer deux objets: \"comparer [nom] [id]\"\n"
 	};
 	printf("%s\n\n", help);
 }
