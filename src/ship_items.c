@@ -5,6 +5,7 @@
 #include <string.h>
 
 #include "rand.h"
+#include "ship.h"
 
 #define NMARKS	7
 #define MAXMARK(a)	((a/2 >= NMARKS) ? NMARKS - 1 : a/2)
@@ -207,19 +208,23 @@ Hull	hull_create_rand(unsigned level) {
 }
 
 void	weapon_display(Weapon weapon) {
-	static char *table_weapon_type[] = {
-		"Laser",
-		"Machine gun",
-		"Plasma",
-		"Missile"
-	};
+	if (weapon.name[0] != NULL) {
+		static char *table_weapon_type[] = {
+			"Laser",
+			"Machine gun",
+			"Plasma",
+			"Missile"
+		};
 
-	printf("\nArme [%s]:\n", weapon.name);
-	printf("\t- Type de degats: %s\n", table_weapon_type[weapon.type]);
-	printf("\t- Degats: %d\n", weapon.damage);
-	printf("\t- Penetration d'armure: %.3f%%\n", weapon.penArmor);
-	printf("\t- Temps de chargement: %.3fs\n", weapon.castTime);
-	printf("\t- Chance de coup critique: %.3f%%\n", weapon.criticalChance);
+		printf("\nArme [%s]:\n", weapon.name);
+		printf("\t- Type de degats: %s\n", table_weapon_type[weapon.type]);
+		printf("\t- Degats: %d\n", weapon.damage);
+		printf("\t- Penetration d'armure: %.3f%%\n", weapon.penArmor);
+		printf("\t- Temps de chargement: %.3fs\n", weapon.castTime);
+		printf("\t- Chance de coup critique: %.3f%%\n", weapon.criticalChance);
+	}
+	else
+		printf("Emplacement d'arme vide\n");
 }
 
 void	armor_display(Armor armor) {

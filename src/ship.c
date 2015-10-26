@@ -12,22 +12,35 @@ void	ship_create(Ship *ship, unsigned int level, size_t nCrew) {
 
 	ship->power = 0u;
 
-	ship_set_item(ship, I_WEAPON, &w);
-	ship_set_item(ship, I_ARMOR, &a);
-	ship_set_item(ship, I_ENGINE, &e);
-	ship_set_item(ship, I_HULL, &h);
+	ship_set_item(ship, I_WEAPON, 0, &w);
+	ship_set_item(ship, I_ARMOR, 0, &a);
+	ship_set_item(ship, I_ENGINE, 0, &e);
+	ship_set_item(ship, I_HULL, 0, &h);
+
+	for (int i = 1; i < h.nWeaponsSlot; ++i) {
+		memset(ship->weapon[i].name, '\0', 31);
+	}
 
 	for (; nCrew > 0; --nCrew) {
 		crew_add_staff(&ship->crew, staff_create());
 	}
 }
 
-void	ship_set_item(Ship *ship, ItemType iType, void *item) {
+int		ship_get_free_slots(Ship ship) {
+	for (int i = 0; i < ship.hull.nWeaponsSlot; ++i) {
+		if (ship.weapon[i].name[0] == '\0')
+			return i;
+	}
+	return -1;
+}
+
+void	ship_set_item(Ship *ship, ItemType iType, int slot, void *item) {
 	switch (iType) {
 	case I_WEAPON:
 	{
 		Weapon	w = *(Weapon *)item;
-		ship->weapon = w;
+
+		ship->weapon[slot] = w;
 		ship->power += w.damage;
 	}
 	break;

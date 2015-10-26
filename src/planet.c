@@ -36,6 +36,7 @@ Planet		planet_create(int id) {
 	chose_random_planetType(&p, id);
 	chose_random_species(&p);
 	chose_random_economy(&p);
+	chose_random_governementType(&p);
 
 	set_radius(&p);
 

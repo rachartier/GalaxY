@@ -319,14 +319,14 @@ void	f_cmd_fired(Player *player, Token *token) {
 void	f_cmd_commerce(Player *player, Token *token) {
 	if (player->actPlanet.isHabitable || player->actPlanet.isColony) {
 		Token	_token[16];
-		char	str[128];
+		char	str[128] = { '\0' };
 
 		while (strcmp(_token[0].str, "quitter") != 0) {
-			market_display(player->actPlanet.market);
+			market_display(player->actPlanet.market, player->actPlanet.governementType);
 
 			printf("[Argent: %.3f] >>> ", player->money);
-			fgets(str, 128, stdin);
 
+			fgets(str, 128, stdin);
 			parse(str, _token);
 
 			if (strcmp(_token[0].str, "acheter") == 0) {

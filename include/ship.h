@@ -9,10 +9,12 @@
 #include "planet.h"
 #include "ship_items.h"
 
+#define MAX_WEAPONS	8
+
 typedef struct s_ship {
 	Crew		crew;
 
-	Weapon		weapon;
+	Weapon		weapon[8];
 	Armor		armor;
 	Engine		engine;
 	Hull		hull;
@@ -22,6 +24,8 @@ typedef struct s_ship {
 
 void	ship_create(Ship *ship, unsigned int level, size_t nCrew);
 
-void	ship_set_item(Ship *ship, ItemType iType, void *item);
+int		ship_get_free_slots(Ship ship);
+
+void	ship_set_item(Ship *ship, ItemType iType, int slot, void *item);
 
 #endif // __SHIP_H__

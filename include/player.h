@@ -59,6 +59,6 @@ void	player_move_toPlanet(Player *player, int dir);
 void	player_move_toSystem(Player *player, StarSystem *starsystem);
 void	player_move_toSatellite(Player *player);
 
-void	player_setItem(Player *player, ItemType iType, void *item);
+void	player_setItem(Player *player, ItemType iType, int id, void *item);
 
 #endif // __PLAYER_H__

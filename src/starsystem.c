@@ -40,7 +40,7 @@ void		add_planet(StarSystem *sys, unsigned index) {
 	else
 		planet = planet_create(index);
 
-	fuelCost = (float)(rand_float(6.f, 30.f));
+	fuelCost = (float)(rand_float(6.f, 12.f));
 
 	if (index != 0)
 		planet_set_distance(&sys->planet[index - 1], &planet, fuelCost);

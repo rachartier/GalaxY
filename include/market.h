@@ -40,9 +40,9 @@ void	market_create(Market *market, Planet *planet);
 void	market_add_item(Market *market, ItemType iType, void *item, int id);
 void	market_remove_item(Market *market, ItemType iType, int id);
 void*	market_get_item(Market *market, ItemType iType, int id);
-float	market_get_item_price(Market *market, ItemType iType, int id);
+float	market_get_item_price(Market *market, GovernementType gt, ItemType iType, int id);
 
-void	market_display(Market *market);
+void	market_display(Market *market, GovernementType gt);
 
 void	market_display_weapon(Market *market);
 void	market_display_armor(Market *market);
@@ -52,7 +52,7 @@ void	market_display_hull(Market *market);
 void	market_display_item(Market *market, Token *token);
 void	market_display_help(void);
 
-void	market_buy(Market *market, struct s_player *player, Token *token);
+void	market_buy(Market *market, Player *player, Token *token);
 void	market_buy_fuel(Market *market, Player *player, unsigned amount);
 void	market_buy_food(Market *market, Player *player, unsigned amount);
 void	market_buy_item(Market *market, Player *player, ItemType iType, int id);

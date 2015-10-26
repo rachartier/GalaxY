@@ -25,7 +25,7 @@ Player* player_create(unsigned life, unsigned shield, float fuel, unsigned weigh
 	player->exp = 0;
 	player->lvl = 50;
 
-	player->money = 100000.0f;
+	player->money = 10000000.0f;
 	player->planetIndex = 0;
 	player->satelliteIndex = -1;
 	player->stats.planetsVisited = 0;
@@ -123,7 +123,9 @@ void	player_info(Player player) {
 	printf("Nombre de planetes visitees: %d\n", player.stats.planetsVisited);
 
 	hull_display(player.ship.hull);
-	weapon_display(player.ship.weapon);
+
+	for (int i = 0; i < player.ship.hull.nWeaponsSlot; ++i)
+		weapon_display(player.ship.weapon[i]);
 	armor_display(player.ship.armor);
 	engine_display(player.ship.engine);
 }
@@ -213,12 +215,12 @@ void	player_drop(Player *player, Planet *planet) {
 		printf("Impossible de fouiller ici\n");
 }
 
-void	player_setItem(Player *player, ItemType iType, void *item) {
+void	player_setItem(Player *player, ItemType iType, int id, void *item) {
 	switch (iType) {
 	case I_WEAPON:
 	{
 		Weapon	w = *(Weapon *)item;
-		player->ship.weapon = w;
+		player->ship.weapon[id] = w;
 		player->power += w.damage;
 	}
 	break;

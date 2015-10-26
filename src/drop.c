@@ -60,7 +60,7 @@ void	drop_weapon(Player *player) {
 
 		scanf("%c", &c);
 		if (c == 'o') {
-			player_setItem(player, I_WEAPON, &w);
+			player_setItem(player, I_WEAPON, 0, &w);
 		}
 	}
 }
