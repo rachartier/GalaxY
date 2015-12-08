@@ -6,6 +6,15 @@
 
 #define MAX_SATELLITE	10
 
+typedef enum e_placegeneration {
+	GEN_OCEAN,
+	GEN_DESERT,
+	GEN_HUGE_FOREST,
+	GEN_ICE,
+	GEN_UNKNOW,
+	GEN_LAST
+} PlaceGeneration;
+
 typedef enum e_planetType {
 	P_TYPE_TERRESRTIAL,
 	P_TYPE_GASEOUS,
@@ -19,9 +28,9 @@ typedef enum e_planetType {
 
 typedef enum e_planetCondition {
 	CONDITION_OCEAN,
+	CONDITION_ICE,
 	CONDITION_DESERT,
 	CONDITION_HUGE_FOREST,
-	CONDITION_ICE,
 	CONDITION_UNKNOW,
 	CONDITION_LAST
 } PlanetCondition;

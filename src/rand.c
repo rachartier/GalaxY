@@ -33,8 +33,8 @@ Name	rand_name(void) {
 	memset(name.str, 0, 32);
 
 	char pairs[] = { // TXTELITE.c
-		"..lexegezacebiso"
-		"usesarmaindirea."
+		"lexegezacebiso"
+		"usesarmaindirea"
 		"eratenberalaveti"
 		"edorquanteisrion"
 	};

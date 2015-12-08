@@ -53,8 +53,8 @@ void	market_display_item(Market *market, Token *token);
 void	market_display_help(void);
 
 void	market_buy(Market *market, Player *player, Token *token);
-void	market_buy_fuel(Market *market, Player *player, unsigned amount);
-void	market_buy_food(Market *market, Player *player, unsigned amount);
+void	market_buy_fuel(Market *market, Player *player, float amount);
+void	market_buy_food(Market *market, Player *player, float amount);
 void	market_buy_item(Market *market, Player *player, ItemType iType, int id);
 
 void	market_compare(Market *market, Player *player, Token *token);

@@ -196,6 +196,8 @@ Hull	hull_create_rand(unsigned level) {
 		ht = rand_born(0, H_LAST - 1);
 
 	h.life.actual = table_life[ht];
+	h.life.max = h.life.actual;
+
 	h.nMaxStaff = table_max_staff[ht];
 	h.nWeaponsSlot = table_max_weapon_slot[ht];
 
@@ -254,7 +256,7 @@ void	hull_display(Hull hull) {
 	};
 
 	printf("\nCoque (%s):\n", hull_name[hull.type]);
-	printf("\t-Point de vie: %d/%d\n", hull.life.actual, hull.life.actual);
+	printf("\t-Point de vie: %d/%d\n", hull.life.actual, hull.life.max);
 	printf("\t-Carburant: %.3f/%.3f\n", hull.fuel.actual, hull.fuel.max);
 	printf("\t-Personnel maximum: %d\n", hull.nMaxStaff);
 	printf("\t-Nombre maximum d'armes: %d\n", hull.nWeaponsSlot);

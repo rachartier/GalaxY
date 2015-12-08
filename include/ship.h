@@ -28,4 +28,6 @@ int		ship_get_free_slots(Ship ship);
 
 void	ship_set_item(Ship *ship, ItemType iType, int slot, void *item);
 
+void	ship_get_damage(Ship *ship, int amountDmg);
+
 #endif // __SHIP_H__

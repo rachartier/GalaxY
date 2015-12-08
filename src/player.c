@@ -157,10 +157,10 @@ void	player_set_planet(Player *player) {
 
 void	player_move_toPlanet(Player *player, int dir) {
 	if (player->planetIndex + dir > 0 && player->planetIndex + dir < (int)player->actStarsystem->numberPlanets) {
-		player->planetIndex += dir;
 		float fuelCost = player_getDistanceOfPlanet(*player, player->actStarsystem->planet[player->planetIndex + dir]);
 
 		if (player->ship.hull.fuel.actual - fuelCost > 0.f) {
+			player->planetIndex += dir;
 			player_set_planet(player);
 
 			if (player->actPlanet.type == P_TYPE_STAR)
@@ -197,13 +197,13 @@ void	player_drop(Player *player, Planet *planet) {
 	if (!planet->isHabitable && (planet->type != P_TYPE_PORTAL_IN && planet->type != P_TYPE_PORTAL_OUT)) {
 		if (!planet->searched) {
 			planet->searched = true;
-			if (CHANCE(2)) {
+			if (CHANCE(5)) {
 				printf("Vous trouvez un vaisseau...\n");
 
-				drop_staff(player);
 				drop_scrap(player);
 				drop_fuel(player);
 				drop_weapon(player);
+				drop_staff(player);
 			}
 			else
 				printf("Vous ne trouvez rien d'interessant\n");

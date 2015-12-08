@@ -27,7 +27,8 @@ Planet		planet_create(int id) {
 		.isColony = false,
 		.visited = false,
 		.nSatellite = 0,
-		.searched = false
+		.searched = false,
+		.condition = -1
 	};
 
 	create_satellite(&p);
@@ -123,6 +124,11 @@ void		planet_show_stats(Planet planet) {
 		"Pauvre"
 	};
 
+	static const char *g_planetCondition[] = {
+		"Ocean",
+		"Glace"
+	};
+
 	putchar('\n');
 	if (planet.type == P_TYPE_STAR) {
 		printf("Est une etoile\n");
@@ -138,6 +144,8 @@ void		planet_show_stats(Planet planet) {
 	else {
 		printf("Nom: %s\n", planet.name);
 		printf("Type: %s\n", g_planetTypeName[planet.type]);
+		if (planet.condition != -1)
+			printf("Condition: %s\n", g_planetCondition[planet.condition]);
 		printf("Est une colonie: %s\n", (planet.isColony) ? "oui" : "non");
 		printf("Rayon: %.3fkm", planet.radius);
 		printf("\nSurface totale: %.3lf millions de km^2", planet.areaTotal);
@@ -158,21 +166,21 @@ void		planet_show_stats(Planet planet) {
 
 void generate_world(Planet *planet) {
 	if (planet->type == P_TYPE_TERRESRTIAL) {
-		if (gen_non_habitable_area(planet, CONDITION_OCEAN, BORN_OCEAN, 7)) {
+		if (gen_non_habitable_area(planet, GEN_OCEAN, BORN_OCEAN, 7)) {
 			planet->hasWater = true;
 			planet->isHabitable = true;
 			planet->canCommerce = true;
 
-			gen_non_habitable_area(planet, CONDITION_DESERT, BORN_DESERT, 4);
-			gen_non_habitable_area(planet, CONDITION_ICE, BORN_ICE, 3);
-			gen_non_habitable_area(planet, CONDITION_HUGE_FOREST, BORN_FOREST, 0);
+			gen_non_habitable_area(planet, GEN_DESERT, BORN_DESERT, 4);
+			gen_non_habitable_area(planet, GEN_ICE, BORN_ICE, 3);
+			gen_non_habitable_area(planet, GEN_HUGE_FOREST, BORN_FOREST, 0);
 		}
 		else if (CHANCE(2)) {
 			planet->isColony = true;
 			planet->isHabitable = true;
 			planet->canCommerce = true;
 
-			gen_non_habitable_area(planet, CONDITION_UNKNOW, 0, 0);
+			gen_non_habitable_area(planet, GEN_UNKNOW, 0, 0);
 		}
 		else {
 			planet->isHabitable = false;
@@ -199,6 +207,8 @@ bool gen_non_habitable_area(Planet *planet, PlanetCondition pCondition, float pe
 
 		if (planet->isColony)
 			areaNonHabitable = rand_float(70.f, 90.f);
+		else if (planet->condition == CONDITION_OCEAN)
+			areaNonHabitable = rand_float(90.f, 100.f);
 		else
 			areaNonHabitable = rand_float(0.f, percentage);
 
@@ -320,6 +330,18 @@ void chose_random_planetType(Planet *planet, int id) {
 	if (planet->type == P_TYPE_GASEOUS) {
 		if (CHANCE(5)) {
 			planet->isGiant = true;
+		}
+	}
+	else if (planet->type == P_TYPE_TERRESRTIAL) {
+		if (CHANCE(1) && planet->hasWater) {
+			if (CHANCE(1)) {
+				planet->condition = CONDITION_OCEAN;
+			}
+			else {
+				planet->condition = CONDITION_ICE;
+				planet->isHabitable = false;
+				planet->canCommerce = false;
+			}
 		}
 	}
 }

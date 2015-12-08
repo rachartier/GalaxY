@@ -5,9 +5,10 @@
 #include "staff.h"
 #include "ship_items.h"
 #include "rand.h"
+#include "memory.h"
 
 void	drop_staff(Player *player) {
-	if (CHANCE(8)) {
+	if (CHANCE(7)) {
 		Staff staff = staff_create();
 		char  c;
 
@@ -19,8 +20,33 @@ void	drop_staff(Player *player) {
 
 		printf("Voulez vous le recruter [o/n]?");
 		scanf("%c", &c);
+		purge_stdin();
 
 		if (c == 'o') {
+			if (CHANCE(10)) {
+				int rep = rand_born(1, 2);
+				int money;
+				int fuel;
+
+				static const char *sentence[] = {
+					"C'etait un piege! La personne que vous venez de recruter est une kamikaze!\nElle explose dans le vaisseau et fait de serieux degats...",
+					"La personne vous remercies, et vous donnes %d d'argent."
+				};
+
+				switch (rep) {
+				case 1:
+					puts(sentence[rep - 1]);
+					ship_get_damage(&player->ship, rand_born(50, player->ship.hull.life.max / 2));
+					break;
+				case 2:
+					money = rand_born(100, 1000);
+					player->money += money;
+					printf(sentence[rep - 1], money);
+					break;
+				default:
+					break;
+				}
+			}
 			crew_add_staff(&player->ship.crew, staff);
 		}
 	}
@@ -28,7 +54,7 @@ void	drop_staff(Player *player) {
 
 void	drop_scrap(Player *player) {
 	if (CHANCE(3)) {
-		unsigned addmoney = rand_born(5, 20);
+		unsigned addmoney = rand_born(20, 60);
 
 		printf("\t- Vous trouvez %u$\n", addmoney);
 
@@ -53,12 +79,15 @@ void	drop_weapon(Player *player) {
 		Weapon	w = weapon_create_rand(player->lvl);
 		char	c;
 
-		printf("Vous trouvez une arme: ");
+		printf("\nVous trouvez une arme: ");
 		weapon_display(w);
 
 		printf("Voulez vous la prendre [o/n]? ");
 
 		scanf("%c", &c);
+
+		purge_stdin();
+
 		if (c == 'o') {
 			player_setItem(player, I_WEAPON, 0, &w);
 		}

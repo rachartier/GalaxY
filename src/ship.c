@@ -57,3 +57,7 @@ void	ship_set_item(Ship *ship, ItemType iType, int slot, void *item) {
 		break;
 	}
 }
+
+void	ship_get_damage(Ship *ship, int amountDmg) {
+	ship->hull.life.actual -= amountDmg;
+}
