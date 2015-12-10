@@ -26,7 +26,6 @@ void	drop_staff(Player *player) {
 			if (CHANCE(10)) {
 				int rep = rand_born(1, 2);
 				int money;
-				int fuel;
 
 				static const char *sentence[] = {
 					"C'etait un piege! La personne que vous venez de recruter est une kamikaze!\nElle explose dans le vaisseau et fait de serieux degats...",
@@ -67,7 +66,7 @@ void	drop_fuel(Player *player) {
 		if (player->ship.hull.fuel.actual < player->ship.hull.fuel.max) {
 			float fuel = rand_float(10.f, 30.f);
 
-			printf("\t- Vous recuperez %.1f fuel\n", fuel);
+			printf("\t- Vous recuperez %.1fL de carburants\n", fuel);
 
 			player_setFuel(player, player->ship.hull.fuel.actual + fuel, player->ship.hull.fuel.max);
 		}

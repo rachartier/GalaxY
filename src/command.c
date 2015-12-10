@@ -34,16 +34,16 @@ static const char *g_commandName[] = {
 };
 
 static const char *g_commandDetail[] = {
-	"[ /vaisseau/equipage] (i [ /v/e])\n\t\tinfos sur une planete, le vaisseau, l'equipage",
-	"(ls) : liste toutes les planetes du systeme planetaire",
-	"[suiv/prec] (al [s/p])\n\t\tpermet de deplacer de planete en planete",
-	"(f) : fouiller la planete actuelle",
-	"(e) : permet de passer au prochain systeme planetaire",
-	"(?) : ouvre l'aide",
-	"(r) : recrute du personnel",
-	"(v) : vire une personne",
-	"(q) : quitte le jeu",
-	"(c) : permet d'acheter du nouveaux materiels"
+	"[ /vaisseau/equipage] (i [ /v/e])\n\t\t - infos sur une planete, le vaisseau, l'equipage",
+	"(ls)\n\t\t - liste toutes les planetes du systeme planetaire",
+	"[s/p] (al [sat/satellite][s/p])\n\t\t - permet de se deplacer",
+	"(f)\n\t\t - fouiller la planete actuelle",
+	"(e)\n\t\t - permet de passer au prochain systeme planetaire",
+	"(?)\n\t\t - ouvre l'aide",
+	"(r)\n\t\t - recrute du personnel",
+	"(v)\n\t\t - vire une personne",
+	"(q)\n\t\t - quitte le jeu",
+	"(c)\n\t\t - permet d'acheter du nouveaux materiels"
 };
 
 void(*cmdFunction[NFUNCTIONS])(Player *, Token *) = {
@@ -64,7 +64,7 @@ void	cmd_get(Player *player) {
 	Token	token[16];
 	int		funcID = -1;
 
-	printf("\n\n%s [%d/%d] >>> ", player->actPlanet.name, player->planetIndex + 1, player->actStarsystem->numberPlanets);
+	printf("\n\n%s [%d/%d] Carburant: %.2Lf>>> ", player->actPlanet.name, player->planetIndex + 1, player->actStarsystem->numberPlanets, player->ship.hull.fuel.actual);
 
 	fgets(str, MAX_LENGHT, stdin);
 
@@ -219,7 +219,8 @@ void f_cmd_help(Player *player, Token *token) {
 	putchar('\n');
 	printf("COMMANDE [ARGUMENT] (VERSION COURTE [ARGUMENT]): DESCRIPTION\n\n");
 	for (int i = 0; i < NFUNCTIONS; ++i) {
-		printf("- %s %s\n\n", g_commandName[i], g_commandDetail[i]);
+		LINE(80, '/');
+		printf("- %s %s\n", g_commandName[i], g_commandDetail[i]);
 	}
 }
 

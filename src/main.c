@@ -74,7 +74,7 @@ int main(void) {
 	int			cmd = 1;
 	bool		exit = false;
 
-	menu_setTitle(mainMenu, "GalaxY (V0.0.0)");
+	menu_setTitle(mainMenu, "GalaxY (V0.10.20)");
 
 	menu_addButtonText(mainMenu, "Jouer");
 	menu_addButtonText(mainMenu, "Charger");

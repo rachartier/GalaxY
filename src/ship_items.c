@@ -60,16 +60,16 @@ Weapon	weapon_create_rand(unsigned level) {
 	float	offset = table_weapon[mark];
 	float	critic = rand_float(5.f, 21.f);
 
-	w.damage = table_damage[wt] * offset + rand_born(0, 4 + (offset / 1.5));
+	w.damage = (int)(table_damage[wt] * offset + rand_born(0, 4 + (offset / 1.5)));
 	w.penArmor = table_penArmor[wt] * offset;
 	w.criticalChance = critic + (9 * offset);
 
-	w.castTime = table_castTime[wt] / (offset - 0.8);
+	w.castTime = table_castTime[wt] / (offset);
 
 	w.isVisible = true;
 	w.type = wt;
 
-	w.price = rand_born(1, 10) * ((mark + 1) * 1000);
+	w.price = rand_float(1, 10) * ((mark + 1) * 1000);
 
 	strcpy(w.name, gTable_markName[mark]);
 
@@ -110,7 +110,7 @@ Armor 	armor_create_rand(unsigned level) {
 	a.isVisible = true;
 	a.type = at;
 
-	a.price = rand_born(1, 10) * ((mark + 1) * 1000);
+	a.price = rand_float(1, 10) * ((mark + 1) * 1000);
 
 	strcpy(a.name, gTable_markName[mark]);
 
@@ -138,7 +138,7 @@ Engine	engine_create_rand(unsigned level) {
 	e.speed = 0;
 	e.type = 0;
 
-	e.price = rand_born(2, 11) * ((mark + 1) * 10000);;
+	e.price = rand_float(2, 11) * ((mark + 1) * 10000);;
 
 	strcpy(e.name, gTable_markName[mark]);
 
@@ -172,12 +172,12 @@ Hull	hull_create_rand(unsigned level) {
 		8
 	};
 
-	static const int table_price[] = {
-		500,
-		1000,
-		1500,
-		2000,
-		5000
+	static const float table_price[] = {
+		500.f,
+		1000.f,
+		1500.f,
+		2000.f,
+		5000.f
 	};
 
 	static const float table_fuel[] = {
@@ -210,7 +210,7 @@ Hull	hull_create_rand(unsigned level) {
 }
 
 void	weapon_display(Weapon weapon) {
-	if (weapon.name[0] != NULL) {
+	if (strlen(weapon.name) > 0) {
 		static char *table_weapon_type[] = {
 			"Laser",
 			"Machine gun",
@@ -257,7 +257,7 @@ void	hull_display(Hull hull) {
 
 	printf("\nCoque (%s):\n", hull_name[hull.type]);
 	printf("\t-Point de vie: %d/%d\n", hull.life.actual, hull.life.max);
-	printf("\t-Carburant: %.3f/%.3f\n", hull.fuel.actual, hull.fuel.max);
+	printf("\t-Carburant: %.3fL/%.3fL\n", hull.fuel.actual, hull.fuel.max);
 	printf("\t-Personnel maximum: %d\n", hull.nMaxStaff);
 	printf("\t-Nombre maximum d'armes: %d\n", hull.nWeaponsSlot);
 }

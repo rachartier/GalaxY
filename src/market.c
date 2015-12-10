@@ -337,11 +337,11 @@ void	market_buy_fuel(Market *market, Player *player, float amount) {
 		player->money -= fuelPrice;
 		player->ship.hull.fuel.actual += amount;
 
-		printf("Vous avez achete %d fuels\n", amount);
+		printf("Vous avez achete %.3f fuels\n", amount);
 	}
 }
 void	market_buy_food(Market *market, Player *player, float amount) {
-	float price = player->money - amount * market_get_item_price(market, player->actPlanet.governementType, I_FOOD, 0);
+	float price = amount * market_get_item_price(market, player->actPlanet.governementType, I_FOOD, 0);
 
 	if ((market->nFoods - amount < 0.f) || (player->money - price < 0.f))
 		printf("Vous ne pouvhez pas en acheter autant!\n");

@@ -186,11 +186,10 @@ void	player_move_toSatellite(Player *player) {
 }
 
 void	player_move_toSystem(Player *player, StarSystem *starsystem) {
-	player->planetIndex = 0;
+	player->planetIndex = 1;
 	player->stats.planetsVisited--;
 	player->actStarsystem = starsystem;
-
-	player_move_toPlanet(player, 1);
+	player_set_planet(player);
 }
 
 void	player_drop(Player *player, Planet *planet) {
