@@ -20,34 +20,33 @@ Si vous ne vous rappelez plus d'une commande ou de comment l'utiliser, tapez `ai
 | `info vaisseau`    | `info v`    | informations de votre vaisseau                  |
 | `info equipage`    | `info e`    | informations sur votre équipage                 |
 | `entrer`           | `e`         | permet de passer au prochain système planétaire |
-| `commerce`         | `c`         | permet d'acheter du matériel           |
+| `commerce`         | `c`         | permet d'acheter du matériel                    |
+| `virer`            | `v`         | permet de virer un membre de l'équipage         |
 | `quitter`          | `q`         | quitte la partie en cours                       |
 
 (A venir)
 
 - `bataille` (`b`) : votre vaisseau entre dans le mode de bataille.
 - `quete` (`qs`) : affichera une liste de quêtes
-
+- `vendre` : permettra de vendre ses armes, armures etc... disponible dans la resérve
+- 
 # TODO
 
 (Vaisseau)
-- Possibilité de personnaliser/améliorer son vaisseau (taille, capacité, réservoir, puissance, armure)
-- Équipage avec poste + bonus de poste
+- De nouvelles armes
+- Hanger pour stocker différents objets
+- Vendre ses armes
 
 (Joueur)
-- Nombre limite de déplacement en fonction du fuel
 - Charge maximum du vaisseau
-- Arme/armure
-- Système d'argent
 - Nourriture/eau (pour l'équipage)
 - Système de combat : attaque et défense
-- Système de drop/item
 - Système de quête
 
 (Planète)
-- Commerce planète
-- Régime politique planète
+- De nouvelles planètes
 - Langue inconnue
+- Amélioration du commerce (acheter des bonus...)
 
 # Licence
 
