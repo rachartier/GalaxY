@@ -22,6 +22,7 @@ Si vous ne vous rappelez plus d'une commande ou de comment l'utiliser, tapez `ai
 | `entrer`           | `e`         | permet de passer au prochain système planétaire |
 | `commerce`         | `c`         | permet d'acheter du matériel                    |
 | `virer`            | `v`         | permet de virer un membre de l'équipage         |
+| `recuperer`        | `g`         | permet de recuperer un objet dans sa réserve    |
 | `quitter`          | `q`         | quitte la partie en cours                       |
 
 (A venir)
@@ -34,7 +35,6 @@ Si vous ne vous rappelez plus d'une commande ou de comment l'utiliser, tapez `ai
 
 (Vaisseau)
 - De nouvelles armes
-- Hanger pour stocker différents objets
 - Vendre ses armes
 
 (Joueur)
