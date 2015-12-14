@@ -210,7 +210,7 @@ Hull	hull_create_rand(unsigned level) {
 }
 
 void	weapon_display(Weapon weapon) {
-	if (strlen(weapon.name) > 0) {
+	if (weapon.isVisible) {
 		static char *table_weapon_type[] = {
 			"Laser",
 			"Machine gun",

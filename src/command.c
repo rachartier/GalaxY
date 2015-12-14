@@ -21,6 +21,7 @@ static const char *g_commandName[] = {
 	"virer",
 	"quitter",
 	"commerce",
+	"recuperer",
 	"i",
 	"ls",
 	"al",
@@ -30,7 +31,8 @@ static const char *g_commandName[] = {
 	"r",
 	"v",
 	"q",
-	"c"
+	"c",
+	"g"
 };
 
 static const char *g_commandDetail[] = {
@@ -43,7 +45,8 @@ static const char *g_commandDetail[] = {
 	"(r)\n\t\t - recrute du personnel",
 	"(v)\n\t\t - vire une personne",
 	"(q)\n\t\t - quitte le jeu",
-	"(c)\n\t\t - permet d'acheter du nouveaux materiels"
+	"(c)\n\t\t - permet d'acheter du nouveaux materiels",
+	"(g)\n\t\t - ololo"
 };
 
 void(*cmdFunction[NFUNCTIONS])(Player *, Token *) = {
@@ -56,10 +59,11 @@ void(*cmdFunction[NFUNCTIONS])(Player *, Token *) = {
 	f_cmd_recruitement,
 	f_cmd_fired,
 	f_cmd_quit,
-	f_cmd_commerce
+	f_cmd_commerce,
+	f_cmd_getItemSupply
 };
 
-void	cmd_get(Player *player) {
+void cmd_get(Player *player) {
 	char	str[MAX_LENGHT] = { 0 };
 	Token	token[16];
 	int		funcID = -1;
@@ -87,7 +91,7 @@ void	cmd_get(Player *player) {
 	}
 }
 
-int		parse(char *str, Token *token) {
+int	 parse(char *str, Token *token) {
 	char	*pch = NULL;
 	char	delimter[] = ", .-\n";
 	int		i = 0;
@@ -102,7 +106,7 @@ int		parse(char *str, Token *token) {
 	return 0;
 }
 
-void	f_cmd_info(Player *player, Token *token) {
+void f_cmd_info(Player *player, Token *token) {
 	printf("%s", token[1].str);
 
 	if (strcmp(token[1].str, "satellite") == 0 || strcmp(token[1].str, "s") == 0) {
@@ -119,12 +123,15 @@ void	f_cmd_info(Player *player, Token *token) {
 	else if (strcmp(token[1].str, "equipage") == 0 || strcmp(token[1].str, "e") == 0) {
 		crew_display(player->ship.crew);
 	}
+	else if ((strcmp(token[1].str, "reserve") == 0 || strcmp(token[1].str, "r") == 0)) {
+		ship_list_item_supply(player->ship);
+	}
 	else {
 		planet_show_stats(player->actPlanet);
 	}
 }
 
-void	f_cmd_list(Player *player, Token *token) {
+void f_cmd_list(Player *player, Token *token) {
 	(void)token;
 
 	printf("Il y a %u planetes dans ce systeme :\n", player->actStarsystem->numberPlanets - 1);
@@ -178,14 +185,14 @@ void f_cmd_jump(Player *player, Token *token) {
 	}
 }
 
-void	f_cmd_quit(Player *player, Token *token) {
+void f_cmd_quit(Player *player, Token *token) {
 	(void)token;
 
 	player->wantToExit = true;
 	putchar('\n');
 }
 
-void	f_cmd_search(Player *player, Token *token) {
+void f_cmd_search(Player *player, Token *token) {
 	(void)token;
 
 	player_drop(player, &player->actPlanet);
@@ -292,7 +299,7 @@ void f_cmd_recruitement(Player *player, Token *token) {
 	}
 }
 
-void	f_cmd_fired(Player *player, Token *token) {
+void f_cmd_fired(Player *player, Token *token) {
 	(void)token;
 
 	unsigned id;
@@ -317,7 +324,7 @@ void	f_cmd_fired(Player *player, Token *token) {
 	purge_stdin();
 }
 
-void	f_cmd_commerce(Player *player, Token *token) {
+void f_cmd_commerce(Player *player, Token *token) {
 	if (player->actPlanet.isHabitable || player->actPlanet.isColony) {
 		Token	_token[16];
 		char	str[128] = { '\0' };
@@ -347,4 +354,59 @@ void	f_cmd_commerce(Player *player, Token *token) {
 	else {
 		printf("Impossible de faire du commerce ici\n");
 	}
+}
+
+void f_cmd_getItemSupply(Player *player, Token *token) {
+	(void)token;
+
+	int id;
+
+	ship_list_item_supply(player->ship);
+
+	printf("\nEntrez l'ID de l'objet que vous voulez recuprer et equiper: ");
+	scanf("%d", &id);
+
+	id -= 1;
+
+	if (id < 10) {
+		if (player->ship.supply.weapon[id].isVisible && ship_get_free_slots(player->ship) != -1) {
+			ship_set_item(&player->ship, I_WEAPON, ship_get_free_slots(player->ship), &player->ship.supply.weapon[id]);
+			player->ship.supply.weapon[id].isVisible = false;
+		}
+		else if (!player->ship.supply.weapon[id].isVisible) {
+			printf("Vous vous etes trompe d'ID! Veuillez re-ecrire la commande...\n");
+		}
+		else {
+			int id2;
+
+			printf("\nIl n'y a plus de place d'armes.\nVeuillez remplacer un emplacement d'arme (0 pour annuler)\n");
+
+			for (int i = 0; i < player->ship.hull.nWeaponsSlot; ++i) {
+				printf("ID %d:", i + 1);
+				weapon_display(player->ship.weapon[i]);
+			}
+
+			printf("ID: ");
+			scanf("%d", &id2);
+
+			if (id2 != 0 && id2 <= player->ship.hull.nWeaponsSlot) {
+				id2 -= 1;
+
+				Weapon tmp = player->ship.weapon[id2];
+
+				ship_set_item(&player->ship, I_WEAPON, id, &player->ship.supply.weapon[id]);
+				ship_add_item_supply(&player->ship, I_WEAPON, id, &tmp);
+			}
+		}
+		purge_stdin();
+	}
+	else if (id < 20) {
+		if (player->ship.supply.weapon[id].isVisible)
+			ship_set_item(&player->ship, I_WEAPON, ship_get_free_slots(player->ship), &player->ship.supply.weapon[id]);
+	}
+	else if (id < 30) {
+		if (player->ship.supply.weapon[id].isVisible)
+			ship_set_item(&player->ship, I_WEAPON, ship_get_free_slots(player->ship), &player->ship.supply.weapon[id]);
+	}
+	else {}
 }

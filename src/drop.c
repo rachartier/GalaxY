@@ -88,7 +88,7 @@ void	drop_weapon(Player *player) {
 		purge_stdin();
 
 		if (c == 'o') {
-			player_setItem(player, I_WEAPON, 0, &w);
+			ship_set_item(&player->ship, I_WEAPON, 0, &w);
 		}
 	}
 }

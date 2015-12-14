@@ -155,19 +155,19 @@ float	market_get_item_price(Market *market, GovernementType gt, ItemType iType, 
 
 		switch (iType) {
 		case I_WEAPON:
-			if (id < market->nWeapons && market->weapon[id].isVisible)
+			if (market->weapon[id].isVisible)
 				return market->weapon[id].price;
 			break;
 		case I_ARMOR:
-			if (id < market->nArmors && market->armor[id].isVisible)
+			if (market->armor[id].isVisible)
 				return market->armor[id].price;
 			break;
 		case I_ENGINE:
-			if (id < market->nEngines && market->engine[id].isVisible)
+			if (market->engine[id].isVisible)
 				return market->engine[id].price;
 			break;
 		case I_HULL:
-			if (id < market->nHulls && market->hull[id].isVisible)
+			if (market->hull[id].isVisible)
 				return market->hull[id].price;
 			break;
 		case I_FOOD:
@@ -361,7 +361,7 @@ void	market_buy_item(Market *market, Player *player, ItemType iType, int id) {
 
 			if (freeslot == -1) {
 				int slot = -1;
-				printf("Quelle arme voulez-vous remplacer: ");
+				printf("Quelle arme voulez-vous remplacer? ");
 				for (int i = 0; i < player->ship.hull.nWeaponsSlot; ++i) {
 					printf("ID %d:", i + 1);
 					weapon_display(player->ship.weapon[i]);
@@ -372,10 +372,10 @@ void	market_buy_item(Market *market, Player *player, ItemType iType, int id) {
 					slot--;
 					purge_stdin();
 				}
-				player_setItem(player, iType, slot - 1, market_get_item(market, iType, id));
+				ship_set_item(&player->ship, I_WEAPON, slot - 1, market_get_item(market, iType, id));
 			}
 			else {
-				player_setItem(player, iType, freeslot, market_get_item(market, iType, id));
+				ship_set_item(&player->ship, I_WEAPON, freeslot, market_get_item(market, iType, id));
 			}
 		}
 		else {

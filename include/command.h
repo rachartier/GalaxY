@@ -6,7 +6,7 @@
 #include "player.h"
 #include "util.h"
 
-#define NFUNCTIONS	10
+#define NFUNCTIONS	11
 #define MAX_LENGHT	64
 
 enum {
@@ -19,7 +19,8 @@ enum {
 	CMD_RECRUITEMENT,
 	CMD_FIRED,
 	CMD_QUIT,
-	CMD_COMMERCE
+	CMD_COMMERCE,
+	CMD_GET_ITEM_SUPPLY
 };
 
 void cmd_get(Player *player);
@@ -36,5 +37,6 @@ void f_cmd_help(Player *player, Token *token);
 void f_cmd_recruitement(Player *player, Token *token);
 void f_cmd_fired(Player *player, Token *token);
 void f_cmd_commerce(Player *player, Token *token);
+void f_cmd_getItemSupply(Player *player, Token *token);
 
 #endif // __COMMAND_H__

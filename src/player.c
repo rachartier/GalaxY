@@ -126,6 +126,7 @@ void	player_info(Player player) {
 
 	for (int i = 0; i < player.ship.hull.nWeaponsSlot; ++i)
 		weapon_display(player.ship.weapon[i]);
+
 	armor_display(player.ship.armor);
 	engine_display(player.ship.engine);
 }
@@ -217,21 +218,12 @@ void	player_drop(Player *player, Planet *planet) {
 void	player_setItem(Player *player, ItemType iType, int id, void *item) {
 	switch (iType) {
 	case I_WEAPON:
-	{
-		Weapon	w = *(Weapon *)item;
-		player->ship.weapon[id] = w;
-		player->power += w.damage;
-	}
-	break;
 	case I_ARMOR:
-		player->ship.armor = *(Armor *)item;
-		break;
 	case I_ENGINE:
-		player->ship.engine = *(Engine *)item;
-		break;
 	case I_HULL:
-		player->ship.hull = *(Hull *)item;
+		ship_set_item(&player->ship, iType, id, item);
 		break;
+
 	case I_FOOD:
 	{
 		unsigned food = *(unsigned *)item;
