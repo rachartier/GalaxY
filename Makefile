@@ -15,6 +15,7 @@ LDFLAGS=
 
 vpath %.c src
 vpath %.h include
+vpath %.o obj
 
 all: $(EXEC)
 
@@ -22,6 +23,7 @@ $(EXEC): $(OBJ)
 	$(CC) -o $@ $^ $(CFLAGS)
 
 $(OBJDIR)/%.o: %.c
+	- mkdir $(OBJDIR)
 	$(CC) -o $@ -c $< $(CFLAGS) $(CPPFLAGS) $(LDFLAGS)
 
 .PHONY: clean mrproper
