@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <stdbool.h>
 
 #include "util.h"
 #include "memory.h"
@@ -21,17 +22,33 @@ void	menu_destroy(Menu *menu) {
 }
 
 int menu_getcmd(Menu menu) {
-	int 	i;
-	
+	char 	str[32] = {'\0'};
+	int 	res;
+	bool 	good = false;
+
 	do {
 		printf("\n> ");
 
-		scanf("%d", &i);
-	} while (i < 1 || i >= 1 + (int)menu.endList);
+		fgets(str, 8, stdin);
 
-	purge_stdin();
+		for(int j = 0; str[j] != '\0'; ++j) {
+			if(!isdigit(str[j])) {
+				good = false;
+				break;
+			}
+			else if(str[j] == '\n') {
+				str[j] = '\0';
+			}
+			else {
+				good = true;
+			}
+		}
+		res = atoi(str);
 
-	return i;
+	} while ((res < 1 || res >= 1 + (int)menu.endList) && !good);
+
+
+	return res;
 }
 
 void	menu_setTitle(Menu *menu, char *str) {
