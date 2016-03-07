@@ -128,7 +128,7 @@ Engine	engine_create_rand(unsigned level) {
 	};
 
 	Engine		e;
-	EngineType	et = rand_born(0, A_LAST);
+	//EngineType	et = rand_born(0, A_LAST);
 
 	int	mark = rand_born(0, MAXMARK(level));
 

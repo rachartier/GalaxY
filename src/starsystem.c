@@ -24,7 +24,7 @@ StarSystem*	starsys_create(void) {
 }
 
 void		starsys_destroy(StarSystem *sys) {
-	for (int i = 0; i < sys->numberPlanets; ++i)
+	for (unsigned i = 0; i < sys->numberPlanets; ++i)
 		planet_destroy(&sys->planet[i]);
 	xfree(sys);
 }

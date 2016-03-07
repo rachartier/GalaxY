@@ -1,7 +1,7 @@
 #ifndef __UTIL_H__
 #define __UTIL_H__
 
-#define LINE(x, c) for(int i = 0; i < x; ++i) putchar(c)
+#define LINE(x, c) for(int i = 0; i < x; ++i) putchar(c); putchar('\n')
 
 typedef struct s_token {
 	char str[64];

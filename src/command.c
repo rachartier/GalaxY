@@ -36,17 +36,17 @@ static const char *g_commandName[] = {
 };
 
 static const char *g_commandDetail[] = {
-	"[ /vaisseau/equipage] (i [ /v/e])\n\t\t - infos sur une planete, le vaisseau, l'equipage",
+	"[/vaisseau/equipage] (i [ /v/e])\n\t\t - infos sur une planete, le vaisseau, l'equipage",
 	"(ls)\n\t\t - liste toutes les planetes du systeme planetaire",
 	"[s/p] (al [sat/satellite][s/p])\n\t\t - permet de se deplacer",
 	"(f)\n\t\t - fouiller la planete actuelle",
 	"(e)\n\t\t - permet de passer au prochain systeme planetaire",
 	"(?)\n\t\t - ouvre l'aide",
 	"(r)\n\t\t - recrute du personnel",
-	"(v)\n\t\t - vire une personne",
+	"(v)\n\t\t - vire un membre de l'equipage",
 	"(q)\n\t\t - quitte le jeu",
 	"(c)\n\t\t - permet d'acheter du nouveaux materiels",
-	"(g)\n\t\t - ololo"
+	"(g)\n\t\t - recupere un objet de la cargaison"
 };
 
 void(*cmdFunction[NFUNCTIONS])(Player *, Token *) = {
@@ -68,7 +68,7 @@ void cmd_get(Player *player) {
 	Token	token[16];
 	int		funcID = -1;
 
-	printf("\n\n%s [%d/%d] Carburant: %.2Lf>>> ", player->actPlanet.name, player->planetIndex + 1, player->actStarsystem->numberPlanets, player->ship.hull.fuel.actual);
+	printf("\n\n%s [%d/%d] Carburant: %.2fL>>> ", player->actPlanet.name, player->planetIndex + 1, player->actStarsystem->numberPlanets, player->ship.hull.fuel.actual);
 
 	fgets(str, MAX_LENGHT, stdin);
 
@@ -249,7 +249,6 @@ void f_cmd_recruitement(Player *player, Token *token) {
 	if (CHANCE(2) && !player->actPlanet.visited && player->actPlanet.isHabitable) {
 		int		n = rand_born(1, 4);
 		Staff	*staff = xmalloc(n * sizeof(Staff));
-		char	c;
 
 		for (int i = 0; i < n; ++i) {
 			staff[i] = staff_create();
@@ -258,32 +257,24 @@ void f_cmd_recruitement(Player *player, Token *token) {
 			staff_display(staff[i]);
 		}
 
-		do {
-			printf("Voulez vous recruter une de ces personnes [o/n]? ");
+		int		id = 0;
 
-			scanf("%c\n", &c);
-		} while (c != 'o' || c != 'n');
+		printf("\nEntrez l'ID de la personne a recruter (entrez 0 pour annuler): ");
+		scanf("%d", &id);
 
-		if (c == 'o') {
-			int		id = 0;
-
-			printf("\nRentrez son ID (rentrez 0 pour annuler): ");
-			scanf("%d", &id);
-
-			if (id != 0) {
-				if (player->ship.crew.nStaff < player->ship.hull.nMaxStaff) {
-					while (id < 0 || id - 1 >= n) {
-						printf("Mauvais ID, tapez de nouveau: ");
-						scanf("%d", &id);
-					}
-					if (id != 0) {
-						crew_add_staff(&player->ship.crew, staff[id - 1]);
-						printf("%s dit: \"%s\"\n", staff[id - 1].name, sentence[rand_born(0, 8)]);
-					}
+		if (id != 0) {
+			if (player->ship.crew.nStaff < player->ship.hull.nMaxStaff) {
+				while (id < 0 || id - 1 >= n) {
+					printf("Mauvais ID, tapez de nouveau: ");
+					scanf("%d", &id);
 				}
-				else {
-					printf("Nombre de personnel maximum atteint\n");
+				if (id != 0) {
+					crew_add_staff(&player->ship.crew, staff[id - 1]);
+					printf("%s dit: \"%s\"\n", staff[id - 1].name, sentence[rand_born(0, 8)]);
 				}
+			}
+			else {
+				printf("Nombre de personnel maximum atteint\n");
 			}
 		}
 
@@ -325,6 +316,7 @@ void f_cmd_fired(Player *player, Token *token) {
 }
 
 void f_cmd_commerce(Player *player, Token *token) {
+	(void) token;
 	if (player->actPlanet.isHabitable || player->actPlanet.isColony) {
 		Token	_token[16];
 		char	str[128] = { '\0' };
@@ -359,7 +351,7 @@ void f_cmd_commerce(Player *player, Token *token) {
 void f_cmd_getItemSupply(Player *player, Token *token) {
 	(void)token;
 
-	int id;
+	unsigned id;
 
 	ship_list_item_supply(player->ship);
 
@@ -381,7 +373,7 @@ void f_cmd_getItemSupply(Player *player, Token *token) {
 
 			printf("\nIl n'y a plus de place d'armes.\nVeuillez remplacer un emplacement d'arme (0 pour annuler)\n");
 
-			for (int i = 0; i < player->ship.hull.nWeaponsSlot; ++i) {
+			for (unsigned i = 0; i < player->ship.hull.nWeaponsSlot; ++i) {
 				printf("ID %d:", i + 1);
 				weapon_display(player->ship.weapon[i]);
 			}
@@ -389,7 +381,7 @@ void f_cmd_getItemSupply(Player *player, Token *token) {
 			printf("ID: ");
 			scanf("%d", &id2);
 
-			if (id2 != 0 && id2 <= player->ship.hull.nWeaponsSlot) {
+			if (id2 != 0 && id2 <= (int)player->ship.hull.nWeaponsSlot) {
 				id2 -= 1;
 
 				Weapon tmp = player->ship.weapon[id2];

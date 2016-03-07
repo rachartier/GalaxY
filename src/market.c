@@ -11,19 +11,21 @@
 #include "memory.h"
 
 void	market_create(Market *market, Planet *planet) {
+	unsigned i = 0;
+
 	market->nWeapons = rand_born(0, MAX_WEAPON_ITEM);
 	market->nArmors = rand_born(0, MAX_ARMOR_ITEM);
 	market->nEngines = rand_born(0, MAX_ENGINE_ITEM);
 	market->nHulls = rand_born(0, MAX_HULL_ITEM);
 
-	market->nFoods = (unsigned)rand_born(10, 100);
+	market->nFoods = rand_born(10, 100);
 
 	if (planet->governementType == G_TYPE_FEUDAL)
 		market->nFuels = 0;
 	else
-		market->nFuels = (unsigned)rand_born(50, 400);
+		market->nFuels = rand_born(50, 400);
 
-	for (int i = 0; i < MAX_WEAPON_ITEM; ++i) {
+	for (i = 0; i < MAX_WEAPON_ITEM; ++i) {
 		if (i < market->nWeapons) {
 			Weapon w = weapon_create_rand(100);
 
@@ -34,7 +36,7 @@ void	market_create(Market *market, Planet *planet) {
 		else
 			market->weapon[i].isVisible = false;
 	}
-	for (int i = 0; i < MAX_ARMOR_ITEM; ++i) {
+	for (i = 0; i < MAX_ARMOR_ITEM; ++i) {
 		if (i < market->nArmors) {
 			Armor a = armor_create_rand(100);
 			a.price *= (planet->governementType + 1) / 2.5f;
@@ -43,7 +45,7 @@ void	market_create(Market *market, Planet *planet) {
 		else
 			market->armor[i].isVisible = false;
 	}
-	for (int i = 0; i < MAX_ENGINE_ITEM; ++i) {
+	for (i = 0; i < MAX_ENGINE_ITEM; ++i) {
 		if (i < market->nEngines) {
 			Engine a = engine_create_rand(100);
 			a.price *= (planet->governementType + 1) / 2.5f;
@@ -52,7 +54,7 @@ void	market_create(Market *market, Planet *planet) {
 		else
 			market->engine[i].isVisible = false;
 	}
-	for (int i = 0; i < MAX_HULL_ITEM; ++i) {
+	for (i = 0; i < MAX_HULL_ITEM; ++i) {
 		if (i < market->nHulls) {
 			Hull a = hull_create_rand(100);
 			a.price *= (planet->governementType + 1) / 2.5f;
@@ -63,7 +65,7 @@ void	market_create(Market *market, Planet *planet) {
 	}
 }
 
-void	market_add_item(Market *market, ItemType iType, void *item, int id) {
+void	market_add_item(Market *market, ItemType iType, void *item, unsigned id) {
 	if (id < MAX_WEAPON_ITEM) {
 		switch (iType) {
 		case I_WEAPON:
@@ -84,8 +86,8 @@ void	market_add_item(Market *market, ItemType iType, void *item, int id) {
 	}
 }
 
-void	market_remove_item(Market *market, ItemType iType, int id) {
-	if (id >= 0 && id < MAX_WEAPON_ITEM) {
+void	market_remove_item(Market *market, ItemType iType, unsigned id) {
+	if (id < MAX_WEAPON_ITEM) {
 		switch (iType) {
 		case I_WEAPON:
 			market->weapon[id].isVisible = false;
@@ -109,7 +111,7 @@ void	market_remove_item(Market *market, ItemType iType, int id) {
 	}
 }
 
-void*	market_get_item(Market *market, ItemType iType, int id) {
+void*	market_get_item(Market *market, ItemType iType, unsigned id) {
 	if (id < MAX_WEAPON_ITEM) {
 		switch (iType) {
 		case I_WEAPON:
@@ -135,7 +137,7 @@ void*	market_get_item(Market *market, ItemType iType, int id) {
 	return NULL;
 }
 
-float	market_get_item_price(Market *market, GovernementType gt, ItemType iType, int id) {
+float	market_get_item_price(Market *market, GovernementType gt, ItemType iType, unsigned id) {
 	if (id < MAX_WEAPON_ITEM) {
 		static const float	foodPrice[] = {
 			1.2f,
@@ -194,13 +196,13 @@ void	market_display(Market *market, GovernementType gt) {
 	printf("\nAutres:");
 
 	printf("\n- Nourriture: %d (%.3f/unite)\n", market->nFoods, market_get_item_price(market, gt, I_FOOD, 0));
-	printf("- Fuels: %d (%.3f/unite)\n\n", market->nFuels, market_get_item_price(market, gt, I_FUEL, 0));
+	printf("- Fuels: %u (%.3f/unite)\n\n", market->nFuels, market_get_item_price(market, gt, I_FUEL, 0));
 }
 
 void	market_display_weapon(Market *market) {
-	for (int i = 0; i < MAX_WEAPON_ITEM; ++i) {
+	for (unsigned i = 0; i < MAX_WEAPON_ITEM; ++i) {
 		if (market->weapon[i].isVisible) {
-			printf("\n[%d (prix: %.3f$)] ", i + 1, market->weapon[i].price);
+			printf("\n[%u (prix: %.2f$)] ", i + 1, market->weapon[i].price);
 			weapon_display(market->weapon[i]);
 		}
 		else {
@@ -211,9 +213,9 @@ void	market_display_weapon(Market *market) {
 }
 void	market_display_armor(Market *market) {
 	printf("\nARMURES:\n");
-	for (int i = 0; i < MAX_ARMOR_ITEM; ++i) {
+	for (unsigned i = 0; i < MAX_ARMOR_ITEM; ++i) {
 		if (market->armor[i].isVisible) {
-			printf("[%d (prix: %.3f$)] ", i + 1, market->armor[i].price);
+			printf("[%u (prix: %.2f$)] ", i + 1, market->armor[i].price);
 			armor_display(market->armor[i]);
 		}
 		else {
@@ -224,9 +226,9 @@ void	market_display_armor(Market *market) {
 }
 void	market_display_engine(Market *market) {
 	printf("\nMOTEURS:\n");
-	for (int i = 0; i < MAX_ENGINE_ITEM; ++i) {
+	for (unsigned i = 0; i < MAX_ENGINE_ITEM; ++i) {
 		if (market->engine[i].isVisible) {
-			printf("\n[%d (prix: %.3f$)] ", i + 1, market->engine[i].price);
+			printf("\n[%u (prix: %.2f$)] ", i + 1, market->engine[i].price);
 			engine_display(market->engine[i]);
 		}
 		else {
@@ -237,9 +239,9 @@ void	market_display_engine(Market *market) {
 }
 void	market_display_hull(Market *market) {
 	printf("\nCOQUES:\n");
-	for (int i = 0; i < MAX_HULL_ITEM; ++i) {
+	for (unsigned i = 0; i < MAX_HULL_ITEM; ++i) {
 		if (market->hull[i].isVisible) {
-			printf("\n[%d (prix: %.3f$)] ", i + 1, market->hull[i].price);
+			printf("\n[%d (prix: %.2f$)] ", i + 1, market->hull[i].price);
 			hull_display(market->hull[i]);
 		}
 		else {
@@ -321,10 +323,10 @@ void	market_buy(Market *market, Player *player, Token *token) {
 		}
 	}
 }
-void	market_buy_fuel(Market *market, Player *player, float amount) {
+void	market_buy_fuel(Market *market, Player *player, unsigned amount) {
 	float fuelPrice = amount + market_get_item_price(market, player->actPlanet.governementType, I_FUEL, 0);
 
-	if (((market->nFuels - amount) < 0.f)
+	if (((int)(market->nFuels - amount) < 0)
 		|| ((player->money - fuelPrice) < 0.f)
 		|| ((player->ship.hull.fuel.actual + amount) > player->ship.hull.fuel.max)) {
 		printf("Vous ne pouvez pas en acheter autant!\n");
@@ -337,19 +339,19 @@ void	market_buy_fuel(Market *market, Player *player, float amount) {
 		player->money -= fuelPrice;
 		player->ship.hull.fuel.actual += amount;
 
-		printf("Vous avez achete %.3f fuels\n", amount);
+		printf("Vous avez achete %u fuels\n", amount);
 	}
 }
-void	market_buy_food(Market *market, Player *player, float amount) {
+void	market_buy_food(Market *market, Player *player, unsigned amount) {
 	float price = amount * market_get_item_price(market, player->actPlanet.governementType, I_FOOD, 0);
 
-	if ((market->nFoods - amount < 0.f) || (player->money - price < 0.f))
+	if ((int)(market->nFoods - amount) < 0 || (player->money - price < 0.f))
 		printf("Vous ne pouvhez pas en acheter autant!\n");
 	else {
 		market->nFoods -= amount;
 		player->money -= price;
 
-		printf("Vous avez achete %d de nourriture\n", amount);
+		printf("Vous avez achete %u de nourriture\n", amount);
 	}
 }
 void	market_buy_item(Market *market, Player *player, ItemType iType, int id) {
@@ -362,11 +364,11 @@ void	market_buy_item(Market *market, Player *player, ItemType iType, int id) {
 			if (freeslot == -1) {
 				int slot = -1;
 				printf("Quelle arme voulez-vous remplacer? ");
-				for (int i = 0; i < player->ship.hull.nWeaponsSlot; ++i) {
+				for (unsigned i = 0; i < player->ship.hull.nWeaponsSlot; ++i) {
 					printf("ID %d:", i + 1);
 					weapon_display(player->ship.weapon[i]);
 				}
-				while (slot < 0 || slot > player->ship.hull.nWeaponsSlot) {
+				while (slot < 0 || slot > (int)player->ship.hull.nWeaponsSlot) {
 					printf("ID? ");
 					scanf("%d", &slot);
 					slot--;
@@ -400,13 +402,13 @@ void	market_compare(Market *market, Player *player, Token *token) {
 
 	for (int i = 0; i < 4; ++i) {
 		if (strcmp(token[1].str, itemName[i]) == 0 && token[2].str != NULL) {
-			int id = atoi(token[2].str) - 1;
+			unsigned id = abs(atoi(token[2].str) - 1);
 
 			switch (i) {
 			case I_WEAPON:
 				if (id < market->nWeapons) {
 					printf("\nVous avez:");
-					for (int i = 0; i < player->ship.hull.nWeaponsSlot; ++i)
+					for (unsigned i = 0; i < player->ship.hull.nWeaponsSlot; ++i)
 						weapon_display(player->ship.weapon[i]);
 					printf("Vous regardez:");
 					weapon_display(market->weapon[id]);

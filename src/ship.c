@@ -5,8 +5,6 @@
 #include "memory.h"
 
 void	ship_create(Ship *ship, unsigned int level, size_t nCrew) {
-	unsigned min = (level == 0) ? level : level - 1;
-
 	Weapon	w = weapon_create_rand(level);
 	Armor	a = armor_create_rand(level);
 	Engine	e = engine_create_rand(level);
@@ -37,7 +35,7 @@ void	ship_create(Ship *ship, unsigned int level, size_t nCrew) {
 }
 
 int		ship_get_free_slots(Ship ship) {
-	for (int i = 0; i < ship.hull.nWeaponsSlot; ++i) {
+	for (unsigned i = 0; i < ship.hull.nWeaponsSlot; ++i) {
 		if (ship.weapon[i].isVisible == false)
 			return i;
 	}
@@ -95,7 +93,7 @@ void	ship_add_item_supply(Ship *ship, ItemType iType, int slot, void *item) {
 
 void	ship_set_supply(Ship *ship) {
 	if (ship->hull.isVisible) {
-		for (int i = 0; i < ship->hull.nWeaponsSlot; ++i) {
+		for (unsigned i = 0; i < ship->hull.nWeaponsSlot; ++i) {
 			if (ship->weapon[i].isVisible) {
 				int j = 0;
 				for (; !ship->supply.weapon[j].isVisible && j < MAX_ITEM; ++j) {}

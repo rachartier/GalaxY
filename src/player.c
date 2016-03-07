@@ -10,7 +10,7 @@
 #include "planet.h"
 #include "drop.h"
 
-Player* player_create(unsigned life, unsigned shield, float fuel, unsigned weight, unsigned food, unsigned power) {
+Player* player_create(void) {
 	Player	*player = xmalloc(sizeof(Player));
 	Staff	user;
 
@@ -124,7 +124,7 @@ void	player_info(Player player) {
 
 	hull_display(player.ship.hull);
 
-	for (int i = 0; i < player.ship.hull.nWeaponsSlot; ++i)
+	for (unsigned i = 0; i < player.ship.hull.nWeaponsSlot; ++i)
 		weapon_display(player.ship.weapon[i]);
 
 	armor_display(player.ship.armor);

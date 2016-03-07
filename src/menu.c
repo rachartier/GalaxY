@@ -22,8 +22,7 @@ void	menu_destroy(Menu *menu) {
 
 int menu_getcmd(Menu menu) {
 	int 	i;
-	char 	buff[8];
-
+	
 	do {
 		printf("\n> ");
 

@@ -9,9 +9,9 @@
 #include "memory.h"
 
 void	set_seed(void) {
-	Menu		*menu = menu_create();
-	int      cmd = 1;
-	bool		running = true;
+	Menu			*menu = menu_create();
+	int      	cmd = 1;
+	bool			running = true;
 	unsigned	seed = 42;
 
 	menu_setTitle(menu, "Seed");
@@ -55,7 +55,7 @@ void	play(void) {
 
 	putchar('\n');
 
-	player = player_create(100, 50, 80, 1000, 100, 100);
+	player = player_create();
 	sys = starsys_create();
 
 	LINE(80, '-');

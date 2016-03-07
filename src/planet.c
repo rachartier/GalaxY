@@ -126,7 +126,10 @@ void		planet_show_stats(Planet planet) {
 
 	static const char *g_planetCondition[] = {
 		"Ocean",
-		"Glace"
+		"Glace",
+		"Desert",
+		"Recouverte de vegetaux",
+		"Inconnue"
 	};
 
 	putchar('\n');
@@ -144,8 +147,7 @@ void		planet_show_stats(Planet planet) {
 	else {
 		printf("Nom: %s\n", planet.name);
 		printf("Type: %s\n", g_planetTypeName[planet.type]);
-		if (planet.condition != -1)
-			printf("Condition: %s\n", g_planetCondition[planet.condition]);
+		printf("Condition: %s\n", g_planetCondition[planet.condition]);
 		printf("Est une colonie: %s\n", (planet.isColony) ? "oui" : "non");
 		printf("Rayon: %.3fkm", planet.radius);
 		printf("\nSurface totale: %.3lf millions de km^2", planet.areaTotal);
@@ -225,13 +227,13 @@ bool gen_non_habitable_area(Planet *planet, PlanetCondition pCondition, float pe
 void chose_random_name(Planet *planet) {
 	static const char	*vowel = "aeiouy";
 	static const char	*consonant = "bcdfghjklmnpqrstvwxz";
-	size_t				lenghtVowel = strlen(vowel);
-	size_t				lenghtConsonant = strlen(consonant);
+	size_t						lenghtVowel = strlen(vowel);
+	size_t						lenghtConsonant = strlen(consonant);
 
 	int randomLenght = rand_born(3, 8);
+	int letter;
 
 	for (int i = 0; i < randomLenght; ++i) {
-		int letter;
 		if (i & 1)
 			letter = vowel[rand_born(0, lenghtVowel)];
 		else
@@ -324,6 +326,7 @@ void chose_random_planetType(Planet *planet, int id) {
 	else
 		type = P_TYPE_TERRESRTIAL;
 
+	planet->condition = CONDITION_UNKNOW;
 	planet->type = type;
 	planet->isGiant = false;
 
