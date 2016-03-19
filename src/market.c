@@ -152,6 +152,7 @@ float	market_get_item_price(Market *market, GovernementType gt, ItemType iType, 
 			2.3f,
 			1.6f,
 			1.7f,
+			2.4f,
 			3.0f
 		};
 
@@ -196,7 +197,7 @@ void	market_display(Market *market, GovernementType gt) {
 	printf("\nAutres:");
 
 	printf("\n- Nourriture: %d (%.3f/unite)\n", market->nFoods, market_get_item_price(market, gt, I_FOOD, 0));
-	printf("- Fuels: %u (%.3f/unite)\n\n", market->nFuels, market_get_item_price(market, gt, I_FUEL, 0));
+	printf("- Fuels: %d (%.3f/unite)\n\n", market->nFuels, market_get_item_price(market, gt, I_FUEL, 0));
 }
 
 void	market_display_weapon(Market *market) {
@@ -326,13 +327,13 @@ void	market_buy(Market *market, Player *player, Token *token) {
 void	market_buy_fuel(Market *market, Player *player, unsigned amount) {
 	float fuelPrice = amount + market_get_item_price(market, player->actPlanet.governementType, I_FUEL, 0);
 
-	if (((int)(market->nFuels - amount) < 0)
+	if (player->actPlanet.governementType == G_TYPE_FEUDAL || market->nFuels == 0) {
+		printf("Vous ne pouvez pas en acheter ici\n");
+	}
+	else if (((int)(market->nFuels - amount) < 0)
 		|| ((player->money - fuelPrice) < 0.f)
 		|| ((player->ship.hull.fuel.actual + amount) > player->ship.hull.fuel.max)) {
 		printf("Vous ne pouvez pas en acheter autant!\n");
-	}
-	else if (player->actPlanet.governementType == G_TYPE_FEUDAL) {
-		printf("Vous ne pouvez pas en acheter ici\n");
 	}
 	else {
 		market->nFuels -= amount;
