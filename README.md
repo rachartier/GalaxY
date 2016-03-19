@@ -9,14 +9,14 @@ GalaxY est un jeu en console d'aventure et d'exploration spatiale. Vous traverse
 Si vous ne vous rappelez plus d'une commande ou de comment l'utiliser, tapez `aide` (ou `?`) pour faire apparaître l'aide, ou tapez la commande sans argument pour avoir les informations sur cette commande précise.
 
 | Commande           | Abréviation | Description                                     |
-| --------           | :---------- | :----------                                     |
+| :--------          | :---------- | :----------                                     |
 | `liste`            | `ls`        | liste toutes les planètes du système planétaire |
 | `aller [argument]` | `al`        | permet de se déplacer de planète en planète     |
 | `aller suiv`       | `al s`      | se déplace sur la planète suivante              |
 | `aller prec`       | `al p`      | se déplace sur la planète précédente            |
 | `fouiller`         | `f`         | fouille la planète actuelle                     |
-| `info [argument]`  |             | donne des informations                          |
-| `info`             |             | informations de la planète actuelle             |
+| `info [argument]`  | `i`        | donne des informations                          |
+| `info`             |  `i`        | informations de la planète actuelle             |
 | `info vaisseau`    | `info v`    | informations de votre vaisseau                  |
 | `info equipage`    | `info e`    | informations sur votre équipage                 |
 | `entrer`           | `e`         | permet de passer au prochain système planétaire |
@@ -26,11 +26,10 @@ Si vous ne vous rappelez plus d'une commande ou de comment l'utiliser, tapez `ai
 | `quitter`          | `q`         | quitte la partie en cours                       |
 
 (A venir)
-
 - `bataille` (`b`) : votre vaisseau entre dans le mode de bataille.
 - `quete` (`qs`) : affichera une liste de quêtes
-- `vendre` : permettra de vendre ses armes, armures etc... disponible dans la resérve
-- 
+- `vendre` (`s`) : permettra de vendre ses armes, armures etc... disponible dans la resérve
+
 # TODO
 
 (Vaisseau)
