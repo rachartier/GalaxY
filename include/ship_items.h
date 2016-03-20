@@ -102,8 +102,9 @@ typedef struct s_hull {
 	unsigned	nWeaponsSlot;
 	unsigned	nMaxStaff;
 
-	OptionInt	life;
-	OptionFloat	fuel;
+	OptionInt	    life;
+	OptionUnsigned	fuel;
+    OptionUnsigned  food;
 
 	float	price;
 

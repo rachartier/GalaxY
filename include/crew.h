@@ -22,4 +22,6 @@ void	crew_add_player(Crew *crew, Staff player);
 
 void	crew_remove_staff(Crew *crew, unsigned id);
 
+void    crew_need_eat(Crew *crew, unsigned *actualFood, bool *isDead);
+
 #endif // __CREW_H__

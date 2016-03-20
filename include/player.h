@@ -13,10 +13,7 @@ typedef struct s_player {
 	Planet		actPlanet;
 	StarSystem	*actStarsystem;
 
-	Ship			ship;
-
-	OptionUnsigned	food;
-	OptionFloat		fuel;
+	Ship	 ship;
 
 	float	 money;
 
@@ -33,7 +30,8 @@ typedef struct s_player {
 		int planetsVisited;
 	} stats;
 
-	bool	wantToExit;
+    bool    isDead;
+    bool	wantToExit;
 } Player;
 
 Player* player_create();
@@ -42,9 +40,6 @@ void	player_destroy(Player *player);
 Staff	player_setByUser(void);
 
 void	player_setLife(Player *player, unsigned life, unsigned maxLife);
-void	player_setshield(Player *player, unsigned shield, unsigned maxshield);
-void	player_setFuel(Player *player, float fuel, float maxFuel);
-void	player_setWeight(Player *player, unsigned weight, unsigned maxWeight);
 void	player_setFood(Player *player, unsigned food, unsigned maxFood);
 
 void	player_drop(Player *player, Planet *planet);

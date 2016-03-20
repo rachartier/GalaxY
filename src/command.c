@@ -68,27 +68,37 @@ void cmd_get(Player *player) {
 	Token	token[16];
 	int		funcID = -1;
 
-	printf("\n\n%s [%d/%d] Carburant: %.2fL>>> ", player->actPlanet.name, player->planetIndex + 1, player->actStarsystem->numberPlanets, player->ship.hull.fuel.actual);
+    if(!player->isDead) {
+	    printf("\n\n%s [%d/%d]\nCarburant[%uL/%uL] - Nourriture[%u]\n>>> ", player->actPlanet.name, 
+                                                                            player->planetIndex + 1, 
+                                                                            player->actStarsystem->numberPlanets,
+                                                                            player->ship.hull.fuel.actual, 
+                                                                            player->ship.hull.fuel.max, 
+                                                                            player->ship.hull.food.actual);
 
-	fgets(str, MAX_LENGHT, stdin);
+    	fgets(str, MAX_LENGHT, stdin);
 
-	if (*str != '\n') {
-		parse(str, token);
+    	if (*str != '\n') {
+	    	parse(str, token);
 
-		for (int i = 0; i < (NFUNCTIONS * 2); ++i) {
-			if (strcmp(g_commandName[i], token[0].str) == 0) {
-				if (i < NFUNCTIONS)
-					funcID = i;
-				else
-					funcID = i - NFUNCTIONS;
-			}
-		}
-
-		if (funcID >= 0 && player != NULL)
-			cmdFunction[funcID](player, token);
-		else
-			printf("Mauvaise commande, tapez aide ou \'?\'\n");
-	}
+    		for (int i = 0; i < (NFUNCTIONS * 2); ++i) {
+    			if (strcmp(g_commandName[i], token[0].str) == 0) {
+    				if (i < NFUNCTIONS)
+    					funcID = i;
+    				else
+    					funcID = i - NFUNCTIONS;
+    			}
+    		}
+    
+    		if (funcID >= 0 && player != NULL)
+    			cmdFunction[funcID](player, token);
+    		else
+		    	printf("Mauvaise commande, tapez aide ou \'?\'\n");
+	    }
+    } else {
+        printf("Vous avez perdu la partie.\nRetour au menu.\n\n");
+        f_cmd_quit(player, token);
+    }
 }
 
 int	 parse(char *str, Token *token) {

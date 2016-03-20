@@ -180,13 +180,21 @@ Hull	hull_create_rand(unsigned level) {
 		5000.f
 	};
 
-	static const float table_fuel[] = {
-		50.f,
-		120.f,
-		200.f,
-		300.f,
-		500.f
+	static const unsigned table_fuel[] = {
+		50u,
+		120u,
+		200u,
+		500u,
+		700u
 	};
+
+    static const unsigned table_food[] = {
+        100u,
+        1u,
+        500u,
+        1000u,
+        5000u
+    };
 
 	h.isVisible = true;
 
@@ -202,6 +210,7 @@ Hull	hull_create_rand(unsigned level) {
 	h.nWeaponsSlot = table_max_weapon_slot[ht];
 
 	h.fuel.actual = h.fuel.max = table_fuel[ht];
+    h.food.actual = h.food.max = table_food[ht];
 
 	h.price = table_price[ht];
 	h.type = ht;
@@ -257,7 +266,7 @@ void	hull_display(Hull hull) {
 
 	printf("\nCoque (%s):\n", hull_name[hull.type]);
 	printf("\t-Point de vie: %d/%d\n", hull.life.actual, hull.life.max);
-	printf("\t-Carburant: %.3fL/%.3fL\n", hull.fuel.actual, hull.fuel.max);
+	printf("\t-Carburant: %uL/%ufL\n", hull.fuel.actual, hull.fuel.max);
 	printf("\t-Personnel maximum: %d\n", hull.nMaxStaff);
 	printf("\t-Nombre maximum d'armes: %d\n", hull.nWeaponsSlot);
 }

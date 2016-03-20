@@ -9,9 +9,9 @@
 #include "memory.h"
 
 void	set_seed(void) {
-	Menu			*menu = menu_create();
+	Menu		*menu = menu_create();
 	int      	cmd = 1;
-	bool			running = true;
+	bool		running = true;
 	unsigned	seed = 42;
 
 	menu_setTitle(menu, "Seed");
@@ -62,7 +62,7 @@ void	play(void) {
 
 	player_move_toSystem(player, sys);
 
-	while (!player->wantToExit) {
+	while (!player->wantToExit) { 
 		cmd_get(player);
 	}
 
@@ -74,7 +74,7 @@ int main(void) {
 	int			cmd = 1;
 	bool		exit = false;
 
-	menu_setTitle(mainMenu, "GalaxY (V0.10.20)");
+	menu_setTitle(mainMenu, "GalaxY (V0.11.20)");
 
 	menu_addButtonText(mainMenu, "Jouer");
 	menu_addButtonText(mainMenu, "Charger");

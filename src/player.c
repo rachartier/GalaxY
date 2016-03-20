@@ -9,6 +9,7 @@
 #include "menu.h"
 #include "planet.h"
 #include "drop.h"
+#include "crew.h"
 
 Player* player_create(void) {
 	Player	*player = xmalloc(sizeof(Player));
@@ -29,7 +30,9 @@ Player* player_create(void) {
 	player->planetIndex = 0;
 	player->satelliteIndex = -1;
 	player->stats.planetsVisited = 0;
-	player->wantToExit = false;
+
+    player->wantToExit = false;
+    player->isDead = false;
 
 	return player;
 }
@@ -102,7 +105,7 @@ void	player_setshield(Player *player, unsigned shield, unsigned maxshield) {
 	player->ship.hull.life.max = maxshield;
 }
 
-void	player_setFuel(Player *player, float fuel, float maxFuel) {
+void	player_setFuel(Player *player, unsigned fuel, unsigned maxFuel) {
 	player->ship.hull.fuel.actual = fuel;
 
 	if (player->ship.hull.fuel.actual > player->ship.hull.fuel.max)
@@ -112,8 +115,8 @@ void	player_setFuel(Player *player, float fuel, float maxFuel) {
 }
 
 void	player_setFood(Player *player, unsigned food, unsigned maxFood) {
-	player->food.actual = food;
-	player->food.max = maxFood;
+	player->ship.hull.food.actual = food;
+    player->ship.hull.food.max = maxFood;
 }
 
 void	player_info(Player player) {
@@ -158,22 +161,25 @@ void	player_set_planet(Player *player) {
 
 void	player_move_toPlanet(Player *player, int dir) {
 	if (player->planetIndex + dir > 0 && player->planetIndex + dir < (int)player->actStarsystem->numberPlanets) {
-		float fuelCost = player_getDistanceOfPlanet(*player, player->actStarsystem->planet[player->planetIndex + dir]);
+		unsigned fuelCost = floor(player_getDistanceOfPlanet(*player, player->actStarsystem->planet[player->planetIndex + dir]));
 
-		if (player->ship.hull.fuel.actual - fuelCost > 0.f) {
-			player->planetIndex += dir;
-			player_set_planet(player);
+        crew_need_eat(&player->ship.crew, &player->ship.hull.food.actual, &player->isDead);
+        if(!player->isDead) {
+	    	if (player->ship.hull.fuel.actual - fuelCost > 0) {
+		    	player->planetIndex += dir;
+		    	player_set_planet(player);
 
-			if (player->actPlanet.type == P_TYPE_STAR)
-				printf("\nVous etes deja dans le systeme planetaire\n");
-			else if (dir == 0)
-				printf("Vous revenez a la planete %s\n", player->actPlanet.name);
-			else
-				player->ship.hull.fuel.actual -= fuelCost;
-		}
-		else
-			printf("Vous n'avez plus de carburant\n");
-	}
+	    		if (player->actPlanet.type == P_TYPE_STAR)
+	    			printf("\nVous etes deja dans le systeme planetaire\n");
+	    		else if (dir == 0)
+	    			printf("Vous revenez a la planete %s\n", player->actPlanet.name);
+	    		else
+	    			player->ship.hull.fuel.actual -= fuelCost;
+	    	}
+	    	else
+	    		printf("Vous n'avez plus de carburant\n");
+	    }
+    }
 	else
 		printf("Vous ne pouvez pas allez plus loin\n\n");
 }
@@ -227,7 +233,7 @@ void	player_setItem(Player *player, ItemType iType, int id, void *item) {
 	case I_FOOD:
 	{
 		unsigned food = *(unsigned *)item;
-		player->food.actual += food;
+		player->ship.hull.food.actual += food;
 	}
 	break;
 	case I_FUEL:

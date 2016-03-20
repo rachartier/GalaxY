@@ -118,7 +118,7 @@ void	ship_list_item_supply(Ship ship) {
 			weapon_display(ship.supply.weapon[i]);
 		}
 		else {
-			printf("\tEmplacement %d vide\n", i + 1);
+			printf("\t[Emplacement %d vide]\n", i + 1);
 		}
 	}
 
@@ -129,7 +129,7 @@ void	ship_list_item_supply(Ship ship) {
 			armor_display(ship.supply.armor[i]);
 		}
 		else {
-			printf("\tEmplacement %d vide\n", i + 11);
+			printf("\t[Emplacement %d vide]\n", i + 11);
 		}
 	}
 
@@ -140,7 +140,7 @@ void	ship_list_item_supply(Ship ship) {
 			engine_display(ship.supply.engine[i]);
 		}
 		else {
-			printf("\tEmplacement %d vide\n", i + 21);
+			printf("\t[Emplacement %d vide]\n", i + 21);
 		}
 	}
 }
