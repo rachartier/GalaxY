@@ -190,7 +190,7 @@ Hull	hull_create_rand(unsigned level) {
 
     static const unsigned table_food[] = {
         100u,
-        1u,
+        200u,
         500u,
         1000u,
         5000u

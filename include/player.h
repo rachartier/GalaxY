@@ -41,6 +41,7 @@ Staff	player_setByUser(void);
 
 void	player_setLife(Player *player, unsigned life, unsigned maxLife);
 void	player_setFood(Player *player, unsigned food, unsigned maxFood);
+void	player_setFuel(Player *player, unsigned fuel, unsigned maxFuel);
 
 void	player_drop(Player *player, Planet *planet);
 

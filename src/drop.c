@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 
+#include "player.h"
 #include "staff.h"
 #include "ship_items.h"
 #include "rand.h"
